@@ -1,220 +1,256 @@
-`<!-- 顶部固定导航 -->`\
-`<nav class="fixed w-full bg-amber-50/95 backdrop-blur-md shadow-sm z-50 border-b border-amber-100">`\
-`    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">`\
-`        <div class="flex justify-between h-16 items-center">`\
-`            <div class="flex items-center">`\
-`                <span class="font-bold text-xl text-amber-900">李煜 · 重瞳·钟山隐</span>`\
-`            </div>`\
-`            <div class="hidden md:flex space-x-8">`\
-`                <a href="#hero" class="text-stone-600 hover:text-amber-700 text-sm font-medium transition">序章首页</a>`\
-`                <a href="#life-progress" class="text-stone-600 hover:text-amber-700 text-sm font-medium transition">人生进度</a>`\
-`                <a href="#poetry-collection" class="text-stone-600 hover:text-amber-700 text-sm font-medium transition">词作收录</a>`\
-`                <a href="#mark-system" class="text-stone-600 hover:text-amber-700 text-sm font-medium transition">属性标记</a>`\
-`            </div>`\
-`        </div>`\
-`    </div>`\
-`</nav>`\
-\
-`<!-- 首页英雄区 -->`\
-`<section id="hero" class="pt-36 pb-24">`\
-`    <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center">`\
-`        <h1 class="text-5xl md:text-6xl font-bold text-amber-900 mb-6">重瞳·钟山隐</h1>`\
-`        <p class="text-xl text-stone-600 max-w-3xl mx-auto mb-8">`\
-`            公元937年七夕，金陵宫城梧桐未落。六皇子李从嘉降生，生来一目重瞳。他本想做钟山脚下的富贵闲人，却被命运一步步推上南唐国主的位置。`\
-`        </p>`\
-`        <p class="text-lg text-stone-500 mb-12">`\
-`            从“李从嘉”到“李煜”，不是改名，是命运把一个人劈成了两半。一半留在钟山书斋，一半走进凤阁龙楼。`\
-`        </p>`\
-`        <a href="#life-progress" class="px-8 py-4 bg-amber-800 text-white rounded-lg hover:bg-amber-900 transition shadow-md text-lg">`\
-`            开启他的人生选择之旅`\
-`        </a>`\
-`    </div>`\
-`</section>`\
-\
-`<!-- 人生进度核心交互区 -->`\
-`<section id="life-progress" class="py-20 bg-white">`\
-`    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">`\
-`        <div class="text-center mb-16">`\
-`            <h2 class="text-3xl font-bold text-amber-900 mb-3">序章 · 交互式人生轨迹</h2>`\
-`            <p class="text-stone-500">你将代入李煜的视角，在每一个命运岔路口做出选择，走向属于你的南唐结局</p>`\
-`        </div>`\
-\
-`        <!-- 第一部分：背景楔子 -->`\
-`        <div class="bg-amber-50 p-8 rounded-xl mb-12 shadow-sm">`\
-`            <h3 class="text-2xl font-semibold text-amber-800 mb-6 border-b border-amber-200 pb-3">楔子 · 重瞳降生</h3>`\
-`            <div class="prose max-w-none text-stone-700 leading-relaxed">`\
-`                <p class="mb-4">公元937年，七夕。金陵宫城，梧桐未落。</p>`\
-`                <p class="mb-4">六皇子降生了。据说他生来一目重瞳，祖父李昪亲自来看，沉默良久，说了一句：“此儿有异相，他日必大贵。”</p>`\
-`                <p class="mb-4">没有人追问“大贵”是什么意思。因为所有人都知道，皇位是大哥李弘冀的。而这个生着双瞳的孩子，只需在钟山脚下，做一个富贵闲人就好。</p>`\
-`                <p>这是你的心愿，也是你的伪装。但命运，从来不问人的心愿。</p>`\
-`            </div>`\
-`        </div>`\
-\
-`        <!-- 金陵风物回忆板块 -->`\
-`        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-16">`\
-`            <div class="bg-amber-50 p-6 rounded-xl card-hover transition duration-300">`\
-`                <h4 class="text-xl font-medium text-amber-800 mb-3">澄心堂</h4>`\
-`                <p class="text-stone-600">父亲李璟处理政务与写字的地方。你小时候常坐一旁，看他研墨落笔，那句“细雨梦回鸡塞远，小楼吹彻玉笙寒”的墨香，至今还留在宣纸上。</p>`\
-`            </div>`\
-`            <div class="bg-amber-50 p-6 rounded-xl card-hover transition duration-300">`\
-`                <h4 class="text-xl font-medium text-amber-800 mb-3">瑶光殿</h4>`\
-`                <p class="text-stone-600">大周后娥皇的寝殿，临水而建。殿里挂着半卷《霓裳羽衣曲》残谱，她弹琵琶的时候，音色清越得像江南的雨，连柳絮落在水面的声音都能听清。</p>`\
-`            </div>`\
-`            <div class="bg-amber-50 p-6 rounded-xl card-hover transition duration-300">`\
-`                <h4 class="text-xl font-medium text-amber-800 mb-3">清凉寺</h4>`\
-`                <p class="text-stone-600">城外的古寺，住持是一位不问世事的老僧。十二岁那年你问他“人为什么会有重瞳”，他说“看得多，未必是福”，那杯苦茶的味道，你记了一辈子。</p>`\
-`            </div>`\
-`        </div>`\
-\
-`        <!-- 第一场交互选择 -->`\
-`        <div class="bg-stone-50 p-8 rounded-xl mb-12">`\
-`            <h3 class="text-2xl font-semibold text-amber-800 mb-6">第一场：钟山书斋·雨</h3>`\
-`            <p class="text-stone-600 mb-6">场景：钟山脚下，书斋。窗外细雨如丝。案上摊着宣纸，墨已研好。你今年十六岁。宫中来人送来大哥李弘冀的手书，信上只有一行字：“叔父李景遂，已除。”</p>`\
-`            <p class="text-lg text-stone-700 mb-6">此刻你会做出什么选择？</p>`\
-`            <div class="space-y-4">`\
-`                <button class="w-full text-left p-5 border border-amber-200 rounded-lg choice-btn transition duration-300">`\
-`                    <span class="font-medium">选择 A：烧掉信，写一首《渔父》词，表明心志</span>`\
-`                    <p class="text-sm text-stone-500 mt-2">把信凑到烛火上化为灰烬，写下“浪花有意千里雪，桃花无言一队春”，命人把词送到金陵城，让所有人知道你只想做一个不问世事的渔父。</p>`\
-`                    <p class="text-xs text-amber-700 mt-2">效果：词心+2，龙椅-1。获得词牌《渔父》，获得标记“刻意的闲散”</p>`\
-`                </button>`\
-`                <button class="w-full text-left p-5 border border-amber-200 rounded-lg choice-btn transition duration-300">`\
-`                    <span class="font-medium">选择 B：把信收好，当作什么都没发生</span>`\
-`                    <p class="text-sm text-stone-500 mt-2">把信折好压在书案最底层，继续研墨写词，假装自己什么都没看见，什么都没听见。</p>`\
-`                    <p class="text-xs text-amber-700 mt-2">效果：愁绪+1。获得标记“沉默的旁观者”</p>`\
-`                </button>`\
-`                <button class="w-full text-left p-5 border border-amber-200 rounded-lg choice-btn transition duration-300">`\
-`                    <span class="font-medium">选择 C：冒雨进宫，去见父亲</span>`\
-`                    <p class="text-sm text-stone-500 mt-2">披上蓑衣骑马入城，在澄心堂向父亲开口提及此事，得到他“你只管读书写词，其他的事有父亲在”的承诺。</p>`\
-`                    <p class="text-xs text-amber-700 mt-2">效果：龙椅+1，词心+1。获得线索“父亲的承诺”，获得标记“寻求庇护”</p>`\
-`                </button>`\
-`            </div>`\
-`        </div>`\
-\
-`        <!-- 过渡与后续章节预览 -->`\
-`        <div class="bg-amber-50 p-8 rounded-xl mb-12">`\
-`            <h3 class="text-xl font-semibold text-amber-800 mb-4">后续剧情预告</h3>`\
-`            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">`\
-`                <div>`\
-`                    <h4 class="font-medium text-stone-700 mb-2">过渡一 · 入城</h4>`\
-`                    <p class="text-stone-500 text-sm">雨停后你骑马回城，站在岔路口，一边是冰冷的宫城，一边是瑶光殿里等你的娥皇，你会走向哪里？</p>`\
-`                </div>`\
-`                <div>`\
-`                    <h4 class="font-medium text-stone-700 mb-2">第二场 · 瑶光殿·琵琶</h4>`\
-`                    <p class="text-stone-500 text-sm">娥皇看着你心神不宁的样子，笑着说“你今天已经捻了十七次袖口”，你会把大哥的秘密告诉她吗？</p>`\
-`                </div>`\
-`                <div>`\
-`                    <h4 class="font-medium text-stone-700 mb-2">过渡二 · 大哥死了</h4>`\
-`                    <p class="text-stone-500 text-sm">显德六年秋天，你正在钟山书斋写“万顷波中得自由”，宫中来人跪在门外，声音发抖地告诉你太子李弘冀薨了。</p>`\
-`                </div>`\
-`                <div>`\
-`                    <h4 class="font-medium text-stone-700 mb-2">最终章 · 登基前夜</h4>`\
-`                    <p class="text-stone-500 text-sm">你站在瑶光殿的台阶上望着东流的长江，终于明白“从嘉”已经留在了钟山书斋，明天站在金陵宫城里的人，只能是李煜。</p>`\
-`                </div>`\
-`            </div>`\
-`        </div>`\
-`    </div>`\
-`</section>`\
-\
-`<!-- 词作收录板块 -->`\
-`<section id="poetry-collection" class="py-20 bg-amber-50">`\
-`    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">`\
-`        <div class="text-center mb-16">`\
-`            <h2 class="text-3xl font-bold text-amber-900 mb-3">序章词作全收录</h2>`\
-`            <p class="text-stone-500">收录李煜序章人生轨迹里出现的全部经典作品，附原文与白话翻译</p>`\
-`        </div>`\
-`        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">`\
-`            <div class="bg-white p-8 rounded-xl shadow-sm card-hover transition duration-300">`\
-`                <h3 class="text-xl font-semibold text-amber-800 mb-4">《渔父·浪花有意千里雪》</h3>`\
-`                <p class="text-stone-700 mb-4 leading-relaxed">`\
-`                    浪花有意千里雪，桃花无言一队春。<br>`\
-`                    一壶酒，一竿纶，世上如侬有几人。`\
-`                </p>`\
-`                <p class="text-stone-500 text-sm">浪花翻涌仿佛卷起千里白雪，桃花无言却排成一队送来春色。一壶酒，一根钓竿，世上像我这样自在的人，又有几个呢？</p>`\
-`            </div>`\
-`            <div class="bg-white p-8 rounded-xl shadow-sm card-hover transition duration-300">`\
-`                <h3 class="text-xl font-semibold text-amber-800 mb-4">《渔父·一棹春风一叶舟》</h3>`\
-`                <p class="text-stone-700 mb-4 leading-relaxed">`\
-`                    一棹春风一叶舟，一纶茧缕一轻钩。<br>`\
-`                    花满渚，酒满瓯，万顷波中得自由。`\
-`                </p>`\
-`                <p class="text-stone-500 text-sm">一支船桨划开春风，一叶小舟漂浮水上。沙洲上开满鲜花，酒杯里盛满美酒，在万顷碧波之中，终于得到了梦寐以求的自由。</p>`\
-`            </div>`\
-`            <div class="bg-white p-8 rounded-xl shadow-sm card-hover transition duration-300">`\
-`                <h3 class="text-xl font-semibold text-amber-800 mb-4">《摊破浣溪沙》李璟</h3>`\
-`                <p class="text-stone-700 mb-4 leading-relaxed">`\
-`                    菡萏香销翠叶残，西风愁起绿波间。<br>`\
-`                    细雨梦回鸡塞远，小楼吹彻玉笙寒。`\
-`                </p>`\
-`                <p class="text-stone-500 text-sm">荷花香气消散，荷叶渐渐凋残，西风从绿波间吹起，满是愁绪。细雨声中梦回遥远的边塞，小楼上吹彻玉笙，深夜里浸满了清寒。</p>`\
-`            </div>`\
-`            <div class="bg-white p-8 rounded-xl shadow-sm card-hover transition duration-300">`\
-`                <h3 class="text-xl font-semibold text-amber-800 mb-4">《浪淘沙·往事只堪哀》</h3>`\
-`                <p class="text-stone-700 mb-4 leading-relaxed">`\
-`                    往事只堪哀，对景难排。<br>`\
-`                    秋风庭院藓侵阶。一任珠帘闲不卷，终日谁来。`\
-`                </p>`\
-`                <p class="text-stone-500 text-sm">过往的往事只剩悲哀，面对眼前景物也难以排遣。秋风吹过庭院，苔藓已经蔓延到台阶上，任凭珠帘闲置不卷，一整天都不会有人来访。</p>`\
-`            </div>`\
-`        </div>`\
-`    </div>`\
-`</section>`\
-\
-`<!-- 属性标记系统板块 -->`\
-`<section id="mark-system" class="py-20 bg-white">`\
-`    <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">`\
-`        <div class="text-center mb-16">`\
-`            <h2 class="text-3xl font-bold text-amber-900 mb-3">人生属性与标记系统</h2>`\
-`            <p class="text-stone-500">记录你在每一个选择中获得的属性与专属标记，拼凑出独属于你的李煜人生轨迹</p>`\
-`        </div>`\
-\
-`        <div class="bg-amber-50 p-8 rounded-xl mb-10">`\
-`            <h3 class="text-xl font-semibold text-amber-800 mb-6">五大核心属性</h3>`\
-`            <div class="grid grid-cols-2 md:grid-cols-5 gap-4 text-center">`\
-`                <div class="p-4 bg-white rounded-lg">`\
-`                    <p class="text-lg font-medium text-amber-700">词心</p>`\
-`                    <p class="text-sm text-stone-500 mt-1">对文学与自由的执念</p>`\
-`                </div>`\
-`                <div class="p-4 bg-white rounded-lg">`\
-`                    <p class="text-lg font-medium text-amber-700">龙椅</p>`\
-`                    <p class="text-sm text-stone-500 mt-1">向权力中心靠近的距离</p>`\
-`                </div>`\
-`                <div class="p-4 bg-white rounded-lg">`\
-`                    <p class="text-lg font-medium text-amber-700">情缘</p>`\
-`                    <p class="text-sm text-stone-500 mt-1">与身边人的情感羁绊</p>`\
-`                </div>`\
-`                <div class="p-4 bg-white rounded-lg">`\
-`                    <p class="text-lg font-medium text-amber-700">民心</p>`\
-`                    <p class="text-sm text-stone-500 mt-1">对南唐百姓的责任感</p>`\
-`                </div>`\
-`                <div class="p-4 bg-white rounded-lg">`\
-`                    <p class="text-lg font-medium text-amber-700">愁绪</p>`\
-`                    <p class="text-sm text-stone-500 mt-1">命运带来的无力与沉重</p>`\
-`                </div>`\
-`            </div>`\
-`        </div>`\
-\
-`        <div class="bg-stone-50 p-8 rounded-xl">`\
-`            <h3 class="text-xl font-semibold text-amber-800 mb-6">序章可获得专属标记</h3>`\
-`            <div class="flex flex-wrap gap-3">`\
-`                <span class="px-3 py-1 bg-white rounded-full text-sm text-stone-600 border border-amber-100">刻意的闲散</span>`\
-`                <span class="px-3 py-1 bg-white rounded-full text-sm text-stone-600 border border-amber-100">沉默的旁观者</span>`\
-`                <span class="px-3 py-1 bg-white rounded-full text-sm text-stone-600 border border-amber-100">父亲的承诺</span>`\
-`                <span class="px-3 py-1 bg-white rounded-full text-sm text-stone-600 border border-amber-100">禅师的点拨</span>`\
-`                <span class="px-3 py-1 bg-white rounded-full text-sm text-stone-600 border border-amber-100">娥皇的承诺</span>`\
-`                <span class="px-3 py-1 bg-white rounded-full text-sm text-stone-600 border border-amber-100">孤家寡人</span>`\
-`                <span class="px-3 py-1 bg-white rounded-full text-sm text-stone-600 border border-amber-100">重光之煜</span>`\
-`                <span class="px-3 py-1 bg-white rounded-full text-sm text-stone-600 border border-amber-100">告别钟山</span>`\
-`                <span class="px-3 py-1 bg-white rounded-full text-sm text-stone-600 border border-amber-100">父亲的遗命</span>`\
-`                <span class="px-3 py-1 bg-white rounded-full text-sm text-stone-600 border border-amber-100">祖父的预言</span>`\
-`            </div>`\
-`        </div>`\
-`    </div>`\
-`</section>`\
-\
-`<!-- 页脚 -->`\
-`<footer class="ink-gradient text-amber-50 py-10">`\
-`    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">`\
-`        <p>© 2026 历史人物生平拆解项目 · 李煜《重瞳·钟山隐》专题站</p>`\
-`        <p class="text-sm text-amber-200 mt-2">做一个只属于你的南唐后主人生故事</p>`\
-`    </div>`\
-`</footer>` 
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>重瞳·钟山隐</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: "PingFang SC", "Microsoft YaHei", "Noto Sans SC", sans-serif;
+      background: #fffaf2;
+      color: #292524;
+    }
+    .ink-gradient {
+      background: linear-gradient(135deg, #7c4a1c 0%, #5b3414 100%);
+    }
+    .card-hover:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 24px rgba(120, 75, 30, 0.08);
+    }
+    .choice-btn:hover {
+      background: #fff7ed;
+      border-color: #f6c68d;
+      transform: translateY(-1px);
+    }
+  </style>
+</head>
+<body class="bg-amber-50/30 text-stone-800">
+  <!-- 顶部固定导航 -->
+  <nav class="fixed w-full bg-amber-50/95 backdrop-blur-md shadow-sm z-50 border-b border-amber-100">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex justify-between h-16 items-center">
+        <div class="flex items-center">
+          <span class="font-bold text-xl text-amber-900">李煜 · 重瞳·钟山隐</span>
+        </div>
+        <div class="hidden md:flex space-x-8">
+          <a href="#hero" class="text-stone-600 hover:text-amber-700 text-sm font-medium transition">序章首页</a>
+          <a href="#life-progress" class="text-stone-600 hover:text-amber-700 text-sm font-medium transition">人生进度</a>
+          <a href="#poetry-collection" class="text-stone-600 hover:text-amber-700 text-sm font-medium transition">词作收录</a>
+          <a href="#mark-system" class="text-stone-600 hover:text-amber-700 text-sm font-medium transition">属性标记</a>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- 首页英雄区 -->
+  <section id="hero" class="pt-36 pb-24">
+    <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      <h1 class="text-5xl md:text-6xl font-bold text-amber-900 mb-6">重瞳·钟山隐</h1>
+      <p class="text-xl text-stone-600 max-w-3xl mx-auto mb-8">
+        公元937年七夕，金陵宫城梧桐未落。六皇子李从嘉降生，生来一目重瞳。他本想做钟山脚下的富贵闲人，却被命运一步步推上南唐国主的位置。
+      </p>
+      <p class="text-lg text-stone-500 mb-12">
+        从“李从嘉”到“李煜”，不是改名，是命运把一个人劈成了两半。一半留在钟山书斋，一半走进凤阁龙楼。
+      </p>
+      <a href="#life-progress" class="px-8 py-4 bg-amber-800 text-white rounded-lg hover:bg-amber-900 transition shadow-md text-lg">
+        开启他的人生选择之旅
+      </a>
+    </div>
+  </section>
+
+  <!-- 人生进度核心交互区 -->
+  <section id="life-progress" class="py-20 bg-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-16">
+        <h2 class="text-3xl font-bold text-amber-900 mb-3">序章 · 交互式人生轨迹</h2>
+        <p class="text-stone-500">你将代入李煜的视角，在每一个命运岔路口做出选择，走向属于你的南唐结局</p>
+      </div>
+
+      <!-- 第一部分：背景楔子 -->
+      <div class="bg-amber-50 p-8 rounded-xl mb-12 shadow-sm">
+        <h3 class="text-2xl font-semibold text-amber-800 mb-6 border-b border-amber-200 pb-3">楔子 · 重瞳降生</h3>
+        <div class="prose max-w-none text-stone-700 leading-relaxed">
+          <p class="mb-4">公元937年，七夕。金陵宫城，梧桐未落。</p>
+          <p class="mb-4">六皇子降生了。据说他生来一目重瞳，祖父李昪亲自来看，沉默良久，说了一句：“此儿有异相，他日必大贵。”</p>
+          <p class="mb-4">没有人追问“大贵”是什么意思。因为所有人都知道，皇位是大哥李弘冀的。而这个生着双瞳的孩子，只需在钟山脚下，做一名读书人，便足够安稳。</p>
+          <p>这是你的心愿，也是你的伪装。但命运，从来不问人的心愿。</p>
+        </div>
+      </div>
+
+      <!-- 金陵风物回忆板块 -->
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-16">
+        <div class="bg-amber-50 p-6 rounded-xl card-hover transition duration-300">
+          <h4 class="text-xl font-medium text-amber-800 mb-3">澄心堂</h4>
+          <p class="text-stone-600">父亲李璟处理政务与写字的地方。你小时候常坐一旁，看他研墨落笔，那句“细雨梦回鸡塞远，小楼吹彻玉笙寒”的墨意，像是最早的命运预兆。</p>
+        </div>
+        <div class="bg-amber-50 p-6 rounded-xl card-hover transition duration-300">
+          <h4 class="text-xl font-medium text-amber-800 mb-3">瑶光殿</h4>
+          <p class="text-stone-600">大周后娥皇的寝殿，临水而建。殿里挂着半卷《霓裳羽衣曲》残谱，她弹琵琶的时候，音色清越得像江南的雨，连柳絮都忍不住停一停。</p>
+        </div>
+        <div class="bg-amber-50 p-6 rounded-xl card-hover transition duration-300">
+          <h4 class="text-xl font-medium text-amber-800 mb-3">清凉寺</h4>
+          <p class="text-stone-600">城外的古寺，住持是一位不问世事的老僧。十二岁那年你问他“人为什么会有重瞳”，他说“看得多，未必是福”，那句话后来总在你睡前浮现。</p>
+        </div>
+      </div>
+
+      <!-- 第一场交互选择 -->
+      <div class="bg-stone-50 p-8 rounded-xl mb-12">
+        <h3 class="text-2xl font-semibold text-amber-800 mb-6">第一场：钟山书斋·雨</h3>
+        <p class="text-stone-600 mb-6">场景：钟山脚下，书斋。窗外细雨如丝。案上摊着宣纸，墨已研好。你今年十六岁。宫中来人送来大哥李弘冀的手书，信里只有一句话：“若你还想活着，最好别再问皇位。”</p>
+        <p class="text-lg text-stone-700 mb-6">此刻你会做出什么选择？</p>
+        <div class="space-y-4">
+          <button class="choice-btn w-full text-left p-5 border border-amber-200 rounded-lg transition duration-300">
+            <span class="font-medium">选择 A：烧掉信，写一首《渔父》词，表明心志</span>
+            <p class="text-sm text-stone-500 mt-2">把信凑到烛火上化为灰烬，写下“浪花有意千里雪，桃花无言一队春”，命人把词送到金陵城，让所有人都知道，你不愿被命运定型。</p>
+            <p class="text-xs text-amber-700 mt-2">效果：词心+2，龙椅-1。获得词牌《渔父》，获得标记“刻意的闲散”</p>
+          </button>
+
+          <button class="choice-btn w-full text-left p-5 border border-amber-200 rounded-lg transition duration-300">
+            <span class="font-medium">选择 B：把信收好，当作什么都没发生</span>
+            <p class="text-sm text-stone-500 mt-2">把信折好压在书案最底层，继续研墨写词，假装自己什么都没看见，什么都没听见。</p>
+            <p class="text-xs text-amber-700 mt-2">效果：愁绪+1。获得标记“沉默的旁观者”</p>
+          </button>
+
+          <button class="choice-btn w-full text-left p-5 border border-amber-200 rounded-lg transition duration-300">
+            <span class="font-medium">选择 C：冒雨进宫，去见父亲</span>
+            <p class="text-sm text-stone-500 mt-2">披上蓑衣骑马入城，在澄心堂向父亲开口提及此事，得到他“你只管读书写词，其他的事有父亲在”的承诺。</p>
+            <p class="text-xs text-amber-700 mt-2">效果：龙椅+1，词心+1。获得线索“父亲的承诺”，获得标记“寻求庇护”</p>
+          </button>
+        </div>
+      </div>
+
+      <!-- 过渡与后续章节预览 -->
+      <div class="bg-amber-50 p-8 rounded-xl mb-12">
+        <h3 class="text-xl font-semibold text-amber-800 mb-4">后续剧情预告</h3>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div>
+            <h4 class="font-medium text-stone-700 mb-2">过渡一 · 入城</h4>
+            <p class="text-stone-500 text-sm">雨停后你骑马回城，站在岔路口，一边是冰冷的宫城，一边是瑶光殿里等你的娥皇，你会走向哪里？</p>
+          </div>
+          <div>
+            <h4 class="font-medium text-stone-700 mb-2">第二场 · 瑶光殿·琵琶</h4>
+            <p class="text-stone-500 text-sm">娥皇看着你心神不宁的样子，笑着说“你今天已经捻了十七次袖口”，你会把大哥的秘密告诉她吗？</p>
+          </div>
+          <div>
+            <h4 class="font-medium text-stone-700 mb-2">过渡二 · 大哥死了</h4>
+            <p class="text-stone-500 text-sm">显德六年秋天，你正在钟山书斋写“万顷波中得自由”，宫中来人跪在门外，声音发抖地告诉你太子李弘冀薨逝。</p>
+          </div>
+          <div>
+            <h4 class="font-medium text-stone-700 mb-2">最终章 · 登基前夜</h4>
+            <p class="text-stone-500 text-sm">你站在瑶光殿的台阶上望着东流的长江，终于明白“从嘉”已经留在了钟山书斋，明天站在金陵宫城里的人，或许不再是自己。</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 词作收录板块 -->
+  <section id="poetry-collection" class="py-20 bg-amber-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-16">
+        <h2 class="text-3xl font-bold text-amber-900 mb-3">序章词作全收录</h2>
+        <p class="text-stone-500">收录李煜序章人生轨迹里出现的全部经典作品，附原文与白话翻译</p>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <div class="bg-white p-8 rounded-xl shadow-sm card-hover transition duration-300">
+          <h3 class="text-xl font-semibold text-amber-800 mb-4">《渔父·浪花有意千里雪》</h3>
+          <p class="text-stone-700 mb-4 leading-relaxed">
+            浪花有意千里雪，桃花无言一队春。<br>
+            一壶酒，一竿纶，世上如侬有几人。
+          </p>
+          <p class="text-stone-500 text-sm">浪花翻涌仿佛卷起千里白雪，桃花无言却排成一队送来春色。一壶酒，一根钓竿，世上像我这样自在的人，又有几人？</p>
+        </div>
+
+        <div class="bg-white p-8 rounded-xl shadow-sm card-hover transition duration-300">
+          <h3 class="text-xl font-semibold text-amber-800 mb-4">《渔父·一棹春风一叶舟》</h3>
+          <p class="text-stone-700 mb-4 leading-relaxed">
+            一棹春风一叶舟，一纶茧缕一轻钩。<br>
+            花满渚，酒满瓯，万顷波中得自由。
+          </p>
+          <p class="text-stone-500 text-sm">一支船桨划开春风，一叶小舟漂浮水上。沙洲上开满鲜花，酒杯里盛满美酒，在万顷碧波之中，终于得到了梦寐以求的自由。</p>
+        </div>
+
+        <div class="bg-white p-8 rounded-xl shadow-sm card-hover transition duration-300">
+          <h3 class="text-xl font-semibold text-amber-800 mb-4">《摊破浣溪沙》李璟</h3>
+          <p class="text-stone-700 mb-4 leading-relaxed">
+            菡萏香销翠叶残，西风愁起绿波间。<br>
+            细雨梦回鸡塞远，小楼吹彻玉笙寒。
+          </p>
+          <p class="text-stone-500 text-sm">荷花香气消散，荷叶渐渐凋残，西风从绿波间吹起，满是愁绪。细雨声中梦回遥远的边塞，小楼上吹彻玉笙，清寒之中更加惆怅。</p>
+        </div>
+
+        <div class="bg-white p-8 rounded-xl shadow-sm card-hover transition duration-300">
+          <h3 class="text-xl font-semibold text-amber-800 mb-4">《浪淘沙·往事只堪哀》</h3>
+          <p class="text-stone-700 mb-4 leading-relaxed">
+            往事只堪哀，对景难排。<br>
+            秋风庭院藓侵阶。一任珠帘闲不卷，终日谁来。
+          </p>
+          <p class="text-stone-500 text-sm">过往的往事只剩悲哀，面对眼前景物也难以排遣。秋风吹过庭院，苔藓已经蔓延到台阶上，任凭珠帘闲置不卷，终日无人来往。</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 属性标记系统板块 -->
+  <section id="mark-system" class="py-20 bg-white">
+    <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-16">
+        <h2 class="text-3xl font-bold text-amber-900 mb-3">人生属性与标记系统</h2>
+        <p class="text-stone-500">记录你在每一个选择中获得的属性与专属标记，拼凑出独属于你的李煜人生轨迹</p>
+      </div>
+
+      <div class="bg-amber-50 p-8 rounded-xl mb-10">
+        <h3 class="text-xl font-semibold text-amber-800 mb-6">五大核心属性</h3>
+        <div class="grid grid-cols-2 md:grid-cols-5 gap-4 text-center">
+          <div class="p-4 bg-white rounded-lg">
+            <p class="text-lg font-medium text-amber-700">词心</p>
+            <p class="text-sm text-stone-500 mt-1">对文学与自由的执念</p>
+          </div>
+          <div class="p-4 bg-white rounded-lg">
+            <p class="text-lg font-medium text-amber-700">龙椅</p>
+            <p class="text-sm text-stone-500 mt-1">向权力中心靠近的距离</p>
+          </div>
+          <div class="p-4 bg-white rounded-lg">
+            <p class="text-lg font-medium text-amber-700">情缘</p>
+            <p class="text-sm text-stone-500 mt-1">与身边人的情感羁绊</p>
+          </div>
+          <div class="p-4 bg-white rounded-lg">
+            <p class="text-lg font-medium text-amber-700">民心</p>
+            <p class="text-sm text-stone-500 mt-1">对南唐百姓的责任感</p>
+          </div>
+          <div class="p-4 bg-white rounded-lg">
+            <p class="text-lg font-medium text-amber-700">愁绪</p>
+            <p class="text-sm text-stone-500 mt-1">命运带来的无力与沉重</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="bg-stone-50 p-8 rounded-xl">
+        <h3 class="text-xl font-semibold text-amber-800 mb-6">序章可获得专属标记</h3>
+        <div class="flex flex-wrap gap-3">
+          <span class="px-3 py-1 bg-white rounded-full text-sm text-stone-600 border border-amber-100">刻意的闲散</span>
+          <span class="px-3 py-1 bg-white rounded-full text-sm text-stone-600 border border-amber-100">沉默的旁观者</span>
+          <span class="px-3 py-1 bg-white rounded-full text-sm text-stone-600 border border-amber-100">父亲的承诺</span>
+          <span class="px-3 py-1 bg-white rounded-full text-sm text-stone-600 border border-amber-100">禅师的点拨</span>
+          <span class="px-3 py-1 bg-white rounded-full text-sm text-stone-600 border border-amber-100">娥皇的承诺</span>
+          <span class="px-3 py-1 bg-white rounded-full text-sm text-stone-600 border border-amber-100">孤家寡人</span>
+          <span class="px-3 py-1 bg-white rounded-full text-sm text-stone-600 border border-amber-100">重光之煜</span>
+          <span class="px-3 py-1 bg-white rounded-full text-sm text-stone-600 border border-amber-100">告别钟山</span>
+          <span class="px-3 py-1 bg-white rounded-full text-sm text-stone-600 border border-amber-100">父亲的遗命</span>
+          <span class="px-3 py-1 bg-white rounded-full text-sm text-stone-600 border border-amber-100">祖父的预言</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 页脚 -->
+  <footer class="ink-gradient text-amber-50 py-10">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      <p>© 2026 历史人物生平拆解项目 · 李煜《重瞳·钟山隐》专题站</p>
+      <p class="text-sm text-amber-200 mt-2">做一个只属于你的南唐后主人生故事</p>
+    </div>
+  </footer>
+</body>
+</html>
