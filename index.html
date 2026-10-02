@@ -1,127 +1,101 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
-<head>
+
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>重瞳·钟山隐</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <style>
-    html { scroll-behavior: smooth; }
-    body {
-      font-family: "PingFang SC", "Microsoft YaHei", "Noto Sans SC", sans-serif;
-      background: #fffbf2;
-      color: #292524;
-      margin: 0;
+  重瞳·钟山隐 · 李煜</title>
+  
+    *{box-sizing:border-box;}
+    body{font-family:"PingFang SC","Microsoft YaHei",sans-serif;background:#fffbf2;color:#292524;margin:0;line-height:1.8;}
+    nav{position:fixed;width:100%;background:rgba(255,251,242,0.95);backdrop-filter:blur(8px);z-index:50;border-bottom:1px solid #fef3c7;top:0;}
+    .nav-inner{max-width:1280px;margin:0 auto;padding:0 24px;display:flex;justify-content:space-between;height:64px;align-items:center;}
+    .nav-item{text-decoration:none;color:#57534e;font-size:18px;cursor:pointer;transition:color 0.2s;}
+    .nav-item:hover{color:#92400e;}
+    .nav-item.active{color:#92400e;font-weight:500;}
+    .container{max-width:900px;margin:0 auto;padding:120px 24px 96px;}
+    .hero{text-align:center;margin-bottom:64px;padding:48px 24px;background:linear-gradient(135deg,#fff7ed 0%,#fef3c7 100%);border-radius:16px;}
+    .hero h1{font-size:48px;color:#78350f;margin:0 0 16px;line-height:1.2;}
+    .hero .subtitle{font-size:20px;color:#92400e;margin:0 0 24px;}
+    .hero .desc{color:#57534e;font-size:16px;max-width:600px;margin:0 auto 32px;line-height:2;}
+    .btn-group{display:flex;gap:16px;justify-content:center;flex-wrap:wrap;}
+    .btn{padding:14px 32px;border-radius:10px;border:none;cursor:pointer;font-size:16px;transition:all 0.2s;text-decoration:none;display:inline-block;}
+    .btn-primary{background:#92400e;color:white;}
+    .btn-primary:hover{background:#78350f;transform:translateY(-2px);}
+    .btn-secondary{background:#fef3c7;color:#92400e;border:1px solid #fcd34d;}
+    .btn-secondary:hover{background:#fde68a;transform:translateY(-2px);}
+    .intro-section{background:white;border-radius:12px;padding:32px;margin-bottom:24px;box-shadow:0 1px 3px rgba(0,0,0,0.05);}
+    .intro-section h2{color:#78350f;font-size:24px;margin:0 0 16px;padding-bottom:12px;border-bottom:1px solid #fef3c7;}
+    .intro-section p{color:#57534e;margin:12px 0;line-height:2;text-indent:2em;}
+    .feature-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;margin-top:24px;}
+    .feature-card{padding:24px;background:#fffbeb;border-radius:8px;border-left:3px solid #fcd34d;}
+    .feature-card h4{color:#92400e;margin:0 0 8px;font-size:18px;}
+    .feature-card p{margin:0;color:#57534e;text-indent:0;font-size:15px;line-height:1.7;}
+    footer{background:linear-gradient(135deg,#7c4a1c 0%,#5b3414 100%);color:#fffbeb;padding:40px 0;text-align:center;margin-top:48px;}
+    @media (max-width:800px){
+      .container{padding:140px 16px 64px;}
+      .nav-inner{padding:12px;flex-direction:column;justify-content:center;gap:8px;height:auto;}
+      nav{position:absolute;}
+      .hero{padding:32px 16px;}
+      .hero h1{font-size:32px;}
+      .feature-grid{grid-template-columns:1fr;}
     }
-    .ink-gradient {
-      background: linear-gradient(135deg, #7c4a1c 0%, #5b3414 100%);
-    }
-    .nav-item {
-      text-decoration: none;
-      cursor: pointer;
-    }
-    .nav-item:hover {
-      color: #92400e;
-    }
-    button { cursor: pointer; }
   </style>
 </head>
-<body>
 
-  <!-- 顶部固定导航 -->
-  <nav style="position:fixed;width:100%;background:rgba(255,251,242,0.95);backdrop-filter:blur(8px);box-shadow:0 1px 3px rgba(0,0,0,0.05);z-index:50;border-bottom:1px solid #fef3c7;">
-    <div style="max-width:1280px;margin:0 auto;padding:0 24px;">
-      <div style="display:flex;justify-content:space-between;height:64px;align-items:center;">
-        <div style="display:flex;align-items:center;gap:24px;">
-          <span style="font-weight:bold;font-size:20px;color:#78350f;">李煜 · 重瞳·钟山隐</span>
-        </div>
-        <div style="display:flex;gap:48px;">
-          <a href="index.html" style="color:#92400e;font-weight:500;font-size:18px;" class="nav-item">序章首页</a>
-          <a href="progress.html" style="color:#57534e;" class="nav-item">人生进度</a>
-          <a href="appendix.html" style="color:#57534e;" class="nav-item">拓展附录</a>
-          <a href="journey.html" style="color:#57534e;" class="nav-item">我的人生轨迹</a>
-          <a href="bag.html" style="color:#57534e;" class="nav-item">我的属性背包</a>
-        </div>
+
+  <div class="nav-inner">
+    <span style="font-weight:bold;font-size:20px;color:#78350f;">李煜 · 重瞳·钟山隐</span>
+    <div style="display:flex;gap:32px;flex-wrap:wrap;justify-content:center;">
+      <a href="index.html" class="nav-item active">序章首页</a>
+      <a href="progress.html" class="nav-item">人生进度</a>
+      <a href="appendix.html" class="nav-item">拓展附录</a>
+      <a href="bag.html" class="nav-item">我的属性背包</a>
+    </div>
+  </div>
+</nav>
+
+<main class="container">
+  <div class="hero">
+    重瞳·钟山隐</h1>
+    <p class="subtitle">李煜序章 · 交互式人生体验</p>
+    <p class="desc">公元937年七夕，金陵宫城，一个生有重瞳的孩子降生。他本想做钟山脚下的隐士，命运却把他推上了帝王的宝座。从李从嘉到李煜，他的人生由你书写。</p>
+    <div class="btn-group">
+      <a href="progress.html" class="btn btn-primary">开始序章旅程</a>
+      <a href="appendix.html" class="btn btn-secondary">查看背景资料</a>
+    </div>
+  </div>
+
+  <div class="intro-section">
+    关于本作</h2>
+    这是一个基于真实历史创作的交互式文字体验，以南唐后主李煜的青年时代为背景，完整覆盖他从出生到登基前夜的人生轨迹。你将做出每一个关键选择，决定他的性格走向、人生轨迹与最终结局。</p>
+    所有剧情细节、人物设定、词作原文均以正史《南唐书》《五代史》及《南唐二主词》为基础，在真实历史框架内进行合理文学演绎。你在剧情中解锁的标记、获得的属性值，都会完整记录在你的属性背包中。</p>
+  </div>
+
+  <div class="intro-section">
+    体验说明</h2>
+    <div class="feature-grid">
+      <div class="feature-card">
+        五大核心属性</h4>
+        词心、龙椅、情缘、民心、愁绪，你的每一个选择都会影响属性成长，最终决定你的结局走向。</p>
+      </div>
+      <div class="feature-card">
+        22个专属标记</h4>
+        不同选择组合会解锁专属剧情标记，收集全部标记即可解锁序章全部隐藏内容。</p>
+      </div>
+      <div class="feature-card">
+        完整人生轨迹</h4>
+        走完剧情后会自动生成完整人生记录，保留你走过的每一幕旁白与做出的选择，如同阅读一篇属于你的李煜传记。</p>
+      </div>
+      <div class="feature-card">
+        详实历史附录</h4>
+        附录页收录完整时代背景、核心人物介绍、金陵风物志、全词作原文与白话翻译，帮助你更好理解这段历史。</p>
       </div>
     </div>
-  </nav>
+  </div>
+</main>
 
-  <!-- 封面英雄区 -->
-  <section style="min-height:100vh;display:flex;flex-direction:column;justify-content:center;align-items:center;padding-top:96px;padding-left:24px;padding-right:24px;text-align:center;">
-    <h1 style="font-size:clamp(48px,8vw,88px);font-weight:bold;color:#7c2d12;margin-bottom:40px;letter-spacing:4px;margin-top:0;">重瞳·钟山隐</h1>
-    <p style="font-size:clamp(20px,3vw,32px);color:#57534e;max-width:1000px;margin:0 auto 40px;line-height:1.6;">
-      公元937年七夕，金陵宫城梧桐未落。六皇子李从嘉降生，生来一目重瞳。他本想做钟山脚下的富贵闲人，却被命运一步步推上南唐国主的位置。
-    </p>
-    <p style="font-size:clamp(18px,2.5vw,24px);color:#78716c;margin-bottom:64px;line-height:1.6;max-width:1100px;">
-      从“李从嘉”到“李煜”，不是改名，是命运把一个人劈成了两半。一半留在钟山书斋，一半走进凤阁龙楼。
-    </p>
-    <button onclick="goProgress()" id="startBtn" style="padding:20px 48px;background:#7c2d12;color:white;border-radius:12px;border:none;box-shadow:0 4px 12px rgba(0,0,0,0.1);font-size:24px;font-weight:600;">
-      开启他的人生选择之旅
-    </button>
-  </section>
 
-  <!-- 页脚 -->
-  <footer style="background:linear-gradient(135deg, #7c4a1c 0%, #5b3414 100%);color:#fffbeb;padding:40px 0;">
-    <div style="max-width:1280px;margin:0 auto;padding:0 24px;text-align:center;">
-      <p style="margin:0;">© 2026 历史人物生平拆解项目 · 李煜《重瞳·钟山隐》专题站</p>
-      <p style="font-size:14px;color:#fde68a;margin-top:8px;margin-bottom:0;">做一个只属于你的南唐后主人生故事</p>
-    </div>
-  </footer>
-
-  <script>
-    // 初始化或读取本地进度
-    function loadState(){
-      try {
-        const saved = localStorage.getItem('liyuGameSave')
-        if(saved) return JSON.parse(saved)
-      } catch (e) {
-        console.warn('无法读取 localStorage:', e)
-      }
-      return {
-        attr: {poetry:0,power:0,love:0,people:0,sad:0},
-        tags: [],
-        currentScene: 0,
-        choices: [],
-        started: false,
-        finished: false
-      }
-    }
-
-    // 更新右侧状态栏显示
-    function updateStatus(){
-      const state = loadState()
-      const el = id => document.getElementById(id)
-      if(el('attr-poetry')) el('attr-poetry').textContent = state.attr.poetry
-      if(el('attr-power')) el('attr-power').textContent = state.attr.power
-      if(el('attr-love')) el('attr-love').textContent = state.attr.love
-      if(el('attr-people')) el('attr-people').textContent = state.attr.people
-      if(el('attr-sad')) el('attr-sad').textContent = state.attr.sad
-      if(el('tagCount')) el('tagCount').textContent = (state.tags || []).length
-
-      const btn = el('startBtn')
-      if(!btn) return
-      if(state.finished){
-        btn.textContent = '查看我的人生轨迹'
-      } else if(state.started){
-        btn.textContent = '继续我的南唐人生'
-      } else {
-        btn.textContent = '开启他的人生选择之旅'
-      }
-    }
-
-    // 跳转到进度页或轨迹页
-    function goProgress(){
-      const state = loadState()
-      if(state.finished){
-        location.href = 'journey.html'
-      } else {
-        location.href = 'progress.html'
-      }
-    }
-
-    // 页面加载时更新状态
-    document.addEventListener('DOMContentLoaded', updateStatus)
-  </script>
-
+  <p style="margin:0;">© 2026 历史人物生平拆解项目 · 李煜《重瞳·钟山隐》专题站</p>
+</footer>
 </body>
 </html>
