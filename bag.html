@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
-
+<head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  我的属性背包 · 重瞳·钟山隐</title>
-  
+  <title>我的属性背包 · 重瞳·钟山隐</title>
+  <style>
     *{box-sizing:border-box;}
     body{font-family:"PingFang SC","Microsoft YaHei",sans-serif;background:#fffbf2;color:#292524;margin:0;line-height:1.6;}
     .ink-gradient{background:linear-gradient(135deg,#7c4a1c 0%,#5b3414 100%);}
@@ -13,26 +13,33 @@
     .nav-item{text-decoration:none;color:#57534e;font-size:18px;cursor:pointer;}
     .nav-item.active{color:#92400e;font-weight:500;}
     .container{max-width:1000px;margin:0 auto;padding:112px 24px 96px;}
-    #statusBar{position:fixed;top:80px;right:16px;background:rgba(255,255,255,0.9);padding:12px;border-radius:8px;box-shadow:0 4px 6px rgba(0,0,0,0.08);z-index:40;border:1px solid #fef3c7;font-size:14px;pointer-events:none;}
+    #statusBar{position:fixed;top:80px;right:16px;background:rgba(255,255,255,0.9);padding:12px;border-radius:8px;box-shadow:0 4px 6px rgba(0,0,0,0.08);z-index:40;border:1px solid #fef3c7;font-size:14px;min-width:260px;}
     .card{background:white;padding:32px;border-radius:12px;box-shadow:0 1px 3px rgba(0,0,0,0.05);margin-bottom:32px;}
-    footer{background:linear-gradient(135deg,#7c4a1c 0%,#5b3414 100%);color:#fffbeb;padding:40px 0;text-align:center;}
+    footer{background:linear-gradient(135deg,#7c4a1c 0%,#5b3414 100%);color:#fffbeb;padding:40px 0;text-align:center;margin-top:48px;}
     .attr-bar{height:8px;border-radius:4px;background:#f5f5f4;overflow:hidden;margin-top:8px;}
     .attr-fill{height:100%;transition:width 1s ease;}
-    .btn{padding:12px 24px;border-radius:8px;border:none;cursor:pointer;text-decoration:none;display:inline-block;margin:8px;}
+    .btn{padding:12px 24px;border-radius:8px;border:none;cursor:pointer;text-decoration:none;display:inline-block;margin:8px;font-size:15px;}
     .btn-primary{background:#92400e;color:white;}
-    .btn-secondary{background:#fef3c7;color:#92400e;}
+    .btn-secondary{background:#fef3c7;color:#92400e;border:1px solid rgba(0,0,0,0.03);}
     .btn-gray{background:#e7e5e4;color:#44403c;}
     .btn-danger{background:#fee2e2;color:#b91c1c;}
-    .tag{padding:4px 12px;border-radius:999px;font-size:14px;display:inline-block;margin:4px;}
+    .tag{padding:6px 12px;border-radius:999px;font-size:14px;display:inline-block;margin:6px;}
     .tag-unlocked{background:#fef3c7;border:1px solid #fcd34d;color:#92400e;}
     .tag-locked{background:#f5f5f4;border:1px solid #e7e5e4;color:#a8a29e;opacity:0.6;}
+    .meta-small{font-size:13px;color:#78716c;}
+    .attr-row{display:flex;justify-content:space-between;align-items:center;}
+    @media (max-width:720px){
+      .nav-inner{padding:0 12px;}
+      .container{padding:96px 12px 80px;}
+      #statusBar{right:8px;left:8px;top:72px;}
+    }
   </style>
 </head>
-
-  
+<body>
+  <nav>
     <div class="nav-inner">
       <span style="font-weight:bold;font-size:20px;color:#78350f;">李煜 · 重瞳·钟山隐</span>
-      <div style="display:flex;gap:48px;">
+      <div style="display:flex;gap:24px;align-items:center;">
         <a href="index.html" class="nav-item">序章首页</a>
         <a href="progress.html" class="nav-item">人生进度</a>
         <a href="appendix.html" class="nav-item">拓展附录</a>
@@ -41,71 +48,170 @@
       </div>
     </div>
   </nav>
-  <div id="statusBar">
-    <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:12px;margin-bottom:8px;padding-bottom:8px;border-bottom:1px solid #fffbeb;">
-      <div style="text-align:center;padding:0 4px;"><p style="color:#b45309;font-weight:500;margin:0;">词心</p><p id="attr-poetry" style="color:#57534e;margin:4px 0 0 0;">0</p></div>
-      <div style="text-align:center;padding:0 4px;"><p style="color:#b45309;font-weight:500;margin:0;">龙椅</p><p id="attr-power" style="color:#57534e;margin:4px 0 0 0;">0</p></div>
-      <div style="text-align:center;padding:0 4px;"><p style="color:#b45309;font-weight:500;margin:0;">情缘</p><p id="attr-love" style="color:#57534e;margin:4px 0 0 0;">0</p></div>
-      <div style="text-align:center;padding:0 4px;"><p style="color:#b45309;font-weight:500;margin:0;">民心</p><p id="attr-people" style="color:#57534e;margin:4px 0 0 0;">0</p></div>
-      <div style="text-align:center;padding:0 4px;"><p style="color:#b45309;font-weight:500;margin:0;">愁绪</p><p id="attr-sad" style="color:#57534e;margin:4px 0 0 0;">0</p></div>
+
+  <div id="statusBar" aria-live="polite">
+    <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin-bottom:8px;padding-bottom:8px;border-bottom:1px solid #fffbeb;">
+      <div style="text-align:center;padding:0 4px;"><p style="color:#b45309;font-weight:500;margin:0;">词心</p><p id="attr-poetry" style="color:#57534e;margin:6px 0 0 0;">0</p></div>
+      <div style="text-align:center;padding:0 4px;"><p style="color:#b45309;font-weight:500;margin:0;">龙椅</p><p id="attr-power" style="color:#57534e;margin:6px 0 0 0;">0</p></div>
+      <div style="text-align:center;padding:0 4px;"><p style="color:#b45309;font-weight:500;margin:0;">情缘</p><p id="attr-love" style="color:#57534e;margin:6px 0 0 0;">0</p></div>
+      <div style="text-align:center;padding:0 4px;"><p style="color:#b45309;font-weight:500;margin:0;">民心</p><p id="attr-people" style="color:#57534e;margin:6px 0 0 0;">0</p></div>
+      <div style="text-align:center;padding:0 4px;"><p style="color:#b45309;font-weight:500;margin:0;">愁绪</p><p id="attr-sad" style="color:#57534e;margin:6px 0 0 0;">0</p></div>
     </div>
-    <p style="font-size:12px;color:#78716c;margin:0;">已收集标记：<span id="tagCount">0</span>/22</p>
+    <p class="meta-small" style="margin:0;">已收集标记：<span id="tagCount">0</span>/22</p>
   </div>
+
   <div class="container">
-    <div style="text-align:center;margin-bottom:64px;">
-      <h2 style="font-size:36px;color:#78350f;margin:0 0 16px 0;">我的属性背包</h2>
+    <div style="text-align:center;margin-bottom:48px;">
+      <h2 style="font-size:36px;color:#78350f;margin:0 0 12px 0;">我的属性背包</h2>
       <p style="color:#78716c;margin:0;">这里记录了你在所有选择中积累的属性与解锁的标记</p>
     </div>
+
     <div class="card">
       <h3 style="font-size:20px;color:#92400e;margin-top:0;">五大核心属性</h3>
-      <div id="attrPanel" style="margin-top:24px;"></div>
+      <div id="attrPanel" style="margin-top:18px;"></div>
     </div>
+
     <div class="card">
       <h3 style="font-size:20px;color:#92400e;margin-top:0;">已解锁标记（<span id="tagCount2">0</span>/22）</h3>
       <div id="tagPanel" style="margin-top:16px;"></div>
     </div>
-    <div style="text-align:center;">
+
+    <div style="text-align:center;margin-top:8px;">
       <a href="progress.html" class="btn btn-primary" id="continueBtn">继续游玩</a>
       <a href="journey.html" class="btn btn-secondary">查看人生轨迹</a>
       <a href="appendix.html" class="btn btn-gray">查看拓展附录</a>
       <button onclick="resetGame()" class="btn btn-danger">清空存档重开</button>
     </div>
   </div>
-  <p style="margin:0;">© 2026 历史人物生平拆解项目 · 李煜《重瞳·钟山隐》专题站</p></footer>
-  
-    const allTags = ["刻意的闲散","沉默的旁观者","寻求庇护","禅师的点拨","娥皇的承诺","民生初察","梨花誓约","迷途者","储君之念","避世未成","受诏东宫","仁主初政","故园之思","重光之煜","告别钟山","父亲的遗命","孤家寡人","祖父的预言","霓裳残谱","钟山旧友","澄心遗墨","金陵雨意"]
-    const attrMeta=[
+
+  <footer>
+    <p style="margin:0;">© 2026 历史人物生平拆解项目 · 李煜《重瞳·钟山隐》专题站</p>
+  </footer>
+
+  <script>
+    // 全部标记（共22项）
+    const allTags = [
+      "刻意的闲散",
+      "沉默的旁观者",
+      "寻求庇护",
+      "禅师的点拨",
+      "娥皇的承诺",
+      "民生初察",
+      "梨花誓约",
+      "迷途者",
+      "储君之念",
+      "避世未成",
+      "受诏东宫",
+      "朝堂风云",
+      "词坛新秀",
+      "江湖旧识",
+      "琴心剑胆",
+      "遗世独立",
+      "羁绊之缘",
+      "国破家亡",
+      "云淡风轻",
+      "江山如画",
+      "归隐钟山",
+      "思君不见"
+    ];
+
+    // 属性元数据
+    const attrMeta = [
       {key:'poetry',name:'词心',color:'#f59e0b',desc:'对文学与自由的执念'},
       {key:'power',name:'龙椅',color:'#92400e',desc:'向权力中心靠近的距离'},
       {key:'love',name:'情缘',color:'#ec4899',desc:'与身边人的情感羁绊'},
       {key:'people',name:'民心',color:'#10b981',desc:'对南唐百姓的责任感'},
       {key:'sad',name:'愁绪',color:'#6b7280',desc:'命运带来的无力与沉重'}
-    ]
-    function loadState(){const s=localStorage.getItem('liyuGameSave');return s?JSON.parse(s):{attr:{poetry:0,power:0,love:0,people:0,sad:0},tags:[],finished:false}}
-    function updateUI(){
-      const s=loadState()
-      document.getElementById('attr-poetry').textContent=s.attr.poetry
-      document.getElementById('attr-power').textContent=s.attr.power
-      document.getElementById('attr-love').textContent=s.attr.love
-      document.getElementById('attr-people').textContent=s.attr.people
-      document.getElementById('attr-sad').textContent=s.attr.sad
-      document.getElementById('tagCount').textContent=s.tags.length
-      document.getElementById('tagCount2').textContent=s.tags.length
-      document.getElementById('attrPanel').innerHTML=attrMeta.map(a=>{
-        const val=Math.max(0,s.attr[a.key])
-        const pct=Math.min(100,val*10)
-        return `<div style="margin-bottom:24px;"><div style="display:flex;justify-content:space-between;margin-bottom:8px;"><span style="font-weight:500;color:#92400e;">${a.name}</span><span style="color:#57534e;">${val} 点</span></div><div class="attr-bar"><div class="attr-fill" style="width:${pct}%;background:${a.color}"></div></div><p style="font-size:12px;color:#78716c;margin:4px 0 0 0;">${a.desc}</p></div>`
-      }).join('')
-      document.getElementById('tagPanel').innerHTML=allTags.map(t=>`<span class="tag ${s.tags.includes(t)?'tag-unlocked':'tag-locked'}">${s.tags.includes(t)?t:'？？？'}</span>`).join('')
-      if(s.finished){
-        const btn=document.getElementById('continueBtn')
-        btn.textContent='序章已完结'
-        btn.style.opacity='0.5'
-        btn.style.pointerEvents='none'
+    ];
+
+    // 载入存档
+    function loadState(){
+      const s = localStorage.getItem('liyuGameSave');
+      if(!s) {
+        // 默认存档结构
+        return {
+          attr: {poetry:0,power:0,love:0,people:0,sad:0},
+          tags: [],
+          finished: false
+        };
+      }
+      try {
+        return JSON.parse(s);
+      } catch(e) {
+        console.warn('存档解析失败，已重置为默认', e);
+        localStorage.removeItem('liyuGameSave');
+        return {
+          attr: {poetry:0,power:0,love:0,people:0,sad:0},
+          tags: [],
+          finished: false
+        };
       }
     }
-    function resetGame(){if(confirm('确定要清空所有存档重新开始吗？')){localStorage.removeItem('liyuGameSave');location.href='index.html'}}
-    setTimeout(updateUI,100)
+
+    // 更新界面
+    function updateUI(){
+      const s = loadState();
+
+      // 状态栏数值
+      document.getElementById('attr-poetry').textContent = s.attr.poetry;
+      document.getElementById('attr-power').textContent = s.attr.power;
+      document.getElementById('attr-love').textContent = s.attr.love;
+      document.getElementById('attr-people').textContent = s.attr.people;
+      document.getElementById('attr-sad').textContent = s.attr.sad;
+      document.getElementById('tagCount').textContent = s.tags.length;
+      document.getElementById('tagCount2').textContent = s.tags.length;
+
+      // 属性面板
+      document.getElementById('attrPanel').innerHTML = attrMeta.map(a=>{
+        const val = Math.max(0, Number(s.attr[a.key] || 0));
+        const pct = Math.min(100, val * 10); // 每点等于10%，最高100%
+        const fillStyle = `width:${pct}%;background:${a.color};`;
+        return `
+          <div style="margin-bottom:20px;">
+            <div class="attr-row" style="margin-bottom:6px;">
+              <div>
+                <div style="font-weight:500;color:#92400e;">${a.name}</div>
+                <div class="meta-small" title="${a.desc}">${a.desc}</div>
+              </div>
+              <div style="text-align:right;">
+                <div style="font-weight:600;color:#374151;">${val}</div>
+              </div>
+            </div>
+            <div class="attr-bar" aria-hidden="true">
+              <div class="attr-fill" style="${fillStyle}"></div>
+            </div>
+          </div>
+        `;
+      }).join('');
+
+      // 标记面板（展示已解锁的名字，未解锁显示“？？？”）
+      document.getElementById('tagPanel').innerHTML = allTags.map(t=>{
+        const unlocked = s.tags.includes(t);
+        return `<span class="tag ${unlocked ? 'tag-unlocked' : 'tag-locked'}">${unlocked ? t : '？？？'}</span>`;
+      }).join('');
+
+      // 若序章已完结，禁用继续按钮
+      if(s.finished){
+        const btn = document.getElementById('continueBtn');
+        btn.textContent = '序章已完结';
+        btn.style.opacity = '0.5';
+        btn.style.pointerEvents = 'none';
+      }
+    }
+
+    // 清空存档并跳转首页
+    function resetGame(){
+      if(confirm('确定要清空所有存档重新开始吗？')){
+        localStorage.removeItem('liyuGameSave');
+        location.href = 'index.html';
+      }
+    }
+
+    // 页面加载后更新UI
+    document.addEventListener('DOMContentLoaded', function(){
+      // 轻微延迟以便动画与初始渲染平滑
+      setTimeout(updateUI, 50);
+    });
   </script>
 </body>
 </html>
