@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
-
+<head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  重瞳·钟山隐</title>
+  <title>重瞳·钟山隐</title>
   <script src="https://cdn.tailwindcss.com"></script>
-  
+  <style>
     html { scroll-behavior: smooth; }
     body {
       font-family: "PingFang SC", "Microsoft YaHei", "Noto Sans SC", sans-serif;
@@ -68,55 +68,53 @@
   <!-- 页脚 -->
   <footer class="ink-gradient text-amber-50 py-10">
     <div class="max-w-7xl mx-auto px-4 text-center">
-      © 2026 历史人物生平拆解项目 · 李煜《重瞳·钟山隐》专题站</p>
+      <p>© 2026 历史人物生平拆解项目 · 李煜《重瞳·钟山隐》专题站</p>
       <p class="text-sm text-amber-200 mt-2">做一个只属于你的南唐后主人生故事</p>
     </div>
   </footer>
 
-  
+  <script>
     // 读取存档
-    function loadState(){
-      const saved = localStorage.getItem('liyuGameSave')
-      if(saved) return JSON.parse(saved)
+    function loadState() {
+      const saved = localStorage.getItem('liyuGameSave');
+      if (saved) return JSON.parse(saved);
       return {
-        attr: {poetry:0,power:0,love:0,people:0,sad:0},
+        attr: { poetry: 0, power: 0, love: 0, people: 0, sad: 0 },
         tags: [],
         currentScene: 0,
         choices: [],
         started: false,
         finished: false
+      };
+    }
+
+    function updateStatus() {
+      const state = loadState();
+      document.getElementById('attr-poetry').textContent = state.attr.poetry;
+      document.getElementById('attr-power').textContent = state.attr.power;
+      document.getElementById('attr-love').textContent = state.attr.love;
+      document.getElementById('attr-people').textContent = state.attr.people;
+      document.getElementById('attr-sad').textContent = state.attr.sad;
+      document.getElementById('tagCount').textContent = state.tags.length;
+
+      const btn = document.getElementById('startBtn');
+      if (state.finished) {
+        btn.textContent = '查看我的人生轨迹';
+      } else if (state.started) {
+        btn.textContent = '继续我的南唐人生';
       }
     }
 
-    function updateStatus(){
-      const state = loadState()
-      document.getElementById('attr-poetry').textContent = state.attr.poetry
-      document.getElementById('attr-poetry').textContent = state.attr.poetry
-      document.getElementById('attr-power').textContent = state.attr.power
-      document.getElementById('attr-love').textContent = state.attr.love
-      document.getElementById('attr-people').textContent = state.attr.people
-      document.getElementById('attr-sad').textContent = state.attr.sad
-      document.getElementById('tagCount').textContent = state.tags.length
-      
-      // 更新按钮文字
-      const btn = document.getElementById('startBtn')
-      if(state.finished){
-        btn.textContent = '查看我的人生轨迹'
-      } else if(state.started){
-        btn.textContent = '继续我的南唐人生'
-      }
-    }
-
-    function goProgress(){
-      const state = loadState()
-      if(state.finished){
-        location.href = 'journey.html'
+    function goProgress() {
+      const state = loadState();
+      if (state.finished) {
+        location.href = 'journey.html';
       } else {
-        location.href = 'progress.html'
+        location.href = 'progress.html';
       }
     }
 
-    updateStatus()
+    updateStatus();
   </script>
 </body>
 </html>
