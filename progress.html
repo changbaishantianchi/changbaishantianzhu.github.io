@@ -628,11 +628,21 @@
             return `${labelMap[k] || k}: ${v > 0 ? '+' : ''}${v}`
           }).join(' / ') : ''
           const tagsHtml = c.choiceTags && c.choiceTags.length ? c.choiceTags.map(t => `<span class="journey-badge">${t}</span>`).join('') : ''
+
+          // 处理时间：检查 timestamp 是否存在且有效
+          let timeText = '时间未知'
+          if (c.timestamp) {
+            const parsed = Date.parse(c.timestamp)
+            if (!isNaN(parsed)) {
+              timeText = new Date(parsed).toLocaleString()
+            }
+          }
+
           return `
             <div class="journey-item">
-              <strong>第 ${idx + 1} 步 · ${c.sceneTitle}</strong>
-              <div class="journey-meta">${new Date(c.timestamp).toLocaleString()}</div>
-              <p style="margin:8px 0 6px 0;color:#444;">${escapeHtml(c.sceneContent).slice(0, 240)}${c.sceneContent.length > 240 ? '…' : ''}</p>
+              <strong>第 ${idx + 1} 步 · ${escapeHtml(c.sceneTitle)}</strong>
+              <div class="journey-meta">${timeText}</div>
+              <p style="margin:8px 0 6px 0;color:#444;">${escapeHtml(c.sceneContent).slice(0, 240)}${c.sceneContent && c.sceneContent.length > 240 ? '…' : ''}</p>
               <div style="margin-top:8px;">
                 <div style="font-weight:500;color:#92400e;">你的选择：${escapeHtml(c.choiceText)}</div>
                 ${c.choiceDesc ? `<div style="color:#78716c;margin-top:6px;">${escapeHtml(c.choiceDesc)}</div>` : ''}
@@ -644,7 +654,9 @@
         }).join('')
       }
 
-      const finishedNote = gameState.finished ? `<p style="color:#92400e;font-weight:500;margin-top:6px;">当前已完成序章，可在下方查看完整回顾或选择重新开始。</p>` : `<p style="color:#78716c;margin-top:6px;">序章尚未完成，你可以返回继续选择，或导出当前存档备份。</p>`
+      const finishedNote = gameState.finished
+        ? `<p style="color:#92400e;font-weight:500;margin-top:6px;">当前已完成序章，可在下方查看完整回顾或选择重新开始。</p>`
+        : `<p style="color:#78716c;margin-top:6px;">序章尚未完成，你可以返回继续选择，或导出当前存档备份。</p>`
 
       journeySection.innerHTML = `
         <div class="text-center scene-card" style="margin-bottom:18px;text-align:center;">
@@ -728,4 +740,4 @@
     }
   </script>
 </body>
-</html><!--18256697352573747210100300-->
+</html>
