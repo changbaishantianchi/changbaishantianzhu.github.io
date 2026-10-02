@@ -22,7 +22,11 @@
     .arrow{transition:transform 0.3s;color:#b45309;}
     .arrow.open{transform:rotate(180deg);}
     @keyframes fadeIn{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:translateY(0);}}
-    #statusBar{position:fixed;top:80px;right:16px;background:rgba(255,255,255,0.9);padding:12px;border-radius:8px;box-shadow:0 4px 6px rgba(0,0,0,0.08);z-index:40;border:1px solid #fef3c7;font-size:14px;min-width:220px;}
+    /* 统一右上角状态栏样式 */
+    .status-item{text-align:center;padding:0 2px;}
+    .status-item p{color:#b45309;font-weight:500;margin:0;font-size:13px;}
+    .status-item .value{color:#57534e;margin:4px 0 0 0;font-size:14px;font-weight:500;}
+    .status-tagline{font-size:12px;color:#78716c;margin:0;text-align:center;}
     footer{background:linear-gradient(135deg,#7c4a1c 0%,#5b3414 100%);color:#fffbeb;padding:40px 0;text-align:center;margin-top:48px;}
     .tag{padding:4px 12px;border-radius:999px;font-size:14px;display:inline-block;margin:4px;transition:all 0.2s;}
     .tag-unlocked{background:#fef3c7;border:1px solid #fcd34d;color:#92400e;}
@@ -38,9 +42,6 @@
     .muted{color:#78716c;}
     .section-content p{color:#57534e;margin:12px 0;line-height:1.8;text-indent:2em;}
     .tags-grid{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px;}
-    .status-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;margin-bottom:8px;padding-bottom:8px;border-bottom:1px solid #fffbeb;}
-    .status-item p{color:#b45309;font-weight:500;margin:0;}
-    .status-item .value{color:#57534e;margin:4px 0 0 0;}
     .poem-card{padding:20px;background:#fffbeb;border-radius:8px;margin-bottom:16px;border-left:3px solid #fcd34d;}
     .poem-card .poem-text{font-style:italic;color:#57534e;line-height:2;text-indent:0;text-align:center;margin-bottom:12px;}
     .poem-card .poem-translate{color:#57534e;line-height:1.8;text-indent:0;font-size:15px;padding:8px 12px;background:#fff7ed;border-radius:6px;}
@@ -57,8 +58,6 @@
       .container{padding:150px 16px 96px;}
       .nav-inner{padding:12px;flex-direction:column;justify-content:center;gap:8px;height:auto;}
       nav{position:absolute;}
-      #statusBar{display:none;}
-      .status-grid{grid-template-columns:repeat(5,1fr);gap:4px;}
       .controls button{font-size:14px;padding:6px 12px;}
     }
   </style>
@@ -71,27 +70,10 @@
         <a href="index.html" class="nav-item">序章首页</a>
         <a href="progress.html" class="nav-item">人生进度</a>
         <a href="appendix.html" class="nav-item active">拓展附录</a>
-        <a href="journey.html" class="nav-item">我的人生轨迹</a>
         <a href="bag.html" class="nav-item">我的属性背包</a>
       </div>
     </div>
   </nav>
-
-  <div id="statusBar">
-    <div class="status-grid">
-      <div class="status-item" style="text-align:center;padding:0 4px;"><p>词心</p><p id="attr-poetry" class="value">0</p></div>
-      <div class="status-item" style="text-align:center;padding:0 4px;"><p>龙椅</p><p id="attr-power" class="value">0</p></div>
-      <div class="status-item" style="text-align:center;padding:0 4px;"><p>情缘</p><p id="attr-love" class="value">0</p></div>
-      <div class="status-item" style="text-align:center;padding:0 4px;"><p>民心</p><p id="attr-people" class="value">0</p></div>
-      <div class="status-item" style="text-align:center;padding:0 4px;"><p>愁绪</p><p id="attr-sad" class="value">0</p></div>
-    </div>
-    <p style="font-size:12px;color:#78716c;margin:8px 0 0 0;">已收集标记：<span id="tagCount">0</span>/22</p>
-    <div style="margin-top:8px;display:flex;gap:6px;flex-wrap:wrap;">
-      <button class="btn primary" style="font-size:12px;padding:4px 8px;" onclick="exportSave()">导出存档</button>
-      <button class="btn primary" style="font-size:12px;padding:4px 8px;" onclick="document.getElementById('importFile').click()">导入存档</button>
-      <input type="file" id="importFile" accept=".json" onchange="importSave(event)"/>
-    </div>
-  </div>
 
   <div class="container">
     <div style="text-align:center;margin-bottom:48px;">
@@ -258,52 +240,6 @@
       }
     }
 
-    function exportSave(){
-      const state = loadState();
-      const dataStr = JSON.stringify(state, null, 2);
-      const blob = new Blob([dataStr], {type:"application/json"});
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      a.href = url;
-      a.download = `李煜重瞳钟山隐_存档_${new Date().toLocaleDateString()}.json`;
-      a.click();
-      URL.revokeObjectURL(url);
-      alert('存档导出成功！');
-    }
-
-    function importSave(event){
-      const file = event.target.files[0];
-      if(!file) return;
-      const reader = new FileReader();
-      reader.onload = function(e){
-        try {
-          const state = JSON.parse(e.target.result);
-          if(state.attr && state.tags){
-            saveState(state);
-            updateStatus();
-            renderSections();
-            alert('存档导入成功！');
-          }else{
-            alert('无效的存档文件！');
-          }
-        }catch(err){
-          alert('存档读取失败，请检查文件格式！');
-        }
-      };
-      reader.readAsText(file);
-      event.target.value = '';
-    }
-
-    function updateStatus(){
-      const s = loadState();
-      document.getElementById('attr-poetry').textContent = s.attr.poetry;
-      document.getElementById('attr-power').textContent = s.attr.power;
-      document.getElementById('attr-love').textContent = s.attr.love;
-      document.getElementById('attr-people').textContent = s.attr.people;
-      document.getElementById('attr-sad').textContent = s.attr.sad;
-      document.getElementById('tagCount').textContent = s.tags.length;
-    }
-
     function renderSections(){
       const box = document.getElementById('sections');
       box.innerHTML = '';
@@ -350,14 +286,13 @@
 
     // 页面加载时初始化
     document.addEventListener('DOMContentLoaded', () => {
-      updateStatus();
       renderSections();
     });
 
-    // 导出工具函数
+    // 供开发者在控制台调试使用
     window.__liyu = {
-      loadState, saveState, updateStatus, renderSections, allTags, exportSave, importSave
+      loadState, saveState, renderSections, allTags
     };
   </script>
 </body>
-</html><!--33115696462573747210100223--><!--33912443152573747210100223--><!--35963757202573747210100223--><!--00062492962573747210100300--><!--00132247792395614730100300--><!--00302160782395614730100300--><!--00600222262573747210100300--><!--00684712512395614730100300--><!--00754175292395614730100300-->
+</html><!--33115696462573747210100223--><!--33912443152573747210100223--><!--35963757202573747210100223--><!--00062492962573747210100300--><!--00132247792395614730100300--><!--00302160782395614730100300--><!--00600222262573747210100300--><!--00684712512395614730100300--><!--09537914502395614730100300--><!--09894869362395614730100300--><!--10062748332573747210100300--><!--16642468512573747210100301--><!--16647886052395614730100301--><!--16723961292573747210100301--><!--16779215402395614730100301--><!--17160144052573747210100301-->
