@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
-
+<head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  重瞳·钟山隐</title>
+  <title>重瞳·钟山隐</title>
   <script src="https://cdn.tailwindcss.com"></script>
-  
+  <style>
     html { scroll-behavior: smooth; }
     body {
       font-family: "PingFang SC", "Microsoft YaHei", "Noto Sans SC", sans-serif;
@@ -26,12 +26,13 @@
     button { cursor: pointer; }
   </style>
 </head>
+<body>
 
   <!-- 顶部固定导航 -->
   <nav style="position:fixed;width:100%;background:rgba(255,251,242,0.95);backdrop-filter:blur(8px);box-shadow:0 1px 3px rgba(0,0,0,0.05);z-index:50;border-bottom:1px solid #fef3c7;">
     <div style="max-width:1280px;margin:0 auto;padding:0 24px;">
       <div style="display:flex;justify-content:space-between;height:64px;align-items:center;">
-        
+        <div style="display:flex;align-items:center;gap:24px;">
           <span style="font-weight:bold;font-size:20px;color:#78350f;">李煜 · 重瞳·钟山隐</span>
         </div>
         <div style="display:flex;gap:48px;">
@@ -46,7 +47,7 @@
   </nav>
 
   <!-- 全局属性状态栏 -->
-  <div id="statusBar" style="position:fixed;top:80px;right:16px;background:rgba(255,255,255,0.9);backdrop-filter:blur(4px);padding:12px;border-radius:8px;box-shadow:0 4px 6px rgba(0,0,0,0.08);z-index:40;border:1px solid #fef3c7;font-size:14px;pointer-events:none;">
+  <div id="statusBar" style="position:fixed;top:80px;right:16px;background:rgba(255,255,255,0.9);backdrop-filter:blur(4px);padding:12px;border-radius:8px;box-shadow:0 4px 6px rgba(0,0,0,0.08);z-index:60;width:220px;">
     <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:12px;margin-bottom:8px;padding-bottom:8px;border-bottom:1px solid #fffbeb;">
       <div style="text-align:center;padding:0 8px;"><p style="color:#b45309;font-weight:500;margin:0;">词心</p><p id="attr-poetry" style="color:#57534e;margin:4px 0 0 0;">0</p></div>
       <div style="text-align:center;padding:0 8px;"><p style="color:#b45309;font-weight:500;margin:0;">龙椅</p><p id="attr-power" style="color:#57534e;margin:4px 0 0 0;">0</p></div>
@@ -58,7 +59,7 @@
   </div>
 
   <!-- 封面英雄区 -->
-  <section style="min-height:100vh;display:flex;flex-direction:column;justify-content:center;align-items:center;padding-top:64px;padding-left:24px;padding-right:24px;text-align:center;">
+  <section style="min-height:100vh;display:flex;flex-direction:column;justify-content:center;align-items:center;padding-top:96px;padding-left:24px;padding-right:24px;text-align:center;">
     <h1 style="font-size:clamp(48px,8vw,88px);font-weight:bold;color:#7c2d12;margin-bottom:40px;letter-spacing:4px;margin-top:0;">重瞳·钟山隐</h1>
     <p style="font-size:clamp(20px,3vw,32px);color:#57534e;max-width:1000px;margin:0 auto 40px;line-height:1.6;">
       公元937年七夕，金陵宫城梧桐未落。六皇子李从嘉降生，生来一目重瞳。他本想做钟山脚下的富贵闲人，却被命运一步步推上南唐国主的位置。
@@ -66,7 +67,7 @@
     <p style="font-size:clamp(18px,2.5vw,24px);color:#78716c;margin-bottom:64px;line-height:1.6;max-width:1100px;">
       从“李从嘉”到“李煜”，不是改名，是命运把一个人劈成了两半。一半留在钟山书斋，一半走进凤阁龙楼。
     </p>
-    <button onclick="goProgress()" id="startBtn" style="padding:20px 48px;background:#7c2d12;color:white;border-radius:12px;border:none;box-shadow:0 4px 12px rgba(0,0,0,0.1);font-size:24px;font-weight:500;transition:all 0.3s;">
+    <button onclick="goProgress()" id="startBtn" style="padding:20px 48px;background:#7c2d12;color:white;border-radius:12px;border:none;box-shadow:0 4px 12px rgba(0,0,0,0.1);font-size:24px;font-weight:600;">
       开启他的人生选择之旅
     </button>
   </section>
@@ -79,10 +80,15 @@
     </div>
   </footer>
 
-  
+  <script>
+    // 初始化或读取本地进度
     function loadState(){
-      const saved = localStorage.getItem('liyuGameSave')
-      if(saved) return JSON.parse(saved)
+      try {
+        const saved = localStorage.getItem('liyuGameSave')
+        if(saved) return JSON.parse(saved)
+      } catch (e) {
+        console.warn('无法读取 localStorage:', e)
+      }
       return {
         attr: {poetry:0,power:0,love:0,people:0,sad:0},
         tags: [],
@@ -93,23 +99,29 @@
       }
     }
 
+    // 更新右侧状态栏显示
     function updateStatus(){
       const state = loadState()
-      document.getElementById('attr-poetry').textContent = state.attr.poetry
-      document.getElementById('attr-power').textContent = state.attr.power
-      document.getElementById('attr-love').textContent = state.attr.love
-      document.getElementById('attr-people').textContent = state.attr.people
-      document.getElementById('attr-sad').textContent = state.attr.sad
-      document.getElementById('tagCount').textContent = state.tags.length
-      
-      const btn = document.getElementById('startBtn')
+      const el = id => document.getElementById(id)
+      if(el('attr-poetry')) el('attr-poetry').textContent = state.attr.poetry
+      if(el('attr-power')) el('attr-power').textContent = state.attr.power
+      if(el('attr-love')) el('attr-love').textContent = state.attr.love
+      if(el('attr-people')) el('attr-people').textContent = state.attr.people
+      if(el('attr-sad')) el('attr-sad').textContent = state.attr.sad
+      if(el('tagCount')) el('tagCount').textContent = (state.tags || []).length
+
+      const btn = el('startBtn')
+      if(!btn) return
       if(state.finished){
         btn.textContent = '查看我的人生轨迹'
       } else if(state.started){
         btn.textContent = '继续我的南唐人生'
+      } else {
+        btn.textContent = '开启他的人生选择之旅'
       }
     }
 
+    // 跳转到进度页或轨迹页
     function goProgress(){
       const state = loadState()
       if(state.finished){
@@ -119,7 +131,9 @@
       }
     }
 
-    updateStatus()
+    // 页面加载时更新状态
+    document.addEventListener('DOMContentLoaded', updateStatus)
   </script>
+
 </body>
 </html>
