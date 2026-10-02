@@ -12,6 +12,7 @@
       background: #fffaf2;
       color: #292524;
     }
+    section[id], div[id] { scroll-margin-top: 88px; }
     .ink-gradient {
       background: linear-gradient(135deg, #7c4a1c 0%, #5b3414 100%);
     }
@@ -19,10 +20,17 @@
       transform: translateY(-4px);
       box-shadow: 0 12px 24px rgba(120, 75, 30, 0.08);
     }
+    .choice-btn {
+      cursor: pointer;
+    }
     .choice-btn:hover {
       background: #fff7ed;
       border-color: #f6c68d;
       transform: translateY(-1px);
+    }
+    .choice-btn:disabled {
+      cursor: not-allowed;
+      opacity: 0.55;
     }
     .scene-card {
       animation: fadeIn 0.5s ease-in-out;
@@ -46,10 +54,45 @@
       margin: 1rem 0;
       border-radius: 0 0.5rem 0.5rem 0;
     }
+    /* 顶部导航项 */
+    .nav-link {
+      cursor: pointer;
+      user-select: none;
+      position: relative;
+      padding-bottom: 4px;
+    }
+    .nav-link::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      height: 2px;
+      width: 0;
+      background: #b45309;
+      transition: width 0.3s ease;
+    }
+    .nav-link:hover::after { width: 100%; }
+    .nav-link.active {
+      color: #b45309;
+      font-weight: 600;
+    }
+    .nav-link.active::after { width: 100%; }
+    /* 附录折叠块 */
+    .appendix-toggle {
+      cursor: pointer;
+      transition: background 0.25s ease;
+    }
+    .appendix-toggle:hover { background: #fffbeb; }
+    .appendix-content { animation: fadeIn 0.35s ease-in-out; }
+    .appendix-arrow {
+      display: inline-block;
+      transition: transform 0.3s ease;
+    }
+    .appendix-arrow.open { transform: rotate(180deg); }
   </style>
 </head>
 <body class="bg-amber-50/30 text-stone-800">
-  <!-- 顶部固定导航 -->
+  <!-- 顶部固定导航（全部可点击，同页锚点交互，不跳转独立页面） -->
   <nav class="fixed w-full bg-amber-50/95 backdrop-blur-md shadow-sm z-50 border-b border-amber-100">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="flex justify-between h-16 items-center">
@@ -57,18 +100,18 @@
           <span class="font-bold text-xl text-amber-900">李煜 · 重瞳·钟山隐</span>
         </div>
         <div class="hidden md:flex space-x-8">
-          <a href="#hero" class="text-stone-600 hover:text-amber-700 text-sm font-medium transition">序章首页</a>
-          <a href="#life-progress" class="text-stone-600 hover:text-amber-700 text-sm font-medium transition">人生进度</a>
-          <a href="#appendix" id="appendixNav" class="text-stone-600 hover:text-amber-700 text-sm font-medium transition hidden">拓展附录</a>
-          <a href="#journey-review" id="reviewNav" class="text-stone-600 hover:text-amber-700 text-sm font-medium transition hidden">我的人生轨迹</a>
-          <a href="#mark-system" class="text-stone-600 hover:text-amber-700 text-sm font-medium transition">我的属性背包</a>
+          <a href="javascript:void(0);" data-target="hero" class="nav-link text-stone-600 hover:text-amber-700 text-sm font-medium transition">序章首页</a>
+          <a href="javascript:void(0);" data-target="life-progress" class="nav-link text-stone-600 hover:text-amber-700 text-sm font-medium transition">人生进度</a>
+          <a href="javascript:void(0);" data-target="appendix" class="nav-link text-stone-600 hover:text-amber-700 text-sm font-medium transition">拓展附录</a>
+          <a href="javascript:void(0);" data-target="journey-review" class="nav-link text-stone-600 hover:text-amber-700 text-sm font-medium transition">我的人生轨迹</a>
+          <a href="javascript:void(0);" data-target="mark-system" class="nav-link text-stone-600 hover:text-amber-700 text-sm font-medium transition">我的属性背包</a>
         </div>
       </div>
     </div>
   </nav>
 
-  <!-- 全局属性状态栏 -->
-  <div id="statusBar" class="fixed top-20 right-4 bg-white/90 backdrop-blur-sm p-3 rounded-lg shadow-md z-40 border border-amber-100 text-sm hidden">
+  <!-- 全局属性状态栏（pointer-events-none，避免遮挡页面按钮点击） -->
+  <div id="statusBar" class="fixed top-20 right-4 bg-white/90 backdrop-blur-sm p-3 rounded-lg shadow-md z-40 border border-amber-100 text-sm hidden pointer-events-none">
     <div class="grid grid-cols-5 gap-3 mb-2 pb-2 border-b border-amber-50">
       <div class="text-center">
         <p class="text-amber-700 font-medium">词心</p>
@@ -94,7 +137,10 @@
     <p class="text-xs text-stone-500">已收集标记：<span id="tagCount">0</span>/22</p>
   </div>
 
-  <!-- 首页英雄区（完全保留用户要求的封面样式） -->
+  <!-- 轻提示 -->
+  <div id="toast" class="fixed left-1/2 -translate-x-1/2 top-24 z-50 px-5 py-3 bg-stone-800/90 text-white text-sm rounded-lg shadow-lg opacity-0 transition-opacity duration-300 pointer-events-none"></div>
+
+  <!-- 首页英雄区（封面完全保留） -->
   <section id="hero" class="min-h-screen flex flex-col items-center justify-center px-4">
     <div class="max-w-5xl text-center">
       <h1 class="text-6xl md:text-7xl font-black text-[#7c3c11] mb-8 tracking-wide">重瞳·钟山隐</h1>
@@ -104,7 +150,7 @@
       <p class="text-xl md:text-2xl text-stone-500 font-light mb-16 leading-relaxed">
         从“李从嘉”到“李煜”，不是改名，是命运把一个人劈成了两半。一半留在钟山书斋，一半走进凤阁龙楼。
       </p>
-      <button onclick="startGame()" class="px-10 py-5 bg-[#8b4513] text-white rounded-xl hover:bg-[#703810] transition shadow-lg text-xl font-medium">
+      <button id="heroCta" type="button" onclick="startGame()" class="px-10 py-5 bg-[#8b4513] text-white rounded-xl hover:bg-[#703810] transition shadow-lg text-xl font-medium cursor-pointer">
         开启他的人生选择之旅
       </button>
     </div>
@@ -128,181 +174,220 @@
     </div>
   </section>
 
-  <!-- 拓展附录板块（完全按照第一版Word附录内容制作） -->
+  <!-- 拓展附录板块：默认不出现，点击导航「拓展附录」后才展开；内部各大板块折叠收纳 -->
   <section id="appendix" class="py-20 bg-amber-50 hidden">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="text-center mb-16">
+      <div class="text-center mb-10">
         <h2 class="text-3xl font-bold text-amber-900 mb-3">拓展附录</h2>
         <p class="text-stone-500">序章全部设定、人物、词作、背景资料完整收录</p>
+        <div class="mt-6 flex justify-center gap-3">
+          <button type="button" onclick="toggleAllAppendix(true)" class="px-5 py-2 bg-white text-amber-700 border border-amber-200 rounded-lg hover:bg-amber-50 transition text-sm cursor-pointer">全部展开</button>
+          <button type="button" onclick="toggleAllAppendix(false)" class="px-5 py-2 bg-white text-amber-700 border border-amber-200 rounded-lg hover:bg-amber-50 transition text-sm cursor-pointer">全部收起</button>
+        </div>
       </div>
 
       <!-- 一、序章历史背景 -->
-      <div class="bg-white p-8 rounded-xl shadow-sm mb-10 card-hover">
-        <h3 class="text-2xl font-semibold text-amber-800 mb-6 border-b border-amber-100 pb-3">一、序章历史背景</h3>
-        <div class="prose max-w-none text-stone-700 leading-relaxed space-y-4">
-          <p>公元937年七夕，李煜生于金陵。他是南唐中主李璟的第六子，原名李从嘉，字重光。传说他生来一目重瞳——一只眼睛里有两个瞳孔。在史书上，重瞳是圣人之相：仓颉重瞳，虞舜重瞳，项羽重瞳。祖父李昪（南唐烈祖）对这个孙子格外钟爱，曾对身边的人说：“此儿有异相，他日必大贵。”</p>
-          <p>但李煜自己，从来不想“大贵”。</p>
-          <p>南唐地处江南，是五代十国里最富庶、最风雅的一国。烈祖李昪以金陵为都，轻徭薄赋，兴文教，开科举，把江南经营成乱世中的一处桃花源。中主李璟继位后，南唐文风更盛，君臣唱和，词客如云。冯延巳、韩熙载、徐铉……这些名字放在中国文学史上，都是响当当的。李璟本人也是一位词人，那首“细雨梦回鸡塞远，小楼吹彻玉笙寒”，便是他的手笔。</p>
-          <p>李煜就生在这样一个地方，这样一个家庭。他的父亲是词人，他的臣子是词人，他身边的人都在写词、弹琴、画画、谈禅。他从小耳濡目染，精书法，善绘画，通音律，工诗词。他本可以做一个富贵闲人，在钟山脚下读书、填词、参禅，像他所仰慕的陶渊明、谢灵运那样过完一生。</p>
-          <p>而且，按长幼顺序，皇位根本轮不到他。他的大哥李弘冀，才是那个被立为太子的人。</p>
+      <div class="appendix-block bg-white rounded-xl shadow-sm mb-6 overflow-hidden card-hover">
+        <div class="appendix-toggle w-full flex items-center justify-between px-8 py-6">
+          <h3 class="text-2xl font-semibold text-amber-800">一、序章历史背景</h3>
+          <span class="appendix-arrow text-amber-400 text-2xl leading-none">▾</span>
+        </div>
+        <div class="appendix-content hidden px-8 pb-8">
+          <div class="prose max-w-none text-stone-700 leading-relaxed space-y-4">
+            <p>公元937年七夕，李煜生于金陵。他是南唐中主李璟的第六子，原名李从嘉，字重光。传说他生来一目重瞳——一只眼睛里有两个瞳孔。在史书上，重瞳是圣人之相：仓颉重瞳，虞舜重瞳，项羽重瞳。祖父李昪（南唐烈祖）对这个孙子格外钟爱，曾对身边的人说：“此儿有异相，他日必大贵。”</p>
+            <p>但李煜自己，从来不想“大贵”。</p>
+            <p>南唐地处江南，是五代十国里最富庶、最风雅的一国。烈祖李昪以金陵为都，轻徭薄赋，兴文教，开科举，把江南经营成乱世中的一处桃花源。中主李璟继位后，南唐文风更盛，君臣唱和，词客如云。冯延巳、韩熙载、徐铉……这些名字放在中国文学史上，都是响当当的。李璟本人也是一位词人，那首“细雨梦回鸡塞远，小楼吹彻玉笙寒”，便是他的手笔。</p>
+            <p>李煜就生在这样一个地方，这样一个家庭。他的父亲是词人，他的臣子是词人，他身边的人都在写词、弹琴、画画、谈禅。他从小耳濡目染，精书法，善绘画，通音律，工诗词。他本可以做一个富贵闲人，在钟山脚下读书、填词、参禅，像他所仰慕的陶渊明、谢灵运那样过完一生。</p>
+            <p>而且，按长幼顺序，皇位根本轮不到他。他的大哥李弘冀，才是那个被立为太子的人。</p>
+          </div>
         </div>
       </div>
 
       <!-- 二、历史的拐点 -->
-      <div class="bg-white p-8 rounded-xl shadow-sm mb-10 card-hover">
-        <h3 class="text-2xl font-semibold text-amber-800 mb-6 border-b border-amber-100 pb-3">二、历史的拐点</h3>
-        <div class="prose max-w-none text-stone-700 leading-relaxed space-y-4">
-          <p>李弘冀是一个狠人。史书记载他“为人猜忌严刻”，曾因叔父李景遂威胁到自己的储位，便派人将他毒死。他盯着每一个可能夺位的人，包括那个生有重瞳的弟弟。</p>
-          <p>李煜心里清楚。所以他从少年时代起，就刻意远离权力中心。他给自己取号“钟山隐士”，又号“莲峰居士”，在诗里写“一壶酒，一竿纶，世上如侬有几人”，在词里写“花满渚，酒满瓯，万顷波中得自由”。他把自己打扮成一个毫无野心、只爱风月的闲人，既是本心，也是自保。</p>
-          <p>可是命运偏偏不肯放过他。显德六年（959年），李弘冀突然病逝。中主李璟悲痛之余，不得不重新考虑储君。长子早亡，次子到五子也相继夭折或早逝，剩下的儿子里，李煜排行第六，却是最年长、最有才、最得中主喜爱的一个。</p>
-          <p>于是，这个一心想做隐士的人，被推上了太子的位置。</p>
-          <p>建隆二年（961年），李璟迁都洪州（今南昌），李煜留守金陵监国。同年六月，李璟病逝，李煜在金陵即位，改名李煜，是为南唐后主。那一年，他二十四岁。</p>
+      <div class="appendix-block bg-white rounded-xl shadow-sm mb-6 overflow-hidden card-hover">
+        <div class="appendix-toggle w-full flex items-center justify-between px-8 py-6">
+          <h3 class="text-2xl font-semibold text-amber-800">二、历史的拐点</h3>
+          <span class="appendix-arrow text-amber-400 text-2xl leading-none">▾</span>
+        </div>
+        <div class="appendix-content hidden px-8 pb-8">
+          <div class="prose max-w-none text-stone-700 leading-relaxed space-y-4">
+            <p>李弘冀是一个狠人。史书记载他“为人猜忌严刻”，曾因叔父李景遂威胁到自己的储位，便派人将他毒死。他盯着每一个可能夺位的人，包括那个生有重瞳的弟弟。</p>
+            <p>李煜心里清楚。所以他从少年时代起，就刻意远离权力中心。他给自己取号“钟山隐士”，又号“莲峰居士”，在诗里写“一壶酒，一竿纶，世上如侬有几人”，在词里写“花满渚，酒满瓯，万顷波中得自由”。他把自己打扮成一个毫无野心、只爱风月的闲人，既是本心，也是自保。</p>
+            <p>可是命运偏偏不肯放过他。显德六年（959年），李弘冀突然病逝。中主李璟悲痛之余，不得不重新考虑储君。长子早亡，次子到五子也相继夭折或早逝，剩下的儿子里，李煜排行第六，却是最年长、最有才、最得中主喜爱的一个。</p>
+            <p>于是，这个一心想做隐士的人，被推上了太子的位置。</p>
+            <p>建隆二年（961年），李璟迁都洪州（今南昌），李煜留守金陵监国。同年六月，李璟病逝，李煜在金陵即位，改名李煜，是为南唐后主。那一年，他二十四岁。</p>
+          </div>
         </div>
       </div>
 
       <!-- 三、金陵风物志 -->
-      <div class="bg-white p-8 rounded-xl shadow-sm mb-10 card-hover">
-        <h3 class="text-2xl font-semibold text-amber-800 mb-6 border-b border-amber-100 pb-3">三、金陵风物志</h3>
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <div class="bg-amber-50 p-6 rounded-xl">
-            <h4 class="text-xl font-medium text-amber-800 mb-3">澄心堂</h4>
-            <p class="text-stone-600 leading-relaxed">父亲李璟处理政务与写字的地方。你小时候常坐一旁，看他研墨落笔，那句“细雨梦回鸡塞远，小楼吹彻玉笙寒”的墨意，像是最早的命运预兆。父亲曾在这里对你说：“从嘉，词是写给自己看的。江山是给别人看的。你记住这句话。”</p>
-          </div>
-          <div class="bg-amber-50 p-6 rounded-xl">
-            <h4 class="text-xl font-medium text-amber-800 mb-3">瑶光殿</h4>
-            <p class="text-stone-600 leading-relaxed">大周后娥皇的寝殿，临水而建。殿里挂着半卷《霓裳羽衣曲》残谱，她弹琵琶的时候，音色清越得像江南的雨，连柳絮都忍不住停一停。这里是你在宫城里唯一可以卸下防备的地方。</p>
-          </div>
-          <div class="bg-amber-50 p-6 rounded-xl">
-            <h4 class="text-xl font-medium text-amber-800 mb-3">清凉寺</h4>
-            <p class="text-stone-600 leading-relaxed">城外的古寺，住持是一位不问世事的老僧。十二岁那年你问他“人为什么会有重瞳”，他说“看得多，未必是福”。在你最迷茫的时候，他告诉你：“坐上去，但别把心也交出去。”</p>
-          </div>
-          <div class="bg-amber-50 p-6 rounded-xl">
-            <h4 class="text-xl font-medium text-amber-800 mb-3">钟山书斋</h4>
-            <p class="text-stone-600 leading-relaxed">你自己的私人空间，案上永远摊着宣纸，砚台里的墨永远研好了。你在这里写《渔父》，读陶渊明、谢灵运、庄子，和僧人谈禅，和娥皇一起补《霓裳羽衣曲》。你曾以为，这里是你永远的归处。</p>
+      <div class="appendix-block bg-white rounded-xl shadow-sm mb-6 overflow-hidden card-hover">
+        <div class="appendix-toggle w-full flex items-center justify-between px-8 py-6">
+          <h3 class="text-2xl font-semibold text-amber-800">三、金陵风物志</h3>
+          <span class="appendix-arrow text-amber-400 text-2xl leading-none">▾</span>
+        </div>
+        <div class="appendix-content hidden px-8 pb-8">
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div class="bg-amber-50 p-6 rounded-xl">
+              <h4 class="text-xl font-medium text-amber-800 mb-3">澄心堂</h4>
+              <p class="text-stone-600 leading-relaxed">父亲李璟处理政务与写字的地方。你小时候常坐一旁，看他研墨落笔，那句“细雨梦回鸡塞远，小楼吹彻玉笙寒”的墨意，像是最早的命运预兆。父亲曾在这里对你说：“从嘉，词是写给自己看的。江山是给别人看的。你记住这句话。”</p>
+            </div>
+            <div class="bg-amber-50 p-6 rounded-xl">
+              <h4 class="text-xl font-medium text-amber-800 mb-3">瑶光殿</h4>
+              <p class="text-stone-600 leading-relaxed">大周后娥皇的寝殿，临水而建。殿里挂着半卷《霓裳羽衣曲》残谱，她弹琵琶的时候，音色清越得像江南的雨，连柳絮都忍不住停一停。这里是你在宫城里唯一可以卸下防备的地方。</p>
+            </div>
+            <div class="bg-amber-50 p-6 rounded-xl">
+              <h4 class="text-xl font-medium text-amber-800 mb-3">清凉寺</h4>
+              <p class="text-stone-600 leading-relaxed">城外的古寺，住持是一位不问世事的老僧。十二岁那年你问他“人为什么会有重瞳”，他说“看得多，未必是福”。在你最迷茫的时候，他告诉你：“坐上去，但别把心也交出去。”</p>
+            </div>
+            <div class="bg-amber-50 p-6 rounded-xl">
+              <h4 class="text-xl font-medium text-amber-800 mb-3">钟山书斋</h4>
+              <p class="text-stone-600 leading-relaxed">你自己的私人空间，案上永远摊着宣纸，砚台里的墨永远研好了。你在这里写《渔父》，读陶渊明、谢灵运、庄子，和僧人谈禅，和娥皇一起补《霓裳羽衣曲》。你曾以为，这里是你永远的归处。</p>
+            </div>
           </div>
         </div>
       </div>
 
       <!-- 四、核心人物与典籍 -->
-      <div class="bg-white p-8 rounded-xl shadow-sm mb-10 card-hover">
-        <h3 class="text-2xl font-semibold text-amber-800 mb-6 border-b border-amber-100 pb-3">四、核心人物与典籍</h3>
-        <div class="space-y-6">
-          <div class="border-l-4 border-amber-200 pl-4">
-            <h4 class="text-lg font-semibold text-amber-700 mb-2">陶渊明</h4>
-            <p class="text-stone-600 text-sm leading-relaxed mb-2">陶渊明（约365—427），名潜，字元亮，私谥“靖节”，浔阳柴桑（今江西九江）人。东晋末至南朝宋初诗人、辞赋家，田园诗派鼻祖，因不愿“为五斗米折腰”辞官归隐。代表作有《归园田居》《饮酒》《桃花源记》等。</p>
-            <p class="text-stone-500 text-sm">你仰慕陶渊明，是因为他代表了“不为权力所屈、归隐田园”的人生理想，正是你在钟山书斋里想要模仿的生活——但你连“辞官”的资格都没有，因为你是皇子，命运不由你选。</p>
-          </div>
-          <div class="border-l-4 border-amber-200 pl-4">
-            <h4 class="text-lg font-semibold text-amber-700 mb-2">谢灵运</h4>
-            <p class="text-stone-600 text-sm leading-relaxed mb-2">谢灵运（385—433），陈郡阳夏人，东晋名将谢玄之孙，山水诗派开创者。他出身显赫、才华横溢却仕途坎坷，被迫寄情山水，诗写江南风物，辞采华美。</p>
-            <p class="text-stone-500 text-sm">你读谢灵运，读到的不仅是江南山水，还有“才华无处施展、只能寄情风月”的无奈——这种无奈，后来也成了你自己的命运。</p>
-          </div>
-          <div class="border-l-4 border-amber-200 pl-4">
-            <h4 class="text-lg font-semibold text-amber-700 mb-2">庄子</h4>
-            <p class="text-stone-600 text-sm leading-relaxed mb-2">庄子（约前369—前286），名周，战国时宋国人，道家学派代表人物。他的文章想象奇诡，主张顺应自然、超脱名利、齐同万物。</p>
-            <p class="text-stone-500 text-sm">你在钟山书斋读庄子，与你在清凉寺谈禅、写“万顷波中得自由”的精神追求完全相通。</p>
+      <div class="appendix-block bg-white rounded-xl shadow-sm mb-6 overflow-hidden card-hover">
+        <div class="appendix-toggle w-full flex items-center justify-between px-8 py-6">
+          <h3 class="text-2xl font-semibold text-amber-800">四、核心人物与典籍</h3>
+          <span class="appendix-arrow text-amber-400 text-2xl leading-none">▾</span>
+        </div>
+        <div class="appendix-content hidden px-8 pb-8">
+          <div class="space-y-6">
+            <div class="border-l-4 border-amber-200 pl-4">
+              <h4 class="text-lg font-semibold text-amber-700 mb-2">陶渊明</h4>
+              <p class="text-stone-600 text-sm leading-relaxed mb-2">陶渊明（约365—427），名潜，字元亮，私谥“靖节”，浔阳柴桑（今江西九江）人。东晋末至南朝宋初诗人、辞赋家，田园诗派鼻祖，因不愿“为五斗米折腰”辞官归隐。代表作有《归园田居》《饮酒》《桃花源记》等。</p>
+              <p class="text-stone-500 text-sm">你仰慕陶渊明，是因为他代表了“不为权力所屈、归隐田园”的人生理想，正是你在钟山书斋里想要模仿的生活——但你连“辞官”的资格都没有，因为你是皇子，命运不由你选。</p>
+            </div>
+            <div class="border-l-4 border-amber-200 pl-4">
+              <h4 class="text-lg font-semibold text-amber-700 mb-2">谢灵运</h4>
+              <p class="text-stone-600 text-sm leading-relaxed mb-2">谢灵运（385—433），陈郡阳夏人，东晋名将谢玄之孙，山水诗派开创者。他出身显赫、才华横溢却仕途坎坷，被迫寄情山水，诗写江南风物，辞采华美。</p>
+              <p class="text-stone-500 text-sm">你读谢灵运，读到的不仅是江南山水，还有“才华无处施展、只能寄情风月”的无奈——这种无奈，后来也成了你自己的命运。</p>
+            </div>
+            <div class="border-l-4 border-amber-200 pl-4">
+              <h4 class="text-lg font-semibold text-amber-700 mb-2">庄子</h4>
+              <p class="text-stone-600 text-sm leading-relaxed mb-2">庄子（约前369—前286），名周，战国时宋国人，道家学派代表人物。他的文章想象奇诡，主张顺应自然、超脱名利、齐同万物。</p>
+              <p class="text-stone-500 text-sm">你在钟山书斋读庄子，与你在清凉寺谈禅、写“万顷波中得自由”的精神追求完全相通。</p>
+            </div>
           </div>
         </div>
       </div>
 
       <!-- 五、序章全词作收录 -->
-      <div class="bg-white p-8 rounded-xl shadow-sm mb-10 card-hover">
-        <h3 class="text-2xl font-semibold text-amber-800 mb-6 border-b border-amber-100 pb-3">五、序章全词作收录（含出处与翻译）</h3>
-        <h4 class="text-lg font-semibold text-amber-700 mb-4">（一）李煜（李从嘉）早期作品</h4>
-        <div class="space-y-8 mb-8">
-          <div>
-            <h5 class="font-semibold text-stone-800 mb-2">1.《渔父·浪花有意千里雪》</h5>
-            <p class="text-stone-500 text-sm mb-2">出现位置：第一场钟山书斋选择A，楔子钟山书斋段落提及</p>
-            <p class="text-stone-700 mb-2 leading-relaxed">浪花有意千里雪，桃花无言一队春。<br>一壶酒，一竿纶，世上如侬有几人。</p>
-            <p class="text-stone-500 text-sm">翻译：浪花翻涌仿佛卷起千里白雪，桃花无言却排成一队送来春色。一壶酒，一根钓竿，世上像我这样自在的人，又有几人？</p>
-          </div>
-          <div>
-            <h5 class="font-semibold text-stone-800 mb-2">2.《渔父·一棹春风一叶舟》</h5>
-            <p class="text-stone-500 text-sm mb-2">出现位置：过渡二大哥死了开头旁白，楔子钟山书斋段落提及</p>
-            <p class="text-stone-700 mb-2 leading-relaxed">一棹春风一叶舟，一纶茧缕一轻钩。<br>花满渚，酒满瓯，万顷波中得自由。</p>
-            <p class="text-stone-500 text-sm">翻译：一支船桨划开春风，一叶小舟漂浮水上。沙洲上开满鲜花，酒杯里盛满美酒，在万顷碧波之中，终于得到了梦寐以求的自由。</p>
-          </div>
-          <div>
-            <h5 class="font-semibold text-stone-800 mb-2">3.《浪淘沙·往事只堪哀》</h5>
-            <p class="text-stone-500 text-sm mb-2">出现位置：改名场景选择B，登基前夜选择B</p>
-            <p class="text-stone-700 mb-2 leading-relaxed">往事只堪哀，对景难排。<br>秋风庭院藓侵阶。一任珠帘闲不卷，终日谁来。</p>
-            <p class="text-stone-500 text-sm">翻译：过往的往事只剩悲哀，面对眼前景物也难以排遣。秋风吹过庭院，苔藓已经蔓延到台阶上，任凭珠帘闲置不卷，终日无人来往。</p>
-          </div>
-          <div>
-            <h5 class="font-semibold text-stone-800 mb-2">4.《忆江南·多少恨》（预叙引用）</h5>
-            <p class="text-stone-500 text-sm mb-2">出现位置：登基前夜旁白续写</p>
-            <p class="text-stone-700 mb-2 leading-relaxed">还似旧时游上苑，车如流水马如龙。花月正春风。</p>
-            <p class="text-stone-500 text-sm">说明：此句为李煜后期作品，序章中作为命运伏笔预叙引用，表现你对少年时光的怀念。</p>
-          </div>
-          <div>
-            <h5 class="font-semibold text-stone-800 mb-2">5.《破阵子》拟句</h5>
-            <p class="text-stone-500 text-sm mb-2">出现位置：大哥死了选择B</p>
-            <p class="text-stone-700 mb-2 leading-relaxed">兄弟四人，今余一人。</p>
-            <p class="text-stone-500 text-sm">说明：为剧情拟作，非李煜传世原句，用于表现你悼念兄长时的孤绝心境。</p>
-          </div>
+      <div class="appendix-block bg-white rounded-xl shadow-sm mb-6 overflow-hidden card-hover">
+        <div class="appendix-toggle w-full flex items-center justify-between px-8 py-6">
+          <h3 class="text-2xl font-semibold text-amber-800">五、序章全词作收录（含出处与翻译）</h3>
+          <span class="appendix-arrow text-amber-400 text-2xl leading-none">▾</span>
         </div>
-        <h4 class="text-lg font-semibold text-amber-700 mb-4">（二）李璟（南唐中主）作品</h4>
-        <div>
-          <h5 class="font-semibold text-stone-800 mb-2">《摊破浣溪沙·菡萏香销翠叶残》</h5>
-          <p class="text-stone-500 text-sm mb-2">出现位置：楔子澄心堂段落提及</p>
-          <p class="text-stone-700 mb-2 leading-relaxed">菡萏香销翠叶残，西风愁起绿波间。<br>细雨梦回鸡塞远，小楼吹彻玉笙寒。</p>
-          <p class="text-stone-500 text-sm">翻译：荷花香气消散，荷叶渐渐凋残，西风从绿波间吹起，满是愁绪。细雨声中梦回遥远的边塞，小楼上吹彻玉笙，清寒之中更加惆怅。</p>
+        <div class="appendix-content hidden px-8 pb-8">
+          <h4 class="text-lg font-semibold text-amber-700 mb-4">（一）李煜（李从嘉）早期作品</h4>
+          <div class="space-y-8 mb-8">
+            <div>
+              <h5 class="font-semibold text-stone-800 mb-2">1.《渔父·浪花有意千里雪》</h5>
+              <p class="text-stone-500 text-sm mb-2">出现位置：第一场钟山书斋选择A，楔子钟山书斋段落提及</p>
+              <p class="text-stone-700 mb-2 leading-relaxed">浪花有意千里雪，桃花无言一队春。<br>一壶酒，一竿纶，世上如侬有几人。</p>
+              <p class="text-stone-500 text-sm">翻译：浪花翻涌仿佛卷起千里白雪，桃花无言却排成一队送来春色。一壶酒，一根钓竿，世上像我这样自在的人，又有几人？</p>
+            </div>
+            <div>
+              <h5 class="font-semibold text-stone-800 mb-2">2.《渔父·一棹春风一叶舟》</h5>
+              <p class="text-stone-500 text-sm mb-2">出现位置：过渡二大哥死了开头旁白，楔子钟山书斋段落提及</p>
+              <p class="text-stone-700 mb-2 leading-relaxed">一棹春风一叶舟，一纶茧缕一轻钩。<br>花满渚，酒满瓯，万顷波中得自由。</p>
+              <p class="text-stone-500 text-sm">翻译：一支船桨划开春风，一叶小舟漂浮水上。沙洲上开满鲜花，酒杯里盛满美酒，在万顷碧波之中，终于得到了梦寐以求的自由。</p>
+            </div>
+            <div>
+              <h5 class="font-semibold text-stone-800 mb-2">3.《浪淘沙·往事只堪哀》</h5>
+              <p class="text-stone-500 text-sm mb-2">出现位置：改名场景选择B，登基前夜选择B</p>
+              <p class="text-stone-700 mb-2 leading-relaxed">往事只堪哀，对景难排。<br>秋风庭院藓侵阶。一任珠帘闲不卷，终日谁来。</p>
+              <p class="text-stone-500 text-sm">翻译：过往的往事只剩悲哀，面对眼前景物也难以排遣。秋风吹过庭院，苔藓已经蔓延到台阶上，任凭珠帘闲置不卷，终日无人来往。</p>
+            </div>
+            <div>
+              <h5 class="font-semibold text-stone-800 mb-2">4.《忆江南·多少恨》（预叙引用）</h5>
+              <p class="text-stone-500 text-sm mb-2">出现位置：登基前夜旁白续写</p>
+              <p class="text-stone-700 mb-2 leading-relaxed">还似旧时游上苑，车如流水马如龙。花月正春风。</p>
+              <p class="text-stone-500 text-sm">说明：此句为李煜后期作品，序章中作为命运伏笔预叙引用，表现你对少年时光的怀念。</p>
+            </div>
+            <div>
+              <h5 class="font-semibold text-stone-800 mb-2">5.《破阵子》拟句</h5>
+              <p class="text-stone-500 text-sm mb-2">出现位置：大哥死了选择B</p>
+              <p class="text-stone-700 mb-2 leading-relaxed">兄弟四人，今余一人。</p>
+              <p class="text-stone-500 text-sm">说明：为剧情拟作，非李煜传世原句，用于表现你悼念兄长时的孤绝心境。</p>
+            </div>
+          </div>
+          <h4 class="text-lg font-semibold text-amber-700 mb-4">（二）李璟（南唐中主）作品</h4>
+          <div>
+            <h5 class="font-semibold text-stone-800 mb-2">《摊破浣溪沙·菡萏香销翠叶残》</h5>
+            <p class="text-stone-500 text-sm mb-2">出现位置：楔子澄心堂段落提及</p>
+            <p class="text-stone-700 mb-2 leading-relaxed">菡萏香销翠叶残，西风愁起绿波间。<br>细雨梦回鸡塞远，小楼吹彻玉笙寒。</p>
+            <p class="text-stone-500 text-sm">翻译：荷花香气消散，荷叶渐渐凋残，西风从绿波间吹起，满是愁绪。细雨声中梦回遥远的边塞，小楼上吹彻玉笙，清寒之中更加惆怅。</p>
+          </div>
         </div>
       </div>
 
       <!-- 六、五大核心属性说明 -->
-      <div class="bg-white p-8 rounded-xl shadow-sm mb-10 card-hover">
-        <h3 class="text-2xl font-semibold text-amber-800 mb-6 border-b border-amber-100 pb-3">六、核心属性系统</h3>
-        <div class="grid grid-cols-2 md:grid-cols-5 gap-4 text-center">
-          <div class="p-4 bg-amber-50 rounded-lg">
-            <p class="text-lg font-medium text-amber-700">词心</p>
-            <p class="text-sm text-stone-500 mt-1">对文学与自由的执念，决定你词作的高度</p>
-          </div>
-          <div class="p-4 bg-amber-50 rounded-lg">
-            <p class="text-lg font-medium text-amber-700">龙椅</p>
-            <p class="text-sm text-stone-500 mt-1">向权力中心靠近的距离，决定你帝王生涯的选择</p>
-          </div>
-          <div class="p-4 bg-amber-50 rounded-lg">
-            <p class="text-lg font-medium text-amber-700">情缘</p>
-            <p class="text-sm text-stone-500 mt-1">与身边人的情感羁绊，决定你身边留下的人</p>
-          </div>
-          <div class="p-4 bg-amber-50 rounded-lg">
-            <p class="text-lg font-medium text-amber-700">民心</p>
-            <p class="text-sm text-stone-500 mt-1">对南唐百姓的责任感，决定你治国的方向</p>
-          </div>
-          <div class="p-4 bg-amber-50 rounded-lg">
-            <p class="text-lg font-medium text-amber-700">愁绪</p>
-            <p class="text-sm text-stone-500 mt-1">命运带来的无力与沉重，决定你词风的沉郁程度</p>
+      <div class="appendix-block bg-white rounded-xl shadow-sm mb-6 overflow-hidden card-hover">
+        <div class="appendix-toggle w-full flex items-center justify-between px-8 py-6">
+          <h3 class="text-2xl font-semibold text-amber-800">六、核心属性系统</h3>
+          <span class="appendix-arrow text-amber-400 text-2xl leading-none">▾</span>
+        </div>
+        <div class="appendix-content hidden px-8 pb-8">
+          <div class="grid grid-cols-2 md:grid-cols-5 gap-4 text-center">
+            <div class="p-4 bg-amber-50 rounded-lg">
+              <p class="text-lg font-medium text-amber-700">词心</p>
+              <p class="text-sm text-stone-500 mt-1">对文学与自由的执念，决定你词作的高度</p>
+            </div>
+            <div class="p-4 bg-amber-50 rounded-lg">
+              <p class="text-lg font-medium text-amber-700">龙椅</p>
+              <p class="text-sm text-stone-500 mt-1">向权力中心靠近的距离，决定你帝王生涯的选择</p>
+            </div>
+            <div class="p-4 bg-amber-50 rounded-lg">
+              <p class="text-lg font-medium text-amber-700">情缘</p>
+              <p class="text-sm text-stone-500 mt-1">与身边人的情感羁绊，决定你身边留下的人</p>
+            </div>
+            <div class="p-4 bg-amber-50 rounded-lg">
+              <p class="text-lg font-medium text-amber-700">民心</p>
+              <p class="text-sm text-stone-500 mt-1">对南唐百姓的责任感，决定你治国的方向</p>
+            </div>
+            <div class="p-4 bg-amber-50 rounded-lg">
+              <p class="text-lg font-medium text-amber-700">愁绪</p>
+              <p class="text-sm text-stone-500 mt-1">命运带来的无力与沉重，决定你词风的沉郁程度</p>
+            </div>
           </div>
         </div>
       </div>
 
       <!-- 七、全专属标记图鉴 -->
-      <div class="bg-white p-8 rounded-xl shadow-sm card-hover">
-        <h3 class="text-2xl font-semibold text-amber-800 mb-6 border-b border-amber-100 pb-3">七、序章专属标记图鉴（共22个）</h3>
-        <div id="appendixTagContainer" class="flex flex-wrap gap-3">
-          <span class="tag-item px-3 py-1 rounded-full text-sm text-stone-400 border border-stone-200">刻意的闲散</span>
-          <span class="tag-item px-3 py-1 rounded-full text-sm text-stone-400 border border-stone-200">沉默的旁观者</span>
-          <span class="tag-item px-3 py-1 rounded-full text-sm text-stone-400 border border-stone-200">寻求庇护</span>
-          <span class="tag-item px-3 py-1 rounded-full text-sm text-stone-400 border border-stone-200">父亲的承诺</span>
-          <span class="tag-item px-3 py-1 rounded-full text-sm text-stone-400 border border-stone-200">孤独的沉默</span>
-          <span class="tag-item px-3 py-1 rounded-full text-sm text-stone-400 border border-stone-200">禅师的点拨</span>
-          <span class="tag-item px-3 py-1 rounded-full text-sm text-stone-400 border border-stone-200">娥皇的承诺</span>
-          <span class="tag-item px-3 py-1 rounded-full text-sm text-stone-400 border border-stone-200">娥皇的期许</span>
-          <span class="tag-item px-3 py-1 rounded-full text-sm text-stone-400 border border-stone-200">娥皇的陪伴</span>
-          <span class="tag-item px-3 py-1 rounded-full text-sm text-stone-400 border border-stone-200">父亲的质问</span>
-          <span class="tag-item px-3 py-1 rounded-full text-sm text-stone-400 border border-stone-200">孤家寡人</span>
-          <span class="tag-item px-3 py-1 rounded-full text-sm text-stone-400 border border-stone-200">兄弟凋零</span>
-          <span class="tag-item px-3 py-1 rounded-full text-sm text-stone-400 border border-stone-200">无法再退</span>
-          <span class="tag-item px-3 py-1 rounded-full text-sm text-stone-400 border border-stone-200">站在父亲身后</span>
-          <span class="tag-item px-3 py-1 rounded-full text-sm text-stone-400 border border-stone-200">父亲的遗命</span>
-          <span class="tag-item px-3 py-1 rounded-full text-sm text-stone-400 border border-stone-200">祖父的预言</span>
-          <span class="tag-item px-3 py-1 rounded-full text-sm text-stone-400 border border-stone-200">无言的继承</span>
-          <span class="tag-item px-3 py-1 rounded-full text-sm text-stone-400 border border-stone-200">重光之煜</span>
-          <span class="tag-item px-3 py-1 rounded-full text-sm text-stone-400 border border-stone-200">礼制之下</span>
-          <span class="tag-item px-3 py-1 rounded-full text-sm text-stone-400 border border-stone-200">接受命运</span>
-          <span class="tag-item px-3 py-1 rounded-full text-sm text-stone-400 border border-stone-200">告别过去</span>
-          <span class="tag-item px-3 py-1 rounded-full text-sm text-stone-400 border border-stone-200">告别钟山</span>
+      <div class="appendix-block bg-white rounded-xl shadow-sm overflow-hidden card-hover">
+        <div class="appendix-toggle w-full flex items-center justify-between px-8 py-6">
+          <h3 class="text-2xl font-semibold text-amber-800">七、序章专属标记图鉴（共22个）</h3>
+          <span class="appendix-arrow text-amber-400 text-2xl leading-none">▾</span>
+        </div>
+        <div class="appendix-content hidden px-8 pb-8">
+          <div id="appendixTagContainer" class="flex flex-wrap gap-3">
+            <span class="tag-item px-3 py-1 rounded-full text-sm text-stone-400 border border-stone-200">刻意的闲散</span>
+            <span class="tag-item px-3 py-1 rounded-full text-sm text-stone-400 border border-stone-200">沉默的旁观者</span>
+            <span class="tag-item px-3 py-1 rounded-full text-sm text-stone-400 border border-stone-200">寻求庇护</span>
+            <span class="tag-item px-3 py-1 rounded-full text-sm text-stone-400 border border-stone-200">父亲的承诺</span>
+            <span class="tag-item px-3 py-1 rounded-full text-sm text-stone-400 border border-stone-200">孤独的沉默</span>
+            <span class="tag-item px-3 py-1 rounded-full text-sm text-stone-400 border border-stone-200">禅师的点拨</span>
+            <span class="tag-item px-3 py-1 rounded-full text-sm text-stone-400 border border-stone-200">娥皇的承诺</span>
+            <span class="tag-item px-3 py-1 rounded-full text-sm text-stone-400 border border-stone-200">娥皇的期许</span>
+            <span class="tag-item px-3 py-1 rounded-full text-sm text-stone-400 border border-stone-200">娥皇的陪伴</span>
+            <span class="tag-item px-3 py-1 rounded-full text-sm text-stone-400 border border-stone-200">父亲的质问</span>
+            <span class="tag-item px-3 py-1 rounded-full text-sm text-stone-400 border border-stone-200">孤家寡人</span>
+            <span class="tag-item px-3 py-1 rounded-full text-sm text-stone-400 border border-stone-200">兄弟凋零</span>
+            <span class="tag-item px-3 py-1 rounded-full text-sm text-stone-400 border border-stone-200">无法再退</span>
+            <span class="tag-item px-3 py-1 rounded-full text-sm text-stone-400 border border-stone-200">站在父亲身后</span>
+            <span class="tag-item px-3 py-1 rounded-full text-sm text-stone-400 border border-stone-200">父亲的遗命</span>
+            <span class="tag-item px-3 py-1 rounded-full text-sm text-stone-400 border border-stone-200">祖父的预言</span>
+            <span class="tag-item px-3 py-1 rounded-full text-sm text-stone-400 border border-stone-200">无言的继承</span>
+            <span class="tag-item px-3 py-1 rounded-full text-sm text-stone-400 border border-stone-200">重光之煜</span>
+            <span class="tag-item px-3 py-1 rounded-full text-sm text-stone-400 border border-stone-200">礼制之下</span>
+            <span class="tag-item px-3 py-1 rounded-full text-sm text-stone-400 border border-stone-200">接受命运</span>
+            <span class="tag-item px-3 py-1 rounded-full text-sm text-stone-400 border border-stone-200">告别过去</span>
+            <span class="tag-item px-3 py-1 rounded-full text-sm text-stone-400 border border-stone-200">告别钟山</span>
+          </div>
         </div>
       </div>
     </div>
@@ -386,7 +471,10 @@
       attr: { poetry:0, power:0, love:0, people:0, sad:0 },
       tags: new Set(),
       currentScene: 0,
-      journeyLog: [] // 记录完整人生轨迹：每段场景正文+选择内容+效果
+      journeyLog: [],   // 记录完整人生轨迹：每段场景正文+选择内容+效果
+      started: false,   // 是否已开启序章
+      finished: false,  // 序章是否已走完
+      locked: false     // 防止连点导致剧情错乱
     }
 
     // 剧情脚本库（完全按照第一版Word内容补全）
@@ -776,21 +864,150 @@
       }
     ]
 
-    // 开始游戏函数
-    function startGame(){
-      document.getElementById('statusBar').classList.remove('hidden')
-      document.getElementById('hero').classList.add('hidden')
-      document.getElementById('life-progress').classList.remove('hidden')
-      document.getElementById('mark-system').classList.remove('hidden')
-      renderScene(0)
-      window.scrollTo({top: document.getElementById('life-progress').offsetTop - 80, behavior: 'smooth'})
+    /* ============ 轻提示 ============ */
+    let toastTimer = null
+    function toast(msg){
+      const el = document.getElementById('toast')
+      el.textContent = msg
+      el.classList.remove('opacity-0')
+      el.classList.add('opacity-100')
+      clearTimeout(toastTimer)
+      toastTimer = setTimeout(()=>{
+        el.classList.add('opacity-0')
+        el.classList.remove('opacity-100')
+      }, 2200)
     }
 
-    // 渲染剧情场景函数
+    /* ============ 平滑滚动（自动避开固定导航） ============ */
+    function scrollToEl(el, extra){
+      if(!el) return
+      const offset = (extra === undefined ? 72 : extra)
+      const y = el.getBoundingClientRect().top + window.pageYOffset - offset
+      window.scrollTo({ top: y < 0 ? 0 : y, behavior: 'smooth' })
+    }
+
+    /* ============ 导航 ============ */
+    function setActiveNav(id){
+      document.querySelectorAll('.nav-link').forEach(a=>{
+        a.classList.toggle('active', a.dataset.target === id)
+      })
+    }
+
+    // 导航项点击：同页锚点交互，不跳转独立页面
+    function navTo(id){
+      if(id === 'hero'){
+        scrollToEl(document.getElementById('hero'), 64)
+        setActiveNav('hero')
+        return
+      }
+      if(id === 'life-progress'){
+        if(!gameState.started){
+          toast('请先点击封面按钮「开启他的人生选择之旅」')
+          return
+        }
+        if(gameState.finished){
+          toast('序章已走完，可点击「我的人生轨迹」回看')
+          scrollToEl(document.getElementById('journey-review'))
+          setActiveNav('journey-review')
+          return
+        }
+        scrollToEl(document.getElementById('life-progress'))
+        setActiveNav('life-progress')
+        return
+      }
+      if(id === 'appendix'){
+        // 拓展附录：只有点击之后才会出现
+        document.getElementById('appendix').classList.remove('hidden')
+        scrollToEl(document.getElementById('appendix'))
+        setActiveNav('appendix')
+        return
+      }
+      if(id === 'journey-review'){
+        if(!gameState.finished){
+          toast('走完序章全部剧情后解锁「我的人生轨迹」')
+          return
+        }
+        scrollToEl(document.getElementById('journey-review'))
+        setActiveNav('journey-review')
+        return
+      }
+      if(id === 'mark-system'){
+        if(!gameState.started){
+          toast('请先开启他的人生选择之旅')
+          return
+        }
+        scrollToEl(document.getElementById('mark-system'))
+        setActiveNav('mark-system')
+        return
+      }
+    }
+
+    document.querySelectorAll('.nav-link').forEach(a=>{
+      a.addEventListener('click', ()=> navTo(a.dataset.target))
+    })
+
+    /* ============ 附录折叠 ============ */
+    function toggleAllAppendix(open){
+      document.querySelectorAll('#appendix .appendix-block').forEach(block=>{
+        const content = block.querySelector('.appendix-content')
+        const arrow = block.querySelector('.appendix-arrow')
+        if(open){
+          content.classList.remove('hidden')
+          arrow.classList.add('open')
+        }else{
+          content.classList.add('hidden')
+          arrow.classList.remove('open')
+        }
+      })
+    }
+
+    // 附录折叠块事件委托（点击标题即展开/收起）
+    document.getElementById('appendix').addEventListener('click', function(e){
+      const toggle = e.target.closest('.appendix-toggle')
+      if(!toggle) return
+      const block = toggle.closest('.appendix-block')
+      const content = block.querySelector('.appendix-content')
+      const arrow = block.querySelector('.appendix-arrow')
+      const isOpen = !content.classList.contains('hidden')
+      if(isOpen){
+        content.classList.add('hidden')
+        arrow.classList.remove('open')
+      }else{
+        content.classList.remove('hidden')
+        arrow.classList.add('open')
+      }
+    })
+
+    /* ============ 开始序章 ============ */
+    function startGame(){
+      gameState.started = true
+      document.getElementById('statusBar').classList.remove('hidden')
+
+      // 若序章已走完，直接带去“我的人生轨迹”
+      if(gameState.finished){
+        scrollToEl(document.getElementById('journey-review'))
+        setActiveNav('journey-review')
+        return
+      }
+
+      document.getElementById('life-progress').classList.remove('hidden')
+      document.getElementById('mark-system').classList.remove('hidden')
+      document.getElementById('heroCta').textContent = '继续他的人生选择之旅'
+
+      if(gameState.journeyLog.length === 0){
+        renderScene(0)
+      }
+      scrollToEl(document.getElementById('life-progress'))
+      setActiveNav('life-progress')
+    }
+
+    /* ============ 渲染剧情场景 ============ */
     function renderScene(sceneIndex){
+      gameState.currentScene = sceneIndex
+      gameState.locked = false
       const scene = storyLines[sceneIndex]
       const container = document.getElementById('storyContainer')
-      
+
       container.innerHTML = `
         <div class="text-center mb-16 scene-card">
           <h2 class="text-3xl font-bold text-amber-900 mb-3">序章 · 交互式人生轨迹</h2>
@@ -799,8 +1016,8 @@
         <h2 class="text-3xl font-bold text-amber-900 mb-8">${scene.title}</h2>
         ${scene.content}
         <div class="space-y-4">
-          ${scene.options.map(opt=>`
-            <button class="choice-btn w-full text-left p-5 border border-amber-200 rounded-lg transition duration-300">
+          ${scene.options.map((opt, i)=>`
+            <button type="button" data-idx="${i}" class="choice-btn w-full text-left p-5 border border-amber-200 rounded-lg transition duration-300">
               <span class="font-medium">${opt.text}</span>
               ${opt.desc ? `<p class="text-sm text-stone-500 mt-2">${opt.desc}</p>` : ''}
               ${opt.effect ? `<p class="text-xs text-amber-700 mt-2">${opt.effect}</p>` : ''}
@@ -808,50 +1025,58 @@
           `).join('')}
         </div>
       `
-
-      container.querySelectorAll('.choice-btn').forEach((btn, idx)=>{
-        btn.addEventListener('click', ()=>{
-          const selectedOpt = scene.options[idx]
-          selectedOpt.action()
-          updateAttributeUI()
-          updateTagUI()
-          
-          // 记录当前场景到人生轨迹日志
-          gameState.journeyLog.push({
-            title: scene.title,
-            content: scene.content,
-            choiceText: selectedOpt.text,
-            choiceDesc: selectedOpt.desc,
-            choiceEffect: selectedOpt.effect
-          })
-
-          const next = selectedOpt.nextScene
-          if(next !== -1) {
-            renderScene(next)
-            window.scrollTo({top: container.offsetTop - 80, behavior: 'smooth'})
-          } else {
-            // 序章完结，渲染完整人生轨迹
-            showJourneyReview()
-          }
-        })
-      })
     }
 
-    // 展示完整人生轨迹回顾
-    function showJourneyReview(){
-      document.getElementById('life-progress').classList.add('hidden')
-      document.getElementById('appendix').classList.remove('hidden')
-      document.getElementById('journey-review').classList.remove('hidden')
-      document.getElementById('appendixNav').classList.remove('hidden')
-      document.getElementById('reviewNav').classList.remove('hidden')
+    // 选项点击：事件委托绑定一次，后续任意场景都稳定可点，不会出现“点不动”
+    document.getElementById('storyContainer').addEventListener('click', function(e){
+      const btn = e.target.closest('.choice-btn')
+      if(!btn) return
+      if(gameState.locked) return
 
-      // 更新附录里的标记点亮状态
+      gameState.locked = true
+      document.querySelectorAll('#storyContainer .choice-btn').forEach(b=>{ b.disabled = true })
+
+      const idx = parseInt(btn.dataset.idx, 10)
+      const scene = storyLines[gameState.currentScene]
+      const selectedOpt = scene.options[idx]
+      if(!selectedOpt) return
+
+      selectedOpt.action()
+      updateAttributeUI()
+      updateTagUI()
+
+      // 记录当前场景到人生轨迹日志（含正文原文 + 选择内容）
+      gameState.journeyLog.push({
+        title: scene.title,
+        content: scene.content,
+        choiceText: selectedOpt.text,
+        choiceDesc: selectedOpt.desc,
+        choiceEffect: selectedOpt.effect
+      })
+
+      const next = selectedOpt.nextScene
+      if(next !== -1){
+        renderScene(next)
+        scrollToEl(document.getElementById('life-progress'))
+        setActiveNav('life-progress')
+      }else{
+        showJourneyReview()
+      }
+    })
+
+    /* ============ 序章走完：完整流程回顾 ============ */
+    function showJourneyReview(){
+      gameState.finished = true
+      document.getElementById('life-progress').classList.add('hidden')
+      document.getElementById('statusBar').classList.add('hidden')
+      document.getElementById('journey-review').classList.remove('hidden')
+      document.getElementById('heroCta').textContent = '重看他的人生选择之旅'
       updateAppendixTags()
 
       const reviewContainer = document.getElementById('reviewContainer')
       let reviewHTML = ''
-      
-      // 逐段渲染每一个走过的场景正文+对应的选择
+
+      // 逐段渲染每一个走过的场景正文原文 + 对应的选择
       gameState.journeyLog.forEach((log, idx)=>{
         reviewHTML += `
           <div class="scene-card">
@@ -895,17 +1120,18 @@
           <p class="text-stone-600 mb-4">你已点亮专属标记：${Array.from(gameState.tags).join('、')}</p>
           <p class="text-stone-500 mb-6">从十六岁钟山书斋听雨的少年李从嘉，到二十四岁登基的南唐国主李煜，你的序章人生已经走完，第一幕「凤阁龙楼」待续。</p>
           <div class="flex gap-4 justify-center">
-            <button onclick="location.reload()" class="px-6 py-3 bg-amber-700 text-white rounded-lg hover:bg-amber-800 transition">重新开启李煜的一生</button>
-            <a href="#appendix" class="px-6 py-3 bg-white text-amber-700 border border-amber-200 rounded-lg hover:bg-amber-50 transition">查看拓展附录</a>
+            <button type="button" onclick="location.reload()" class="px-6 py-3 bg-amber-700 text-white rounded-lg hover:bg-amber-800 transition cursor-pointer">重新开启李煜的一生</button>
+            <button type="button" onclick="navTo('appendix')" class="px-6 py-3 bg-white text-amber-700 border border-amber-200 rounded-lg hover:bg-amber-50 transition cursor-pointer">查看拓展附录</button>
           </div>
         </div>
       `
 
       reviewContainer.innerHTML = reviewHTML
-      window.scrollTo({top: document.getElementById('journey-review').offsetTop - 80, behavior: 'smooth'})
+      scrollToEl(document.getElementById('journey-review'))
+      setActiveNav('journey-review')
     }
 
-    // 更新属性UI
+    /* ============ 属性 / 标记 UI ============ */
     function updateAttributeUI(){
       document.getElementById('attr-poetry').textContent = gameState.attr.poetry
       document.getElementById('attr-power').textContent = gameState.attr.power
@@ -914,11 +1140,9 @@
       document.getElementById('attr-sad').textContent = gameState.attr.sad
     }
 
-    // 更新标记UI
     function updateTagUI(){
-      const tagEls = document.querySelectorAll('#tagContainer .tag-item')
-      tagEls.forEach(el=>{
-        if(gameState.tags.has(el.textContent.trim())) {
+      document.querySelectorAll('#tagContainer .tag-item').forEach(el=>{
+        if(gameState.tags.has(el.textContent.trim())){
           el.classList.add('active')
           el.classList.remove('text-stone-400', 'border-stone-200')
         }
@@ -926,19 +1150,28 @@
       document.getElementById('tagCount').textContent = gameState.tags.size
     }
 
-    // 更新附录标记UI
     function updateAppendixTags(){
-      const tagEls = document.querySelectorAll('#appendixTagContainer .tag-item')
-      tagEls.forEach(el=>{
-        if(gameState.tags.has(el.textContent.trim())) {
+      document.querySelectorAll('#appendixTagContainer .tag-item').forEach(el=>{
+        if(gameState.tags.has(el.textContent.trim())){
           el.classList.add('active')
           el.classList.remove('text-stone-400', 'border-stone-200')
         }
       })
     }
+
+    /* ============ 滚动时同步导航高亮 ============ */
+    window.addEventListener('scroll', function(){
+      const ids = ['hero', 'life-progress', 'journey-review', 'appendix', 'mark-system']
+      let current = null
+      ids.forEach(id=>{
+        const el = document.getElementById(id)
+        if(!el || el.classList.contains('hidden')) return
+        const r = el.getBoundingClientRect()
+        if(r.top <= 120 && r.bottom > 120) current = id
+      })
+      if(current) setActiveNav(current)
+    }, { passive: true })
   </script>
 </body>
-</html><!--18855785882573747210100214-->
-  </script>
-</body>
-</html><!--03435555592395614730100214-->
+</html>
+<!--30939948012395614730100214-->
