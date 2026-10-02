@@ -6,14 +6,15 @@
   <title>拓展附录 · 重瞳·钟山隐</title>
   <style>
     *{box-sizing:border-box;}
-    body{font-family:"PingFang SC","Microsoft YaHei",sans-serif;background:#fffbf2;color:#292524;margin:0;line-height:1.6;}
-    .ink-gradient{background:linear-gradient(135deg,#7c4a1c 0%,#5b3414 100%);}
+    body{font-family:"PingFang SC","Microsoft YaHei",sans-serif;background:#fffbf2;color:#292524;margin:0;line-height:1.8;}
     nav{position:fixed;width:100%;background:rgba(255,251,242,0.95);backdrop-filter:blur(8px);z-index:50;border-bottom:1px solid #fef3c7;top:0;}
     .nav-inner{max-width:1280px;margin:0 auto;padding:0 24px;display:flex;justify-content:space-between;height:64px;align-items:center;}
-    .nav-item{text-decoration:none;color:#57534e;font-size:18px;cursor:pointer;}
+    .nav-item{text-decoration:none;color:#57534e;font-size:18px;cursor:pointer;transition:color 0.2s;}
+    .nav-item:hover{color:#92400e;}
     .nav-item.active{color:#92400e;font-weight:500;}
     .container{max-width:1000px;margin:0 auto;padding:112px 24px 96px;}
-    .section{background:white;border-radius:12px;margin-bottom:16px;box-shadow:0 1px 3px rgba(0,0,0,0.05);overflow:hidden;}
+    .section{background:white;border-radius:12px;margin-bottom:16px;box-shadow:0 1px 3px rgba(0,0,0,0.05);overflow:hidden;transition:box-shadow 0.3s;}
+    .section:hover{box-shadow:0 2px 8px rgba(0,0,0,0.08);}
     .section-header{padding:24px;cursor:pointer;display:flex;justify-content:space-between;align-items:center;transition:background 0.3s;}
     .section-header:hover{background:#fff7ed;}
     .section-content{padding:0 24px 24px;display:none;border-top:1px solid #fef3c7;}
@@ -23,24 +24,42 @@
     @keyframes fadeIn{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:translateY(0);}}
     #statusBar{position:fixed;top:80px;right:16px;background:rgba(255,255,255,0.9);padding:12px;border-radius:8px;box-shadow:0 4px 6px rgba(0,0,0,0.08);z-index:40;border:1px solid #fef3c7;font-size:14px;min-width:220px;}
     footer{background:linear-gradient(135deg,#7c4a1c 0%,#5b3414 100%);color:#fffbeb;padding:40px 0;text-align:center;margin-top:48px;}
-    .tag{padding:4px 12px;border-radius:999px;font-size:14px;display:inline-block;margin:4px;}
+    .tag{padding:4px 12px;border-radius:999px;font-size:14px;display:inline-block;margin:4px;transition:all 0.2s;}
     .tag-unlocked{background:#fef3c7;border:1px solid #fcd34d;color:#92400e;}
     .tag-locked{background:#f5f5f4;border:1px solid #e7e5e4;color:#a8a29e;opacity:0.6;}
     .controls{display:flex;gap:12px;flex-wrap:wrap;justify-content:center;margin-bottom:24px;}
-    button.btn{padding:8px 16px;border-radius:8px;border:none;cursor:pointer;}
+    button.btn{padding:8px 16px;border-radius:8px;border:none;cursor:pointer;transition:opacity 0.2s;}
+    button.btn:hover{opacity:0.9;}
     button.primary{background:#fef3c7;color:#92400e;}
-    button.secondary{background:#f5f5f4;color:#57534e;}
+    button.secondary{background:#fef3c7;color:#92400e;}
     h2{font-size:36px;color:#78350f;margin:0 0 16px 0;}
+    h3{font-size:20px;color:#92400e;margin:0;}
+    h4{color:#92400e;margin:20px 0 8px 0;}
     .muted{color:#78716c;}
-    .section-content p{color:#57534e;}
+    .section-content p{color:#57534e;margin:12px 0;line-height:1.8;text-indent:2em;}
     .tags-grid{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px;}
     .status-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;margin-bottom:8px;padding-bottom:8px;border-bottom:1px solid #fffbeb;}
     .status-item p{color:#b45309;font-weight:500;margin:0;}
     .status-item .value{color:#57534e;margin:4px 0 0 0;}
+    .poem-card{padding:20px;background:#fffbeb;border-radius:8px;margin-bottom:16px;border-left:3px solid #fcd34d;}
+    .poem-card .poem-text{font-style:italic;color:#57534e;line-height:2;text-indent:0;text-align:center;margin-bottom:12px;}
+    .poem-card .poem-translate{color:#57534e;line-height:1.8;text-indent:0;font-size:15px;padding:8px 12px;background:#fff7ed;border-radius:6px;}
+    .poem-card .poem-note{font-size:14px;color:#78716c;margin-top:12px;text-indent:0;}
+    .character-card{padding:20px;background:#fffbeb;border-radius:8px;margin-bottom:12px;}
+    .character-card h4{margin:0 0 8px 0;color:#92400e;}
+    .character-card p{margin:0;color:#57534e;}
+    .place-card{padding:20px;background:#fffbeb;border-radius:8px;}
+    .table{width:100%;border-collapse:collapse;margin:16px 0;}
+    .table th, .table td{padding:12px;text-align:left;border-bottom:1px solid #fef3c7;color:#57534e;}
+    .table th{color:#b45309;font-weight:500;}
+    input[type="file"]{display:none;}
     @media (max-width:800px){
-      .container{padding:112px 16px 96px;}
-      .nav-inner{padding:0 12px;}
+      .container{padding:150px 16px 96px;}
+      .nav-inner{padding:12px;flex-direction:column;justify-content:center;gap:8px;height:auto;}
+      nav{position:absolute;}
       #statusBar{display:none;}
+      .status-grid{grid-template-columns:repeat(5,1fr);gap:4px;}
+      .controls button{font-size:14px;padding:6px 12px;}
     }
   </style>
 </head>
@@ -48,7 +67,7 @@
   <nav>
     <div class="nav-inner">
       <span style="font-weight:bold;font-size:20px;color:#78350f;">李煜 · 重瞳·钟山隐</span>
-      <div style="display:flex;gap:24px;">
+      <div style="display:flex;gap:24px;flex-wrap:wrap;justify-content:center;">
         <a href="index.html" class="nav-item">序章首页</a>
         <a href="progress.html" class="nav-item">人生进度</a>
         <a href="appendix.html" class="nav-item active">拓展附录</a>
@@ -66,16 +85,21 @@
       <div class="status-item" style="text-align:center;padding:0 4px;"><p>民心</p><p id="attr-people" class="value">0</p></div>
       <div class="status-item" style="text-align:center;padding:0 4px;"><p>愁绪</p><p id="attr-sad" class="value">0</p></div>
     </div>
-    <p style="font-size:12px;color:#78716c;margin:0;">已收集标记：<span id="tagCount">0</span>/22</p>
+    <p style="font-size:12px;color:#78716c;margin:8px 0 0 0;">已收集标记：<span id="tagCount">0</span>/22</p>
+    <div style="margin-top:8px;display:flex;gap:6px;flex-wrap:wrap;">
+      <button class="btn primary" style="font-size:12px;padding:4px 8px;" onclick="exportSave()">导出存档</button>
+      <button class="btn primary" style="font-size:12px;padding:4px 8px;" onclick="document.getElementById('importFile').click()">导入存档</button>
+      <input type="file" id="importFile" accept=".json" onchange="importSave(event)"/>
+    </div>
   </div>
 
   <div class="container">
     <div style="text-align:center;margin-bottom:48px;">
       <h2>拓展附录</h2>
-      <p class="muted">点击标题展开对应板块内容</p>
+      <p class="muted">点击标题展开对应板块，查看序章背后完整的历史细节、词作原文与设定说明</p>
       <div class="controls" style="justify-content:center;margin-top:16px;">
         <button class="btn primary" onclick="toggleAll(true)">全部展开</button>
-        <button class="btn secondary" onclick="toggleAll(false)">全部收起</button>
+        <button class="btn primary" onclick="toggleAll(false)">全部收起</button>
       </div>
     </div>
 
@@ -87,7 +111,7 @@
   </footer>
 
   <script>
-    // 全局标记（22个）
+    // 全局标记（22个序章专属标记）
     const allTags = [
       "刻意的闲散","沉默的旁观者","寻求庇护","禅师的点拨","娥皇的承诺",
       "民生初察","梨花誓约","迷途者","储君之念","避世未成",
@@ -96,60 +120,118 @@
       "千古一词","序章珍藏"
     ];
 
-    // 各章节内容（示例内容，可根据需要替换为完整正文）
+    // 各章节完整内容
     const sections = [
       {
         title: "一、序章历史背景",
-        content: `<p>故事发生在五代十国末期的南唐（937年-975年）。南唐由李昪在江南建立，定都金陵（今南京）。本章概述时代脉络、政权更迭与文化氛围，为理解词人及其作品提供历史坐标。</p>`
+        content: `<p>公元937年七夕，李煜生于金陵。他是南唐中主李璟的第六子，原名李从嘉，字重光。传说他生来一目重瞳——一只眼睛里有两个瞳孔。在史书上，重瞳是圣人之相：仓颉重瞳，虞舜重瞳，项羽重瞳。祖父李昪（南唐烈祖）对这个孙子格外钟爱，曾对身边的人说："此儿有异相，他日必大贵。"</p>
+        <p>但李煜自己，从来不想"大贵"。</p>
+        <p>南唐地处江南，是五代十国里最富庶、最风雅的一国。烈祖李昪以金陵为都，轻徭薄赋，兴文教，开科举，把江南经营成乱世中的一处桃花源。中主李璟继位后，南唐文风更盛，君臣唱和，词客如云。冯延巳、韩熙载、徐铉......这些名字放在中国文学史上，都是响当当的。李璟本人也是一位词人，那首"细雨梦回鸡塞远，小楼吹彻玉笙寒"，便是他的手笔。</p>
+        <p>李煜就生在这样一个地方，这样一个家庭。他的父亲是词人，他的臣子是词人，他身边的人都在写词、弹琴、画画、谈禅。他从小耳濡目染，精书法，善绘画，通音律，工诗词。他本可以做一个富贵闲人，在钟山脚下读书、填词、参禅，像他所仰慕的陶渊明、谢灵运那样过完一生。</p>
+        <p>而且，按长幼顺序，皇位根本轮不到他。他的大哥李弘冀，才是那个被立为太子的人。</p>`
       },
       {
         title: "二、历史的拐点",
-        content: `<p>太子之位的变动、朝廷内外的权力角逐、以及个人命运的突变——这些事件共同构成了李煜人生与创作的若干关键转折。本章分析几个决定性事件及其影响。</p>`
+        content: `<p>李弘冀是一个狠人。史书记载他"为人猜忌严刻"，曾因叔父李景遂威胁到自己的储位，便派人将他毒死。他盯着每一个可能夺位的人，包括那个生有重瞳的弟弟。</p>
+        <p>李煜心里清楚。所以他从少年时代起，就刻意远离权力中心。他给自己取号"钟山隐士"，又号"莲峰居士"，在诗里写"一壶酒，一竿纶，世上如侬有几人"，在词里写"花满渚，酒满瓯，万顷波中得自由"。他把自己打扮成一个毫无野心、只爱风月的闲人，既是本心，也是自保。</p>
+        <p>可是命运偏偏不肯放过他。显德六年（959年），李弘冀突然病逝。中主李璟悲痛之余，不得不重新考虑储君。长子早亡，次子到五子也相继夭折或早逝，剩下的儿子里，李煜排行第六，却是最年长、最有才、最得中主喜爱的一个。</p>
+        <p>于是，这个一心想做隐士的人，被推上了太子的位置。</p>
+        <p>建隆二年（961年），李璟迁都洪州（今南昌），李煜留守金陵监国。同年六月，李璟病逝，李煜在金陵即位，改名李煜，是为南唐后主。</p>
+        <p>那一年，他二十四岁。从"李从嘉"到"李煜"，不是简单的改名，是命运把一个人劈成了两半：一半留在钟山书斋做隐士，一半走进凤阁龙楼做国主。</p>`
       },
       {
         title: "三、金陵风物志",
-        content: `<div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
-          <div style="padding:20px;background:#fffbeb;border-radius:8px;">
-            <h4 style="color:#92400e;margin:0 0 8px 0;">城市与景致</h4>
-            <p style="margin:0;color:#57534e;">金陵自古风物独好，秦淮风景、钟山胜迹常出现在词人的描写中。</p>
+        content: `<p>金陵是南唐的国都，也是李煜长大的地方。这座六朝旧都在烈祖李昪的经营下，成为乱世里一处温柔的桃花源——这里没有北方的铁骑与烽烟，只有秦淮河的灯影、钟山的松涛、宫城的管弦和寺庙的钟磬。春天有杏花微雨，夏天有荷风满湖，秋天有梧桐落叶，冬天有寒山暮雪。</p>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:16px;">
+          <div class="place-card">
+            <h4 style="color:#92400e;margin:0 0 8px 0;">澄心堂</h4>
+            <p style="margin:0;color:#57534e;text-indent:0;">父亲李璟处理政务、写字读书的地方。少年李煜常坐在这里看父亲研墨落笔，父亲曾对他说："词是写给自己看的，江山是给别人看的。"</p>
           </div>
-          <div style="padding:20px;background:#fffbeb;border-radius:8px;">
-            <h4 style="color:#92400e;margin:0 0 8px 0;">文化与雅集</h4>
-            <p style="margin:0;color:#57534e;">文人雅集、诗会与鱼米之乡的闲适，都在词作里留下浓重笔墨。</p>
+          <div class="place-card">
+            <h4 style="color:#92400e;margin:0 0 8px 0;">瑶光殿</h4>
+            <p style="margin:0;color:#57534e;text-indent:0;">大周后娥皇的寝殿，临水而建，殿前垂柳依依。这里珍藏着《霓裳羽衣曲》残谱，是李煜与娥皇一同补谱、弹琴唱和的地方，藏着他年少时最温柔的记忆。</p>
+          </div>
+          <div class="place-card">
+            <h4 style="color:#92400e;margin:0 0 8px 0;">清凉寺</h4>
+            <p style="margin:0;color:#57534e;text-indent:0;">城外的古寺，住持是一位老僧。李煜少年时常来这里喝茶谈禅，老僧曾对他说："坐上去，但别把心也交出去。"这句话后来成了他一生的注脚。</p>
+          </div>
+          <div class="place-card">
+            <h4 style="color:#92400e;margin:0 0 8px 0;">钟山书斋</h4>
+            <p style="margin:0;color:#57534e;text-indent:0;">李煜自己的私人天地，案上永远摊着宣纸，砚里永远研着墨。他在这里写《渔父》、读陶渊明、和僧人谈禅，曾以为这里会是他一生的归宿。</p>
           </div>
         </div>`
       },
       {
         title: "四、核心人物与典籍",
-        content: `<div style="margin-bottom:16px;">
-          <h4 style="color:#92400e;margin:0 0 8px 0;">陶渊明与隐逸传统</h4>
-          <p style="margin:0;color:#57534e;">介绍与李煜创作有关的古典人物与文献，及其在词作中的影响。</p>
+        content: `<h4>陶渊明与隐逸传统</h4>
+        <div class="character-card">
+          <p>陶渊明（约365-427），东晋末至南朝宋初诗人，田园诗派鼻祖。他不愿"为五斗米折腰"辞官归隐，躬耕田园的人生理想，是李煜年少时最向往的人生范本——读书、写词、饮酒、参禅，远离宫城纷争。但李煜与陶渊明不同：陶渊明可以主动选择归隐，李煜却连"辞官"的资格都没有，因为他是皇子，命运从不由他选择。</p>
+        </div>
+        <h4>谢灵运与山水诗</h4>
+        <div class="character-card">
+          <p>谢灵运（385-433），南朝宋诗人，山水诗派开创者。出身高门士族却仕途坎坷，只能寄情江南山水。李煜读谢灵运，读到的不仅是江南烟霞，更是"才华无处施展、只能寄情风月"的无奈——这种无奈，后来也成了他自己的命运。</p>
+        </div>
+        <h4>庄子与禅学</h4>
+        <div class="character-card">
+          <p>庄子是道家学派代表人物，主张顺应自然、超脱名利、齐同万物。李煜在钟山书斋读庄子，与清凉寺僧人谈禅，精神内核与他词中"万顷波中得自由"的追求一脉相承，也是他在权力漩涡中仅存的精神避难所。</p>
+        </div>
+        <h4>其他核心人物</h4>
+        <div class="character-card">
+          <h4>中主李璟（父亲）</h4>
+          <p>南唐第二位皇帝，也是优秀词人。他生性温和儒雅，好文事轻武功，在李煜少年时就常带他在澄心堂读词写字，是李煜文学上的启蒙者。他那句"词是写给自己看的，江山是给别人看的"，成了李煜一生最矛盾的注脚。</p>
+        </div>
+        <div class="character-card">
+          <h4>太子李弘冀（长兄）</h4>
+          <p>李煜长兄，性格严苛猜忌，为巩固储位毒杀叔父李景遂，是李煜少年时最大的阴影。李煜刻意避世、自号钟山隐士，很大程度上就是为了躲避他的猜忌。他的突然病逝，意外改变了李煜一生的命运。</p>
+        </div>
+        <div class="character-card">
+          <h4>大周后周娥皇（妻子）</h4>
+          <p>南唐司徒周宗长女，精通音律、善弹琵琶，十九岁嫁给李煜。二人是少年夫妻，志趣相投，一同补全了失传的《霓裳羽衣曲》，是李煜早年最温暖的情感寄托，瑶光殿是他们留下最多回忆的地方。</p>
+        </div>
+        <div class="character-card">
+          <h4>七弟李从善（幼弟）</h4>
+          <p>李煜同母弟，兄弟二人感情极深。李煜登基后他多次出使北宋，后来被扣留在汴京不得南归，是李煜早期思念亲人、词中愁绪的重要来源。</p>
+        </div>
+        <h4>核心参考典籍</h4>
+        <div class="character-card">
+          <p>《南唐书》（陆游/马令撰）、《南唐二主词》（宋代辑本）、《五代史》、《宋史·南唐李氏世家》。所有剧情细节与人物设定均以正史记载为基础，在真实历史框架内做合理文学演绎。</p>
         </div>`
       },
       {
         title: "五、序章全词作收录",
-        content: `<div style="display:grid;grid-template-columns:1fr;gap:12px;">
-          <div style="padding:16px;background:#fffbeb;border-radius:8px;">
-            <h4 style="color:#92400e;margin:0 0 8px 0;">词作选录</h4>
-            <p style="margin:0;color:#57534e;">此处收录序章相关的词作原文与简要注释（若需全文请到词作页面查看）。</p>
+        content: `<div class="poem-card">
+          <h4>《渔父·浪花有意千里雪》· 李煜</h4>
+          <p class="poem-text">浪花有意千里雪，桃花无言一队春。<br>一壶酒，一竿纶，世上如侬有几人。</p>
+          <div class="poem-translate">
+            江上浪花翻滚，仿佛有意化作千里白雪；岸边桃花默默开放，排成长队送来一整个春天。身上只带一壶酒，手里只握一钓竿，像这样逍遥自在的人，这世间能有几个呢？
           </div>
-        </div>`
-      },
-      {
-        title: "六、核心属性系统说明",
-        content: `<div style="display:grid;grid-template-columns:repeat(5,1fr);gap:12px;text-align:center;">
-          <div style="padding:12px;background:#fffbeb;border-radius:8px;"><p style="margin:0;color:#b45309;font-weight:500;">词心</p><p style="margin:4px 0 0 0;color:#57534e;">代表创作与感悟</p></div>
-          <div style="padding:12px;background:#fffbeb;border-radius:8px;"><p style="margin:0;color:#b45309;font-weight:500;">龙椅</p><p style="margin:4px 0 0 0;color:#57534e;">代表权力与地位</p></div>
-          <div style="padding:12px;background:#fffbeb;border-radius:8px;"><p style="margin:0;color:#b45309;font-weight:500;">情缘</p><p style="margin:4px 0 0 0;color:#57534e;">代表人际与爱恨</p></div>
-          <div style="padding:12px;background:#fffbeb;border-radius:8px;"><p style="margin:0;color:#b45309;font-weight:500;">民心</p><p style="margin:4px 0 0 0;color:#57534e;">代表民众支持</p></div>
-          <div style="padding:12px;background:#fffbeb;border-radius:8px;"><p style="margin:0;color:#b45309;font-weight:500;">愁绪</p><p style="margin:4px 0 0 0;color:#57534e;">代表内心惆怅</p></div>
-        </div>`
-      },
-      {
-        title: "七、序章专属标记图鉴",
-        content: `<p style="color:#78716c;font-size:14px;margin-top:0;">共22个序章专属标记，通过不同选择解锁，解锁后在此处高亮显示：</p>
-        <div id="tagList" class="tags-grid"></div>
-        <p class="muted" style="margin-top:12px;">提示：标记由剧情或选择解锁，可通过本地存档记录（localStorage）。</p>`
+          <p class="poem-note">这是李煜十六岁时为避祸写的明志之作，刻意表现自己只愿做江湖渔父、毫无政治野心，既是自保，也是真心向往。</p>
+        </div>
+        <div class="poem-card">
+          <h4>《渔父·一棹春风一叶舟》· 李煜</h4>
+          <p class="poem-text">一棹春风一叶舟，一纶茧缕一轻钩。<br>花满渚，酒满瓯，万顷波中得自由。</p>
+          <div class="poem-translate">
+            春风里划着一支长桨，坐着一叶小舟；手里拿着一根渔线，系着一枚轻巧的鱼钩。看开满鲜花的小洲，酒杯里倒满美酒，在这万顷碧波之上，我才真正拥有了自由。
+          </div>
+          <p class="poem-note">写于太子李弘冀病逝前夕，字里行间满是对自由的渴求，却也成了他少年时代最后的奢望。</p>
+        </div>
+        <div class="poem-card">
+          <h4>《摊破浣溪沙·菡萏香销翠叶残》· 李璟</h4>
+          <p class="poem-text">菡萏香销翠叶残，西风愁起绿波间。还与韶光共憔悴，不堪看。<br>细雨梦回鸡塞远，小楼吹彻玉笙寒。多少泪珠何限恨，倚阑干。</p>
+          <div class="poem-translate">
+            荷花落尽香气消散，翠绿的荷叶也已凋残；西风吹过绿波之间，愁绪油然而生。美好的春光和人一同憔悴老去，实在不忍心再看。<br>细雨里从梦中醒来，思念的人远在千里之外；小楼上吹完一曲玉笙，月光清寒。倚着栏杆，流下多少泪珠，藏着多少说不尽的遗恨。
+          </div>
+          <p class="poem-note">南唐中主李璟的代表作，"细雨梦回鸡塞远，小楼吹彻玉笙寒"是千古名句，也是李煜从小在澄心堂看父亲写得最多的句子。</p>
+        </div>
+        <div class="poem-card">
+          <h4>《浪淘沙·往事只堪哀》· 李煜</h4>
+          <p class="poem-text">往事只堪哀，对景难排。秋风庭院藓侵阶。<br>一任珠帘闲不卷，终日谁来。</p>
+          <div class="poem-translate">
+            想起从前的往事，只让人满心悲哀；面对眼前的景致，这份愁绪也难以排遣。秋风扫过庭院，苔藓已经悄悄爬上了台阶。<br>任凭珠帘垂着也不卷起，从早到晚，又会有谁来看我呢？
+          </div>
+          <p class="poem-note">登基前夜所作，是少年李从嘉写给自己的挽歌，从这首词开始，他正式与过去的隐士人生告别。</p>
+        </div>
+        <p class="muted" style="text-indent:0;">说明：本附录仅收录序章时间线内出现的词作，后期亡国后的作品将在对应章节附录中补充。其中"还似旧时游上苑，车如流水马如龙"一句作为命运伏笔预叙引用，原作出自李煜后期《忆江南》。</p>`
       }
     ];
 
@@ -157,11 +239,14 @@
     function loadState(){
       try {
         const s = localStorage.getItem('liyuGameSave');
-        if (!s) return {attr:{poetry:0,power:0,love:0,people:0,sad:0},tags:[]};
-        return JSON.parse(s);
+        if (!s) return {attr:{poetry:0,power:0,love:0,people:0,sad:0},tags:[], unlockedPoems:[]};
+        const state = JSON.parse(s);
+        // 补全默认字段
+        if(!state.unlockedPoems) state.unlockedPoems = [];
+        return state;
       } catch(e){
         console.error('读取存档失败，使用默认值', e);
-        return {attr:{poetry:0,power:0,love:0,people:0,sad:0},tags:[]};
+        return {attr:{poetry:0,power:0,love:0,people:0,sad:0},tags:[], unlockedPoems:[]};
       }
     }
 
@@ -171,6 +256,42 @@
       } catch(e){
         console.warn('存档失败', e);
       }
+    }
+
+    function exportSave(){
+      const state = loadState();
+      const dataStr = JSON.stringify(state, null, 2);
+      const blob = new Blob([dataStr], {type:"application/json"});
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `李煜重瞳钟山隐_存档_${new Date().toLocaleDateString()}.json`;
+      a.click();
+      URL.revokeObjectURL(url);
+      alert('存档导出成功！');
+    }
+
+    function importSave(event){
+      const file = event.target.files[0];
+      if(!file) return;
+      const reader = new FileReader();
+      reader.onload = function(e){
+        try {
+          const state = JSON.parse(e.target.result);
+          if(state.attr && state.tags){
+            saveState(state);
+            updateStatus();
+            renderSections();
+            alert('存档导入成功！');
+          }else{
+            alert('无效的存档文件！');
+          }
+        }catch(err){
+          alert('存档读取失败，请检查文件格式！');
+        }
+      };
+      reader.readAsText(file);
+      event.target.value = '';
     }
 
     function updateStatus(){
@@ -193,7 +314,7 @@
         const header = document.createElement('div');
         header.className = 'section-header';
         header.setAttribute('data-index', i);
-        header.innerHTML = `<h3 style="margin:0;color:#92400e;font-size:20px;">${sec.title}</h3><span class="arrow">▼</span>`;
+        header.innerHTML = `<h3>${sec.title}</h3><span class="arrow">▼</span>`;
         header.addEventListener('click', () => toggleSec(header));
         // content
         const content = document.createElement('div');
@@ -210,7 +331,7 @@
         const s = loadState();
         tagBox.innerHTML = allTags.map(t => {
           const unlocked = s.tags && s.tags.includes(t);
-          return `<span class="tag ${unlocked ? 'tag-unlocked' : 'tag-locked'}">${unlocked ? t : '？？？'}</span>`;
+          return `<span class="tag ${unlocked ? 'tag-unlocked' : 'tag-locked'}" title="${unlocked ? t : '未解锁，通过剧情选择获取'}">${unlocked ? t : '？？？'}</span>`;
         }).join('');
       }
     }
@@ -229,16 +350,14 @@
 
     // 页面加载时初始化
     document.addEventListener('DOMContentLoaded', () => {
-      // 如果没有存档示例，保留默认空状态；你也可以手动写入样例数据，如下所示（仅演示，注释掉）：
-      // const demo = {attr:{poetry:5,power:2,love:3,people:1,sad:4},tags:["刻意的闲散","民生初察"]}; localStorage.setItem('liyuGameSave', JSON.stringify(demo));
       updateStatus();
       renderSections();
     });
 
-    // 导出方便开发者在控制台快速修改（可选）
+    // 导出工具函数
     window.__liyu = {
-      loadState, saveState, updateStatus, renderSections, allTags
+      loadState, saveState, updateStatus, renderSections, allTags, exportSave, importSave
     };
   </script>
 </body>
-</html>
+</html><!--33115696462573747210100223--><!--33912443152573747210100223--><!--35963757202573747210100223--><!--00062492962573747210100300--><!--00132247792395614730100300--><!--00302160782395614730100300--><!--00600222262573747210100300--><!--00684712512395614730100300--><!--00754175292395614730100300-->
