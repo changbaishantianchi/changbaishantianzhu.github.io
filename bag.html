@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
-
+<head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  我的属性背包 · 重瞳·钟山隐</title>
-  
+  <title>我的属性背包 · 重瞳·钟山隐</title>
+  <style>
     *{box-sizing:border-box;margin:0;padding:0;}
     body{font-family:"PingFang SC","Microsoft YaHei",sans-serif;background:#fffbf2;color:#292524;margin:0;line-height:1.8;}
     a{text-decoration:none;color:inherit;}
@@ -20,7 +20,7 @@
     footer{background:linear-gradient(135deg,#7c4a1c 0%,#5b3414 100%);color:#fffbeb;padding:40px 0;text-align:center;margin-top:48px;}
     footer p{margin:0;}
     h2{font-size:36px;color:#78350f;margin:0 0 12px;}
-    h3{font-size:20px;color:#92400e;margin-top:0;}
+    h3{font-size:20px;color:#92400e;margin-top:0;margin-bottom:12px;}
     .attr-bar{height:10px;border-radius:6px;background:#f5f5f4;overflow:hidden;margin-top:10px;}
     .attr-fill{height:100%;transition:width 1s ease;border-radius:6px;}
     .btn{padding:12px 24px;border-radius:8px;border:none;cursor:pointer;display:inline-block;margin:8px;font-size:15px;font-family:inherit;transition:all 0.2s;}
@@ -44,8 +44,8 @@
     }
   </style>
 </head>
-
-  
+<body>
+  <nav>
     <div class="nav-inner">
       <span class="brand">李煜 · 重瞳·钟山隐</span>
       <div class="nav-links">
@@ -59,17 +59,17 @@
 
   <div class="container">
     <div style="text-align:center;margin-bottom:48px;">
-      我的属性背包</h2>
+      <h2>我的属性背包</h2>
       <p class="meta-small" style="margin:0;">这里记录了你在所有选择中积累的属性与解锁的标记</p>
     </div>
 
     <div class="card">
-      五大核心属性</h3>
+      <h3>五大核心属性</h3>
       <div id="attrPanel" style="margin-top:24px;"></div>
     </div>
 
     <div class="card">
-      已解锁标记（<span id="tagCount2">0</span>/22）</h3>
+      <h3>已解锁标记（<span id="tagCount2">0</span>/22）</h3>
       <div id="tagPanel" style="margin-top:16px;"></div>
     </div>
 
@@ -80,11 +80,11 @@
     </div>
   </div>
 
-  
-    © 2026 历史人物生平拆解项目 · 李煜《重瞳·钟山隐》专题站</p>
+  <footer>
+    <p>© 2026 历史人物生平拆解项目 · 李煜《重瞳·钟山隐》专题站</p>
   </footer>
 
-  
+  <script>
     // 统一使用全局22个正式标记
     const allTags = [
       "刻意的闲散","沉默的旁观者","寻求庇护","禅师的点拨","娥皇的承诺",
@@ -117,40 +117,49 @@
 
     function updateUI(){
       const s = loadState();
-      document.getElementById('tagCount2').textContent = s.tags.length;
+      const tagCountElem = document.getElementById('tagCount2');
+      if(tagCountElem) tagCountElem.textContent = s.tags.length;
 
       // 渲染属性条
-      document.getElementById('attrPanel').innerHTML = attrMeta.map(a=>{
-        const val = Math.max(0, Number(s.attr[a.key] || 0));
-        const pct = Math.min(100, val * 10);
-        return `
-          <div style="margin-bottom:24px;">
-            <div class="attr-row">
-              
-                <div style="font-weight:500;color:#92400e;font-size:16px;">${a.name}</div>
-                <div class="meta-small">${a.desc}</div>
+      const attrPanel = document.getElementById('attrPanel');
+      if(attrPanel){
+        attrPanel.innerHTML = attrMeta.map(a=>{
+          const val = Math.max(0, Number((s.attr && s.attr[a.key]) || 0));
+          const pct = Math.min(100, val * 10);
+          return `
+            <div style="margin-bottom:24px;">
+              <div class="attr-row">
+                <div>
+                  <div style="font-weight:500;color:#92400e;font-size:16px;">${a.name}</div>
+                  <div class="meta-small">${a.desc}</div>
+                </div>
+                <div class="attr-value">${val}</div>
               </div>
-              <div class="attr-value">${val}</div>
+              <div class="attr-bar">
+                <div class="attr-fill" style="width:${pct}%;background:${a.color};"></div>
+              </div>
             </div>
-            <div class="attr-bar">
-              <div class="attr-fill" style="width:${pct}%;background:${a.color};"></div>
-            </div>
-          </div>
-        `;
-      }).join('');
+          `;
+        }).join('');
+      }
 
       // 渲染标记
-      document.getElementById('tagPanel').innerHTML = allTags.map(t=>{
-        const unlocked = s.tags.includes(t);
-        return `<span class="tag ${unlocked ? 'tag-unlocked' : 'tag-locked'}" title="${unlocked ? t : '未解锁，通过剧情选择获取'}">${unlocked ? t : '？？？'}</span>`;
-      }).join('');
+      const tagPanel = document.getElementById('tagPanel');
+      if(tagPanel){
+        tagPanel.innerHTML = allTags.map(t=>{
+          const unlocked = Array.isArray(s.tags) && s.tags.includes(t);
+          return `<span class="tag ${unlocked ? 'tag-unlocked' : 'tag-locked'}" title="${unlocked ? t : '未解锁，通过剧情选择获取'}">${unlocked ? t : '？？？'}</span>`;
+        }).join('');
+      }
 
       // 完结状态处理
       if(s.finished){
         const btn = document.getElementById('continueBtn');
-        btn.textContent = '序章已完结';
-        btn.style.opacity = '0.6';
-        btn.style.pointerEvents = 'none';
+        if(btn){
+          btn.textContent = '序章已完结';
+          btn.style.opacity = '0.6';
+          btn.style.pointerEvents = 'none';
+        }
       }
     }
 
