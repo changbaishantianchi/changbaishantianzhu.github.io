@@ -4,113 +4,101 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   人生进度 · 重瞳·钟山隐</title>
-  <script src="https://cdn.tailwindcss.com"></script>
   
+    * { box-sizing: border-box; }
     html { scroll-behavior: smooth; }
     body {
       font-family: "PingFang SC", "Microsoft YaHei", "Noto Sans SC", sans-serif;
       background: #fffbf2;
       color: #292524;
+      margin: 0;
+      line-height: 1.6;
     }
     .ink-gradient {
       background: linear-gradient(135deg, #7c4a1c 0%, #5b3414 100%);
     }
-    .card-hover:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 12px 24px rgba(120, 75, 30, 0.08);
+    nav {
+      position:fixed;width:100%;background:rgba(255,251,242,0.95);
+      backdrop-filter:blur(8px);box-shadow:0 1px 3px rgba(0,0,0,0.05);
+      z-index:50;border-bottom:1px solid #fef3c7;top:0;
     }
+    .nav-inner {
+      max-width:1280px;margin:0 auto;padding:0 24px;
+      display:flex;justify-content:space-between;height:64px;align-items:center;
+    }
+    .nav-item { text-decoration:none; color:#57534e; font-size:18px; cursor:pointer; }
+    .nav-item.active { color:#92400e; font-weight:500; }
+    .nav-item:hover { color:#92400e; }
+    #statusBar {
+      position:fixed;top:80px;right:16px;background:rgba(255,255,255,0.9);
+      backdrop-filter:blur(4px);padding:12px;border-radius:8px;
+      box-shadow:0 4px 6px rgba(0,0,0,0.08);z-index:40;border:1px solid #fef3c7;
+      font-size:14px;pointer-events:none;
+    }
+    .scene-card { animation: fadeIn 0.6s ease-in-out; }
+    @keyframes fadeIn { from {opacity:0;transform:translateY(12px);} to {opacity:1;transform:translateY(0);} }
     .choice-btn {
-      transition: all 0.3s ease;
-      pointer-events: auto;
+      width:100%;text-align:left;padding:20px;border:1px solid #fde68a;
+      border-radius:8px;background:white;cursor:pointer;transition:all 0.3s;
+      margin-bottom:16px;font-family:inherit;font-size:16px;
     }
     .choice-btn:hover:not(:disabled) {
-      background: #fff7ed;
-      border-color: #f6c68d;
-      transform: translateY(-2px);
+      background:#fff7ed;border-color:#f6c68d;transform:translateY(-2px);
     }
-    .choice-btn:disabled {
-      opacity: 0.6;
-      cursor: not-allowed;
-    }
-    .scene-card {
-      animation: fadeIn 0.6s ease-in-out;
-    }
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(12px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-    .nav-item:hover {
-      color: #92400e;
-    }
+    .choice-btn:disabled { opacity:0.6; cursor:not-allowed; }
+    .container { max-width:900px; margin:0 auto; padding:112px 24px 96px; }
+    .bg-amber50 { background:#fffbeb; padding:32px; border-radius:12px; margin-bottom:32px; box-shadow:0 1px 3px rgba(0,0,0,0.05); }
+    .bg-stone50 { background:#fafaf9; padding:32px; border-radius:12px; margin-bottom:32px; }
+    h2 { color:#78350f; }
+    h3 { color:#92400e; padding-bottom:12px; border-bottom:1px solid #fde68a; }
+    footer { background:linear-gradient(135deg, #7c4a1c 0%, #5b3414 100%);color:#fffbeb;padding:40px 0;text-align:center; }
   </style>
 </head>
-<body class="bg-amber-50/30">
-  <!-- 顶部固定导航 -->
-  <nav class="fixed w-full bg-amber-50/95 backdrop-blur-md shadow-sm z-50 border-b border-amber-100">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="flex justify-between h-16 items-center">
-        <div class="flex items-center">
-          <span class="font-bold text-xl text-amber-900">李煜 · 重瞳·钟山隐</span>
-        </div>
-        <div class="hidden md:flex space-x-12">
-          <a href="index.html" class="nav-item text-stone-600 hover:text-amber-700 font-medium text-lg transition">序章首页</a>
-          <a href="progress.html" class="nav-item text-amber-700 font-medium text-lg transition">人生进度</a>
-          <a href="appendix.html" class="nav-item text-stone-600 hover:text-amber-700 font-medium text-lg transition">拓展附录</a>
-          <a href="journey.html" class="nav-item text-stone-600 hover:text-amber-700 font-medium text-lg transition">我的人生轨迹</a>
-          <a href="bag.html" class="nav-item text-stone-600 hover:text-amber-700 font-medium text-lg transition">我的属性背包</a>
-        </div>
+
+  
+    <div class="nav-inner">
+      <span style="font-weight:bold;font-size:20px;color:#78350f;">李煜 · 重瞳·钟山隐</span>
+      <div style="display:flex;gap:48px;">
+        <a href="index.html" class="nav-item">序章首页</a>
+        <a href="progress.html" class="nav-item active">人生进度</a>
+        <a href="appendix.html" class="nav-item">拓展附录</a>
+        <a href="journey.html" class="nav-item">我的人生轨迹</a>
+        <a href="bag.html" class="nav-item">我的属性背包</a>
       </div>
     </div>
   </nav>
 
-  <!-- 全局属性状态栏 -->
-  <div id="statusBar" class="fixed top-20 right-4 bg-white/90 backdrop-blur-sm p-3 rounded-lg shadow-md z-40 border border-amber-100 text-sm pointer-events-none">
-    <div class="grid grid-cols-5 gap-3 mb-2 pb-2 border-b border-amber-50">
-      <div class="text-center px-2"><p class="text-amber-700 font-medium">词心</p><p id="attr-poetry" class="text-stone-600">0</p></div>
-      <div class="text-center px-2"><p class="text-amber-700 font-medium">龙椅</p><p id="attr-power" class="text-stone-600">0</p></div>
-      <div class="text-center px-2"><p class="text-amber-700 font-medium">情缘</p><p id="attr-love" class="text-stone-600">0</p></div>
-      <div class="text-center px-2"><p class="text-amber-700 font-medium">民心</p><p id="attr-people" class="text-stone-600">0</p></div>
-      <div class="text-center px-2"><p class="text-amber-700 font-medium">愁绪</p><p id="attr-sad" class="text-stone-600">0</p></div>
+  <div id="statusBar">
+    <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:12px;margin-bottom:8px;padding-bottom:8px;border-bottom:1px solid #fffbeb;">
+      <div style="text-align:center;padding:0 4px;"><p style="color:#b45309;font-weight:500;margin:0;">词心</p><p id="attr-poetry" style="color:#57534e;margin:4px 0 0 0;">0</p></div>
+      <div style="text-align:center;padding:0 4px;"><p style="color:#b45309;font-weight:500;margin:0;">龙椅</p><p id="attr-power" style="color:#57534e;margin:4px 0 0 0;">0</p></div>
+      <div style="text-align:center;padding:0 4px;"><p style="color:#b45309;font-weight:500;margin:0;">情缘</p><p id="attr-love" style="color:#57534e;margin:4px 0 0 0;">0</p></div>
+      <div style="text-align:center;padding:0 4px;"><p style="color:#b45309;font-weight:500;margin:0;">民心</p><p id="attr-people" style="color:#57534e;margin:4px 0 0 0;">0</p></div>
+      <div style="text-align:center;padding:0 4px;"><p style="color:#b45309;font-weight:500;margin:0;">愁绪</p><p id="attr-sad" style="color:#57534e;margin:4px 0 0 0;">0</p></div>
     </div>
-    <p class="text-xs text-stone-500">已收集标记：<span id="tagCount">0</span>/22</p>
+    <p style="font-size:12px;color:#78716c;margin:0;">已收集标记：<span id="tagCount">0</span>/22</p>
   </div>
 
-  <!-- 剧情容器 -->
-  <section class="pt-28 pb-24">
-    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div id="storyContainer"></div>
-    </div>
-  </section>
+  <div class="container">
+    <div id="storyContainer"></div>
+  </div>
 
-  <!-- 页脚 -->
-  <footer class="ink-gradient text-amber-50 py-10">
-    <div class="max-w-7xl mx-auto px-4 text-center">
-      © 2026 历史人物生平拆解项目 · 李煜《重瞳·钟山隐》专题站</p>
-    </div>
+  
+    <p style="margin:0;">© 2026 历史人物生平拆解项目 · 李煜《重瞳·钟山隐》专题站</p>
   </footer>
 
   
-    // 全局状态
     let gameState = loadState()
-
     function loadState(){
       const saved = localStorage.getItem('liyuGameSave')
       if(saved) return JSON.parse(saved)
       return {
         attr: {poetry:0,power:0,love:0,people:0,sad:0},
-        tags: [],
-        currentScene: 0,
-        choices: [],
-        started: true,
-        finished: false
+        tags: [], currentScene: 0, choices: [], started: true, finished: false
       }
     }
-    function saveState(){
-      localStorage.setItem('liyuGameSave', JSON.stringify(gameState))
-      updateStatusUI()
-    }
-
-    function updateStatusUI(){
+    function saveState(){ localStorage.setItem('liyuGameSave', JSON.stringify(gameState)); updateUI(); }
+    function updateUI(){
       document.getElementById('attr-poetry').textContent = gameState.attr.poetry
       document.getElementById('attr-power').textContent = gameState.attr.power
       document.getElementById('attr-love').textContent = gameState.attr.love
@@ -119,301 +107,41 @@
       document.getElementById('tagCount').textContent = gameState.tags.length
     }
 
-    // 完整剧情脚本
     const storyLines = [
-      {
-        title: "楔子 · 重瞳降生",
-        content: `<div class="bg-amber-50 p-8 rounded-xl mb-12 shadow-sm">
-            <h3 class="text-2xl font-semibold text-amber-800 mb-6 border-b border-amber-200 pb-3">楔子 · 重瞳降生</h3>
-            <div class="prose max-w-none text-stone-700 leading-relaxed text-lg">
-              <p class="mb-4">公元937年，七夕。金陵宫城，梧桐未落。</p>
-              <p class="mb-4">六皇子降生了。据说他生来一目重瞳，祖父李昪亲自来看，沉默良久，说了一句：“此儿有异相，他日必大贵。”</p>
-              <p class="mb-4">没有人追问“大贵”是什么意思。因为所有人都知道，皇位是大哥李弘冀的。而这个生着双瞳的孩子，只需在钟山脚下，做一名读书人，便足够安稳。</p>
-              这是你的心愿，也是你的伪装。但命运，从来不问人的心愿。</p>
-            </div>
-          </div>
-          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-16">
-            <div class="bg-amber-50 p-6 rounded-xl card-hover transition duration-300">
-              <h4 class="text-xl font-medium text-amber-800 mb-3">澄心堂</h4>
-              <p class="text-stone-600 leading-relaxed">父亲李璟处理政务与写字的地方。你小时候常坐一旁，看他研墨落笔，那句“细雨梦回鸡塞远，小楼吹彻玉笙寒”的墨意，像是最早的命运预兆。</p>
-            </div>
-            <div class="bg-amber-50 p-6 rounded-xl card-hover transition duration-300">
-              <h4 class="text-xl font-medium text-amber-800 mb-3">瑶光殿</h4>
-              <p class="text-stone-600 leading-relaxed">大周后娥皇的寝殿，临水而建。殿里挂着半卷《霓裳羽衣曲》残谱，她弹琵琶的时候，音色清越得像江南的雨，连柳絮都忍不住停一停。</p>
-            </div>
-            <div class="bg-amber-50 p-6 rounded-xl card-hover transition duration-300">
-              <h4 class="text-xl font-medium text-amber-800 mb-3">清凉寺</h4>
-              <p class="text-stone-600 leading-relaxed">城外的古寺，住持是一位不问世事的老僧。十二岁那年你问他“人为什么会有重瞳”，他说“看得多，未必是福”，那句话后来总在你睡前浮现。</p>
-            </div>
-          </div>`,
-        options: [
-          {
-            text: "选择 A：烧掉信，写一首《渔父》词，表明心志",
-            desc: "把信凑到烛火上化为灰烬，写下“浪花有意千里雪，桃花无言一队春”，命人把词送到金陵城，让所有人都知道，你不愿被命运定型。",
-            effect: "效果：词心+2，龙椅-1。获得词牌《渔父》，获得标记「刻意的闲散」",
-            action: () => { gameState.attr.poetry += 2; gameState.attr.power -= 1; gameState.tags.push("刻意的闲散"); },
-            nextScene: 1
-          },
-          {
-            text: "选择 B：把信收好，当作什么都没发生",
-            desc: "把信折好压在书案最底层，继续研墨写词，假装自己什么都没看见，什么都没听见。",
-            effect: "效果：愁绪+1。获得标记「沉默的旁观者」",
-            action: () => { gameState.attr.sad += 1; gameState.tags.push("沉默的旁观者"); },
-            nextScene: 2
-          },
-          {
-            text: "选择 C：冒雨进宫，去见父亲",
-            desc: "披上蓑衣骑马入城，在澄心堂向父亲开口提及此事，得到他“你只管读书写词，其他的事有父亲在”的承诺。",
-            effect: "效果：龙椅+1，词心+1。获得线索「父亲的承诺」，获得标记「寻求庇护」",
-            action: () => { gameState.attr.power += 1; gameState.attr.poetry += 1; gameState.tags.push("寻求庇护"); },
-            nextScene: 3
-          }
-        ]
-      },
-      {
-        title: "过渡一 · 雨停辞山",
-        content: `<div class="bg-stone-50 p-8 rounded-xl mb-12 scene-card">
-            <h3 class="text-2xl font-semibold text-amber-800 mb-6">你选择了烧掉大哥的信，写下渔父词明志</h3>
-            <p class="text-stone-600 mb-4 leading-relaxed text-lg">烛火把信纸烧成黑灰的那一刻，窗外的雨刚好停了。你把刚写好的词笺递给侍从，让他立刻送进金陵城，贴在最热闹的酒肆墙上。</p>
-            <p class="text-stone-600 mb-4 leading-relaxed text-lg">不过三日，整个金陵城都在传六皇子写的那两句渔父词，人人都夸六皇子潇洒自在，毫无争储之心。大哥李弘冀看到词之后，果然放下了对你的戒心，再也没派人往钟山书斋递过威胁的信。</p>
-            <p class="text-stone-700 leading-relaxed text-lg">你站在书斋门口望着远处的金陵城墙，风卷着词纸的墨香吹过耳边，你此刻忽然明白：这世上最聪明的避祸，从来不是逃开权力，而是让权力觉得你根本不值得一提。</p>
-          </div>
-          <div class="bg-amber-50 p-8 rounded-xl scene-card">
-            <h3 class="text-xl font-semibold text-amber-800 mb-4">入城路上</h3>
-            <p class="text-stone-500 leading-relaxed mb-2">你带着刚写好的两首渔父词，骑马往金陵城走，路上刚好经过清凉寺，当年给你批命的老僧站在山门口等了你很久。</p>
-            <p class="text-stone-500 leading-relaxed">他递了你一卷亲手抄的《金刚经》，告诉你“重瞳不必避世，人心从来比权欲软”。</p>
-          </div>`,
-        options: [
-          {
-            text: "收下经书，谢过禅师，继续进城",
-            desc: "",
-            effect: "效果：愁绪-1。获得标记「禅师的点拨」",
-            action: () => { gameState.attr.sad -= 1; gameState.tags.push("禅师的点拨"); },
-            nextScene: 4
-          }
-        ]
-      },
-      {
-        title: "过渡一 · 无声的雨",
-        content: `<div class="bg-stone-50 p-8 rounded-xl mb-12 scene-card">
-            <h3 class="text-2xl font-semibold text-amber-800 mb-6">你选择把信压在书案最底层，假装什么都没发生</h3>
-            <p class="text-stone-600 mb-4 leading-relaxed text-lg">你把信纸折得平平整整，压在最爱的那卷《花间集》下面。窗外的雨下到黄昏也没停，你握着笔半天没落下一个字，纸上的空白处晕开了好大一圈墨痕。</p>
-            <p class="text-stone-600 mb-4 leading-relaxed text-lg">此后半个月你都假装什么事都没发生，该看书看书，该填词填词，可你总能在没人的时候，听见书斋外传来奇怪的脚步声。你知道那是大哥派来的人，在盯着你的一举一动。</p>
-            <p class="text-stone-700 leading-relaxed text-lg">你从来没把那封信的事告诉过任何人，可那页信纸折痕的痕迹越来越深，像一道无声的伤口，刻在你和整个东宫之间。</p>
-          </div>
-          <div class="bg-amber-50 p-8 rounded-xl scene-card">
-            <h3 class="text-xl font-semibold text-amber-800 mb-4">娥皇来访</h3>
-            <p class="text-stone-500 leading-relaxed mb-2">半个月后娥皇来钟山书斋看你，一眼就看出你藏在《花间集》里那张信纸的折痕，她没说破，只是笑着弹了一首你从来没听过的新曲子，曲子里全是安慰。</p>
-            <p class="text-stone-500 leading-relaxed">你握着茶杯听完全曲，第一次觉得，原来有人不用你开口，就懂你所有没说出口的话。</p>
-          </div>`,
-        options: [
-          {
-            text: "送娥皇回瑶光殿，同她一起整理霓裳羽衣曲残谱",
-            desc: "",
-            effect: "效果：情缘+2。获得标记「娥皇的承诺」",
-            action: () => { gameState.attr.love += 2; gameState.tags.push("娥皇的承诺"); },
-            nextScene: 4
-          }
-        ]
-      },
-      {
-        title: "过渡一 · 澄心堂的蓑衣",
-        content: `<div class="bg-stone-50 p-8 rounded-xl mb-12 scene-card">
-            <h3 class="text-2xl font-semibold text-amber-800 mb-6">你选择冒雨进宫，去澄心堂见父亲</h3>
-            <p class="text-stone-600 mb-4 leading-relaxed text-lg">你披着蓑衣骑马冲进金陵城的时候，浑身都淋得湿透。李璟看到你滴着水走进澄心堂，听完你说的话，半天没说话，只是伸手拍了拍你的肩膀。</p>
-            <p class="text-stone-600 mb-4 leading-relaxed text-lg">第二天宫里就传出了陛下给六皇子李从嘉加食邑三千户的消息，太子李弘冀得知这件事之后，果然再也没敢随便动你。整个金陵的官员都开始意识到，六皇子再也不是那个可以随便欺负的闲散皇子。</p>
-            <p class="text-stone-700 leading-relaxed text-lg">你站在澄心堂的廊下脱掉滴水的蓑衣，看着檐角流下的雨线，忽然明白了一件事：你本想躲着权力走，可当你主动向权力伸手求助的那一刻，你早就已经走到了权力的棋局里。</p>
-          </div>
-          <div class="bg-amber-50 p-8 rounded-xl scene-card">
-            <h3 class="text-xl font-semibold text-amber-800 mb-4">瑶光殿姜汤</h3>
-            <p class="text-stone-500 leading-relaxed mb-2">从澄心堂出来之后你没有直接回钟山，转身往瑶光殿走，娥皇早就准备好了干衣服和热姜汤在殿门口等你，她笑着说“我就知道你今天会过来”。</p>
-            <p class="text-stone-500 leading-relaxed">你端着姜汤站在殿门口看她调琵琶弦，忽然觉得哪怕以后真的卷进朝堂风波，只要这里永远留着一盏灯等你，好像也没那么可怕。</p>
-          </div>`,
-        options: [
-          {
-            text: "留在宫里，帮父亲处理一些江南赈灾的小事",
-            desc: "",
-            effect: "效果：民心+2。获得标记「民生初察」",
-            action: () => { gameState.attr.people += 2; gameState.tags.push("民生初察"); },
-            nextScene: 4
-          }
-        ]
-      },
-      {
-        title: "第二幕 · 瑶光殿琵琶",
-        content: `<div class="bg-stone-50 p-8 rounded-xl mb-12 scene-card">
-            <h3 class="text-2xl font-semibold text-amber-800 mb-6">瑶光殿琵琶语</h3>
-            <p class="text-stone-600 mb-4 leading-relaxed text-lg">你回到金陵城的第三日，瑶光殿的梨花全开了。娥皇在殿外的梨树下摆了酒，她抱着琵琶问你：“殿下，你到底想做什么样的人？”</p>
-            <p class="text-stone-700 leading-relaxed text-lg mb-4">风卷着梨花落在琵琶弦上，你端着酒杯沉默了很久。你想起钟山的书斋，想起澄心堂的墨香，想起清凉寺老僧说的话，也想起大哥递来的那封带着威胁的信。</p>
-            <p class="text-stone-700 leading-relaxed text-lg">这个问题你问过自己很多次，从来没有答案。可今天看着娥皇的眼睛，你忽然想把答案说给她听。</p>
-          </div>`,
-        options: [
-          {
-            text: "我只想做个词人，和你在江南填一辈子词",
-            desc: "",
-            effect: "效果：词心+1，情缘+1。获得标记「梨花誓约」",
-            action: () => { gameState.attr.poetry +=1; gameState.attr.love +=1; gameState.tags.push("梨花誓约"); },
-            nextScene: 5
-          },
-          {
-            text: "我也不知道，走一步看一步吧",
-            desc: "",
-            effect: "效果：愁绪+2。获得标记「迷途者」",
-            action: () => { gameState.attr.sad +=2; gameState.tags.push("迷途者"); },
-            nextScene: 5
-          },
-          {
-            text: "父亲年纪大了，我总得为南唐分担一些",
-            desc: "",
-            effect: "效果：民心+1，龙椅+1。获得标记「储君之念」",
-            action: () => { gameState.attr.people +=1; gameState.attr.power +=1; gameState.tags.push("储君之念"); },
-            nextScene: 5
-          }
-        ]
-      },
-      {
-        title: "第三幕 · 东宫惊变",
-        content: `<div class="bg-stone-50 p-8 rounded-xl mb-12 scene-card">
-            <h3 class="text-2xl font-semibold text-amber-800 mb-6">大哥病逝</h3>
-            <p class="text-stone-600 mb-4 leading-relaxed text-lg">你从瑶光殿回府的第二日，宫里突然传来消息：太子李弘冀暴病而亡。</p>
-            <p class="text-stone-600 mb-4 leading-relaxed text-lg">你站在东宫灵堂里，看着大哥的棺木，想起他曾经派人给你递过的威胁信，想起他年少时在马背上教你射箭的样子，心里五味杂陈。满朝文武站在灵堂两侧，所有人的目光都落在你身上——现在你是李璟唯一在世的嫡长子，太子之位，除了你没有人能坐。</p>
-            <p class="text-stone-700 leading-relaxed text-lg">你跪在灵前烧纸，火光照着你的重瞳，你忽然明白，你躲了半辈子的东西，最终还是落到了你头上。</p>
-          </div>`,
-        options: [
-          {
-            text: "在灵堂大哭一场，主动上表请辞太子位",
-            desc: "",
-            effect: "效果：愁绪+2，龙椅-2。获得标记「避世未成」",
-            action: () => { gameState.attr.sad +=2; gameState.attr.power -=2; gameState.tags.push("避世未成"); },
-            nextScene: 6
-          },
-          {
-            text: "沉默接受所有安排，开始学习处理政务",
-            desc: "",
-            effect: "效果：龙椅+2，民心+1。获得标记「受诏东宫」",
-            action: () => { gameState.attr.power +=2; gameState.attr.people +=1; gameState.tags.push("受诏东宫"); },
-            nextScene: 6
-          }
-        ]
-      },
-      {
-        title: "第四幕 · 改名登基",
-        content: `<div class="bg-stone-50 p-8 rounded-xl mb-12 scene-card">
-            <h3 class="text-2xl font-semibold text-amber-800 mb-6">父亲病逝，改名李煜</h3>
-            <p class="text-stone-600 mb-4 leading-relaxed text-lg">李璟去世的那天，把你叫到澄心堂床前，把传国玉玺交到你手里，他说“从嘉，南唐就交给你了，守好江南的百姓”。</p>
-            <p class="text-stone-600 mb-4 leading-relaxed text-lg">登基大典那天，司仪官奏请陛下改名，你选了“煜”字——重光为煜，你不再是钟山脚下那个闲散的李从嘉，你是南唐国主李煜。</p>
-            <p class="text-stone-700 leading-relaxed text-lg">你穿着龙袍站在金陵宫城的城楼上，看着城下跪拜的文武百官和百姓，风从钟山方向吹过来，带着你熟悉的书斋墨香。你知道，从今天起，你再也回不去了。</p>
-          </div>`,
-        options: [
-          {
-            text: "登基后第一日，下旨减免江南赋税三年",
-            desc: "",
-            effect: "效果：民心+3，龙椅+1。获得标记「仁主初政」「重光之煜」「告别钟山」「父亲的遗命」",
-            action: () => { 
-              gameState.attr.people +=3; gameState.attr.power +=1; 
-              ["仁主初政","重光之煜","告别钟山","父亲的遗命"].forEach(t=>gameState.tags.push(t));
-            },
-            nextScene: 7
-          },
-          {
-            text: "登基后第一日，回钟山书斋坐了一下午",
-            desc: "",
-            effect: "效果：词心+2，愁绪+2。获得标记「故园之思」「重光之煜」「告别钟山」「父亲的遗命」",
-            action: () => { 
-              gameState.attr.poetry +=2; gameState.attr.sad +=2; 
-              ["故园之思","重光之煜","告别钟山","父亲的遗命"].forEach(t=>gameState.tags.push(t));
-            },
-            nextScene: 7
-          }
-        ]
-      },
-      {
-        title: "终幕 · 登基前夜",
-        content: `<div class="bg-stone-50 p-8 rounded-xl mb-12 scene-card">
-            <h3 class="text-2xl font-semibold text-amber-800 mb-6">登基前夜</h3>
-            <p class="text-stone-600 mb-4 leading-relaxed text-lg">登基大典的前一晚，你一个人坐在澄心堂里，案上摆着传国玉玺，旁边放着你刚填完的半阕词。</p>
-            <p class="text-stone-600 mb-4 leading-relaxed text-lg">外面下起了和你出生那天一样的七夕雨，你伸手摸了摸自己的重瞳，想起祖父当年说的“他日必大贵”，想起父亲临终前的嘱托，想起娥皇在瑶光殿等你回去喝莲子羹，也想起钟山书斋里你没写完的那些渔父词。</p>
-            <p class="text-stone-700 leading-relaxed text-lg">你知道，序章到这里就结束了。属于南唐后主李煜的人生，才刚刚开始。</p>
-          </div>`,
-        options: [
-          {
-            text: "合上笔，起身走向登基大典的方向",
-            desc: "",
-            effect: "序章完结，查看我的人生轨迹",
-            action: () => { 
-              gameState.tags.push("孤家寡人","祖父的预言");
-              gameState.finished = true;
-            },
-            nextScene: -1
-          }
-        ]
-      }
+      {title:"楔子 · 重瞳降生",content:`<div class="bg-amber50 scene-card">楔子 · 重瞳降生</h3><p style="font-size:18px;color:#44403c;">公元937年，七夕。金陵宫城，梧桐未落。</p><p style="font-size:18px;color:#44403c;">六皇子降生了。据说他生来一目重瞳，祖父李昪亲自来看，沉默良久，说了一句：“此儿有异相，他日必大贵。”</p><p style="font-size:18px;color:#44403c;">没有人追问“大贵”是什么意思。因为所有人都知道，皇位是大哥李弘冀的。而这个生着双瞳的孩子，只需在钟山脚下，做一名读书人，便足够安稳。</p><p style="font-size:18px;color:#44403c;">这是你的心愿，也是你的伪装。但命运，从来不问人的心愿。</p></div>`,options:[{text:"选择 A：烧掉信，写一首《渔父》词，表明心志",desc:"把信凑到烛火上化为灰烬，写下“浪花有意千里雪，桃花无言一队春”，命人把词送到金陵城，让所有人都知道，你不愿被命运定型。",effect:"效果：词心+2，龙椅-1。获得标记「刻意的闲散」",action:()=>{gameState.attr.poetry+=2;gameState.attr.power-=1;gameState.tags.push("刻意的闲散")},next:1},{text:"选择 B：把信收好，当作什么都没发生",desc:"把信折好压在书案最底层，继续研墨写词，假装自己什么都没看见，什么都没听见。",effect:"效果：愁绪+1。获得标记「沉默的旁观者」",action:()=>{gameState.attr.sad+=1;gameState.tags.push("沉默的旁观者")},next:2},{text:"选择 C：冒雨进宫，去见父亲",desc:"披上蓑衣骑马入城，在澄心堂向父亲开口提及此事，得到他“你只管读书写词，其他的事有父亲在”的承诺。",effect:"效果：龙椅+1，词心+1。获得标记「寻求庇护」",action:()=>{gameState.attr.power+=1;gameState.attr.poetry+=1;gameState.tags.push("寻求庇护")},next:3}]},
+      {title:"过渡一 · 雨停辞山",content:`<div class="bg-stone50 scene-card">你选择了烧掉大哥的信，写下渔父词明志</h3><p style="font-size:18px;color:#44403c;">烛火把信纸烧成黑灰的那一刻，窗外的雨刚好停了。你把刚写好的词笺递给侍从，让他立刻送进金陵城，贴在最热闹的酒肆墙上。</p><p style="font-size:18px;color:#44403c;">不过三日，整个金陵城都在传六皇子写的渔父词，大哥李弘冀看到词之后，果然放下了对你的戒心。</p></div><div class="bg-amber50 scene-card">入城路上</h3><p style="color:#78716c;">你带着刚写好的两首渔父词骑马进城，路过清凉寺时，当年给你批命的老僧站在山门口等了你很久，他递了你一卷亲手抄的《金刚经》。</p></div>`,options:[{text:"收下经书，谢过禅师，继续进城",desc:"",effect:"效果：愁绪-1。获得标记「禅师的点拨」",action:()=>{gameState.attr.sad-=1;gameState.tags.push("禅师的点拨")},next:4}]},
+      {title:"过渡一 · 无声的雨",content:`<div class="bg-stone50 scene-card">你选择把信压在书案最底层，假装什么都没发生</h3><p style="font-size:18px;color:#44403c;">你把信纸折得平平整整，压在最爱的那卷《花间集》下面。窗外的雨下到黄昏也没停，你握着笔半天没落下一个字。</p><p style="font-size:18px;color:#44403c;">此后半个月你都假装什么事都没发生，可你总能在没人的时候，听见书斋外传来奇怪的脚步声——那是大哥派来盯着你的人。</p></div><div class="bg-amber50 scene-card">娥皇来访</h3><p style="color:#78716c;">半个月后娥皇来钟山书斋看你，一眼就看出你藏在书里的信纸折痕，她没说破，只是笑着弹了一首新曲子，曲子里全是安慰。</p></div>`,options:[{text:"送娥皇回瑶光殿，同她一起整理霓裳羽衣曲残谱",desc:"",effect:"效果：情缘+2。获得标记「娥皇的承诺」",action:()=>{gameState.attr.love+=2;gameState.tags.push("娥皇的承诺")},next:4}]},
+      {title:"过渡一 · 澄心堂的蓑衣",content:`<div class="bg-stone50 scene-card">你选择冒雨进宫，去澄心堂见父亲</h3><p style="font-size:18px;color:#44403c;">你披着蓑衣骑马冲进金陵城的时候，浑身都淋得湿透。李璟看到你滴着水走进澄心堂，听完你说的话，半天没说话，只是伸手拍了拍你的肩膀。</p><p style="font-size:18px;color:#44403c;">第二天宫里就传出陛下给六皇子加食邑三千户的消息，太子李弘冀再也没敢随便动你。</p></div><div class="bg-amber50 scene-card">瑶光殿姜汤</h3><p style="color:#78716c;">从澄心堂出来你往瑶光殿走，娥皇早就准备好了干衣服和热姜汤在殿门口等你，她笑着说“我就知道你今天会过来”。</p></div>`,options:[{text:"留在宫里，帮父亲处理一些江南赈灾的小事",desc:"",effect:"效果：民心+2。获得标记「民生初察」",action:()=>{gameState.attr.people+=2;gameState.tags.push("民生初察")},next:4}]},
+      {title:"第二幕 · 瑶光殿琵琶",content:`<div class="bg-stone50 scene-card">瑶光殿琵琶语</h3><p style="font-size:18px;color:#44403c;">你回到金陵城的第三日，瑶光殿的梨花全开了。娥皇在殿外梨树下摆了酒，她抱着琵琶问你：“殿下，你到底想做什么样的人？”</p><p style="font-size:18px;color:#44403c;">风卷着梨花落在琵琶弦上，你端着酒杯沉默了很久。</p></div>`,options:[{text:"我只想做个词人，和你在江南填一辈子词",desc:"",effect:"效果：词心+1，情缘+1。获得标记「梨花誓约」",action:()=>{gameState.attr.poetry+=1;gameState.attr.love+=1;gameState.tags.push("梨花誓约")},next:5},{text:"我也不知道，走一步看一步吧",desc:"",effect:"效果：愁绪+2。获得标记「迷途者」",action:()=>{gameState.attr.sad+=2;gameState.tags.push("迷途者")},next:5},{text:"父亲年纪大了，我总得为南唐分担一些",desc:"",effect:"效果：民心+1，龙椅+1。获得标记「储君之念」",action:()=>{gameState.attr.people+=1;gameState.attr.power+=1;gameState.tags.push("储君之念")},next:5}]},
+      {title:"第三幕 · 东宫惊变",content:`<div class="bg-stone50 scene-card">大哥病逝</h3><p style="font-size:18px;color:#44403c;">你从瑶光殿回府的第二日，宫里突然传来消息：太子李弘冀暴病而亡。</p><p style="font-size:18px;color:#44403c;">你站在东宫灵堂里，看着大哥的棺木，满朝文武的目光都落在你身上——现在你是李璟唯一在世的嫡长子，太子之位，除了你没有人能坐。</p></div>`,options:[{text:"在灵堂大哭一场，主动上表请辞太子位",desc:"",effect:"效果：愁绪+2，龙椅-2。获得标记「避世未成」",action:()=>{gameState.attr.sad+=2;gameState.attr.power-=2;gameState.tags.push("避世未成")},next:6},{text:"沉默接受所有安排，开始学习处理政务",desc:"",effect:"效果：龙椅+2，民心+1。获得标记「受诏东宫」",action:()=>{gameState.attr.power+=2;gameState.attr.people+=1;gameState.tags.push("受诏东宫")},next:6}]},
+      {title:"第四幕 · 改名登基",content:`<div class="bg-stone50 scene-card">父亲病逝，改名李煜</h3><p style="font-size:18px;color:#44403c;">李璟去世那天，把你叫到澄心堂床前，把传国玉玺交到你手里，他说“从嘉，南唐就交给你了，守好江南的百姓”。</p><p style="font-size:18px;color:#44403c;">登基大典那天，你选了“煜”字——你不再是钟山脚下闲散的李从嘉，你是南唐国主李煜。</p></div>`,options:[{text:"登基后第一日，下旨减免江南赋税三年",desc:"",effect:"效果：民心+3，龙椅+1。获得标记「仁主初政」「重光之煜」「告别钟山」「父亲的遗命」",action:()=>{gameState.attr.people+=3;gameState.attr.power+=1;["仁主初政","重光之煜","告别钟山","父亲的遗命"].forEach(t=>gameState.tags.push(t))},next:7},{text:"登基后第一日，回钟山书斋坐了一下午",desc:"",effect:"效果：词心+2，愁绪+2。获得标记「故园之思」「重光之煜」「告别钟山」「父亲的遗命」",action:()=>{gameState.attr.poetry+=2;gameState.attr.sad+=2;["故园之思","重光之煜","告别钟山","父亲的遗命"].forEach(t=>gameState.tags.push(t))},next:7}]},
+      {title:"终幕 · 登基前夜",content:`<div class="bg-stone50 scene-card">登基前夜</h3><p style="font-size:18px;color:#44403c;">登基大典的前一晚，你一个人坐在澄心堂里，案上摆着传国玉玺，旁边放着你刚填完的半阕词。</p><p style="font-size:18px;color:#44403c;">外面下起了和你出生那天一样的七夕雨，你伸手摸了摸自己的重瞳，知道从今天起，你再也回不去钟山了。</p><p style="font-size:18px;color:#44403c;">序章到这里就结束了。属于南唐后主李煜的人生，才刚刚开始。</p></div>`,options:[{text:"合上笔，起身走向登基大典的方向",desc:"",effect:"序章完结，查看我的人生轨迹",action:()=>{gameState.tags.push("孤家寡人","祖父的预言");gameState.finished=true},next:-1}]}
     ]
 
-    // 渲染当前场景
     function renderScene(){
       const scene = storyLines[gameState.currentScene]
-      const container = document.getElementById('storyContainer')
-      
-      container.innerHTML = `
-        <div class="text-center mb-12 scene-card">
-          <h2 class="text-3xl font-bold text-amber-900 mb-3">序章 · 交互式人生轨迹</h2>
-          <p class="text-stone-500">你将代入李煜的视角，在每一个命运岔路口做出选择，走向属于你的南唐结局</p>
-        </div>
-        <h2 class="text-3xl font-bold text-amber-900 mb-8">${scene.title}</h2>
-        ${scene.content}
-        <div class="space-y-4">
-          ${scene.options.map((opt,idx)=>`
-            <button class="choice-btn w-full text-left p-5 border border-amber-200 rounded-lg bg-white" data-idx="${idx}">
-              <span class="font-medium text-lg">${opt.text}</span>
-              ${opt.desc ? `<p class="text-sm text-stone-500 mt-2 leading-relaxed">${opt.desc}</p>` : ''}
-              ${opt.effect ? `<p class="text-xs text-amber-700 mt-2 font-medium">${opt.effect}</p>` : ''}
-            </button>
-          `).join('')}
-        </div>
-      `
-
-      // 事件委托绑定点击
-      container.addEventListener('click', (e)=>{
-        const btn = e.target.closest('.choice-btn')
-        if(!btn || btn.disabled) return
-        const idx = parseInt(btn.dataset.idx)
-        const opt = scene.options[idx]
-        
-        // 锁定所有按钮防止连点
-        container.querySelectorAll('.choice-btn').forEach(b=>b.disabled = true)
-        // 执行效果
-        opt.action()
-        // 记录选择
-        gameState.choices.push({
-          sceneTitle: scene.title,
-          content: scene.content,
-          choiceText: opt.text,
-          choiceDesc: opt.desc,
-          choiceEffect: opt.effect
-        })
-        // 保存
-        gameState.currentScene = opt.nextScene
-        saveState()
-
-        // 跳转
-        setTimeout(()=>{
-          if(opt.nextScene === -1){
-            location.href = 'journey.html'
-          } else {
-            location.reload()
-          }
-        }, 600)
+      const c = document.getElementById('storyContainer')
+      c.innerHTML = `<div class="text-center scene-card" style="margin-bottom:48px;"><h2 style="font-size:30px;margin-bottom:12px;">序章 · 交互式人生轨迹</h2><p style="color:#78716c;margin:0;">你将代入李煜的视角，在每一个命运岔路口做出选择，走向属于你的南唐结局</p></div><h2 style="font-size:30px;margin-bottom:32px;">${scene.title}</h2>${scene.content}<div id="optBox"></div>`
+      const box = document.getElementById('optBox')
+      scene.options.forEach((opt,idx)=>{
+        const btn = document.createElement('button')
+        btn.className = 'choice-btn'
+        btn.innerHTML = `<span style="font-weight:500;font-size:18px;">${opt.text}</span>${opt.desc?`<p style="font-size:14px;color:#78716c;margin:8px 0 0 0;">${opt.desc}</p>`:''}${opt.effect?`<p style="font-size:12px;color:#b45309;margin:8px 0 0 0;font-weight:500;">${opt.effect}</p>`:''}`
+        btn.onclick = ()=>{
+          document.querySelectorAll('.choice-btn').forEach(b=>b.disabled=true)
+          opt.action()
+          gameState.choices.push({sceneTitle:scene.title, content:scene.content, choiceText:opt.text, choiceDesc:opt.desc, choiceEffect:opt.effect})
+          gameState.currentScene = opt.next
+          saveState()
+          setTimeout(()=>{ opt.next===-1?location.href='journey.html':location.reload() }, 500)
+        }
+        box.appendChild(btn)
       })
+      window.scrollTo(0,0)
     }
 
-    // 初始化
-    updateStatusUI()
-    if(gameState.finished){
-      location.href = 'journey.html'
-    } else {
-      renderScene()
-    }
+    updateUI()
+    if(gameState.finished){ location.href='journey.html' } else { renderScene() }
   </script>
 </body>
 </html>
