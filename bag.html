@@ -4,149 +4,108 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   我的属性背包 · 重瞳·钟山隐</title>
-  <script src="https://cdn.tailwindcss.com"></script>
   
-    html { scroll-behavior: smooth; }
-    body {
-      font-family: "PingFang SC", "Microsoft YaHei", "Noto Sans SC", sans-serif;
-      background: #fffbf2;
-      color: #292524;
-    }
-    .ink-gradient {
-      background: linear-gradient(135deg, #7c4a1c 0%, #5b3414 100%);
-    }
-    .attr-bar { height: 8px; border-radius: 4px; background: #f5f5f4; overflow: hidden; }
-    .attr-fill { height: 100%; transition: width 1s ease; }
-    .tag-locked { opacity: 0.4; }
-    .nav-item:hover { color: #92400e; }
+    *{box-sizing:border-box;}
+    body{font-family:"PingFang SC","Microsoft YaHei",sans-serif;background:#fffbf2;color:#292524;margin:0;line-height:1.6;}
+    .ink-gradient{background:linear-gradient(135deg,#7c4a1c 0%,#5b3414 100%);}
+    nav{position:fixed;width:100%;background:rgba(255,251,242,0.95);backdrop-filter:blur(8px);z-index:50;border-bottom:1px solid #fef3c7;top:0;}
+    .nav-inner{max-width:1280px;margin:0 auto;padding:0 24px;display:flex;justify-content:space-between;height:64px;align-items:center;}
+    .nav-item{text-decoration:none;color:#57534e;font-size:18px;cursor:pointer;}
+    .nav-item.active{color:#92400e;font-weight:500;}
+    .container{max-width:1000px;margin:0 auto;padding:112px 24px 96px;}
+    #statusBar{position:fixed;top:80px;right:16px;background:rgba(255,255,255,0.9);padding:12px;border-radius:8px;box-shadow:0 4px 6px rgba(0,0,0,0.08);z-index:40;border:1px solid #fef3c7;font-size:14px;pointer-events:none;}
+    .card{background:white;padding:32px;border-radius:12px;box-shadow:0 1px 3px rgba(0,0,0,0.05);margin-bottom:32px;}
+    footer{background:linear-gradient(135deg,#7c4a1c 0%,#5b3414 100%);color:#fffbeb;padding:40px 0;text-align:center;}
+    .attr-bar{height:8px;border-radius:4px;background:#f5f5f4;overflow:hidden;margin-top:8px;}
+    .attr-fill{height:100%;transition:width 1s ease;}
+    .btn{padding:12px 24px;border-radius:8px;border:none;cursor:pointer;text-decoration:none;display:inline-block;margin:8px;}
+    .btn-primary{background:#92400e;color:white;}
+    .btn-secondary{background:#fef3c7;color:#92400e;}
+    .btn-gray{background:#e7e5e4;color:#44403c;}
+    .btn-danger{background:#fee2e2;color:#b91c1c;}
+    .tag{padding:4px 12px;border-radius:999px;font-size:14px;display:inline-block;margin:4px;}
+    .tag-unlocked{background:#fef3c7;border:1px solid #fcd34d;color:#92400e;}
+    .tag-locked{background:#f5f5f4;border:1px solid #e7e5e4;color:#a8a29e;opacity:0.6;}
   </style>
 </head>
-<body class="bg-amber-50/30">
-  <!-- 顶部固定导航 -->
-  <nav class="fixed w-full bg-amber-50/95 backdrop-blur-md shadow-sm z-50 border-b border-amber-100">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="flex justify-between h-16 items-center">
-        <div class="flex items-center">
-          <span class="font-bold text-xl text-amber-900">李煜 · 重瞳·钟山隐</span>
-        </div>
-        <div class="hidden md:flex space-x-12">
-          <a href="index.html" class="nav-item text-stone-600 hover:text-amber-700 font-medium text-lg transition">序章首页</a>
-          <a href="progress.html" class="nav-item text-stone-600 hover:text-amber-700 font-medium text-lg transition">人生进度</a>
-          <a href="appendix.html" class="nav-item text-stone-600 hover:text-amber-700 font-medium text-lg transition">拓展附录</a>
-          <a href="journey.html" class="nav-item text-stone-600 hover:text-amber-700 font-medium text-lg transition">我的人生轨迹</a>
-          <a href="bag.html" class="nav-item text-amber-700 font-medium text-lg transition">我的属性背包</a>
-        </div>
+
+  
+    <div class="nav-inner">
+      <span style="font-weight:bold;font-size:20px;color:#78350f;">李煜 · 重瞳·钟山隐</span>
+      <div style="display:flex;gap:48px;">
+        <a href="index.html" class="nav-item">序章首页</a>
+        <a href="progress.html" class="nav-item">人生进度</a>
+        <a href="appendix.html" class="nav-item">拓展附录</a>
+        <a href="journey.html" class="nav-item">我的人生轨迹</a>
+        <a href="bag.html" class="nav-item active">我的属性背包</a>
       </div>
     </div>
   </nav>
-
-  <!-- 全局属性状态栏 -->
-  <div id="statusBar" class="fixed top-20 right-4 bg-white/90 backdrop-blur-sm p-3 rounded-lg shadow-md z-40 border border-amber-100 text-sm pointer-events-none">
-    <div class="grid grid-cols-5 gap-3 mb-2 pb-2 border-b border-amber-50">
-      <div class="text-center px-2"><p class="text-amber-700 font-medium">词心</p><p id="attr-poetry" class="text-stone-600">0</p></div>
-      <div class="text-center px-2"><p class="text-amber-700 font-medium">龙椅</p><p id="attr-power" class="text-stone-600">0</p></div>
-      <div class="text-center px-2"><p class="text-amber-700 font-medium">情缘</p><p id="attr-love" class="text-stone-600">0</p></div>
-      <div class="text-center px-2"><p class="text-amber-700 font-medium">民心</p><p id="attr-people" class="text-stone-600">0</p></div>
-      <div class="text-center px-2"><p class="text-amber-700 font-medium">愁绪</p><p id="attr-sad" class="text-stone-600">0</p></div>
+  <div id="statusBar">
+    <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:12px;margin-bottom:8px;padding-bottom:8px;border-bottom:1px solid #fffbeb;">
+      <div style="text-align:center;padding:0 4px;"><p style="color:#b45309;font-weight:500;margin:0;">词心</p><p id="attr-poetry" style="color:#57534e;margin:4px 0 0 0;">0</p></div>
+      <div style="text-align:center;padding:0 4px;"><p style="color:#b45309;font-weight:500;margin:0;">龙椅</p><p id="attr-power" style="color:#57534e;margin:4px 0 0 0;">0</p></div>
+      <div style="text-align:center;padding:0 4px;"><p style="color:#b45309;font-weight:500;margin:0;">情缘</p><p id="attr-love" style="color:#57534e;margin:4px 0 0 0;">0</p></div>
+      <div style="text-align:center;padding:0 4px;"><p style="color:#b45309;font-weight:500;margin:0;">民心</p><p id="attr-people" style="color:#57534e;margin:4px 0 0 0;">0</p></div>
+      <div style="text-align:center;padding:0 4px;"><p style="color:#b45309;font-weight:500;margin:0;">愁绪</p><p id="attr-sad" style="color:#57534e;margin:4px 0 0 0;">0</p></div>
     </div>
-    <p class="text-xs text-stone-500">已收集标记：<span id="tagCount">0</span>/22</p>
+    <p style="font-size:12px;color:#78716c;margin:0;">已收集标记：<span id="tagCount">0</span>/22</p>
   </div>
-
-  <section class="pt-28 pb-24">
-    <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="text-center mb-16">
-        <h2 class="text-4xl font-bold text-amber-900 mb-4">我的属性背包</h2>
-        <p class="text-stone-500">这里记录了你在所有选择中积累的属性与解锁的标记</p>
-      </div>
-
-      <!-- 属性面板 -->
-      <div class="bg-white p-8 rounded-xl shadow-sm mb-10">
-        <h3 class="text-xl font-semibold text-amber-800 mb-8">五大核心属性</h3>
-        <div class="space-y-6" id="attrPanel"></div>
-      </div>
-
-      <!-- 标记面板 -->
-      <div class="bg-white p-8 rounded-xl shadow-sm mb-10">
-        <h3 class="text-xl font-semibold text-amber-800 mb-6">已解锁标记（<span id="tagCount2">0</span>/22）</h3>
-        <div id="tagPanel" class="flex flex-wrap gap-3"></div>
-      </div>
-
-      <!-- 操作按钮 -->
-      <div class="flex justify-center gap-4 flex-wrap">
-        <a href="progress.html" class="px-6 py-3 bg-amber-700 text-white rounded-lg hover:bg-amber-800 transition" id="continueBtn">继续游玩</a>
-        <a href="journey.html" class="px-6 py-3 bg-amber-100 text-amber-800 rounded-lg hover:bg-amber-200 transition">查看人生轨迹</a>
-        <a href="appendix.html" class="px-6 py-3 bg-stone-200 text-stone-700 rounded-lg hover:bg-stone-300 transition">查看拓展附录</a>
-        <button onclick="resetGame()" class="px-6 py-3 bg-red-100 text-red-700 rounded-lg hover:bg-red-200 transition">清空存档重开</button>
-      </div>
+  <div class="container">
+    <div style="text-align:center;margin-bottom:64px;">
+      <h2 style="font-size:36px;color:#78350f;margin:0 0 16px 0;">我的属性背包</h2>
+      <p style="color:#78716c;margin:0;">这里记录了你在所有选择中积累的属性与解锁的标记</p>
     </div>
-  </section>
-
-  <footer class="ink-gradient text-amber-50 py-10">
-    <div class="max-w-7xl mx-auto px-4 text-center">
-      © 2026 历史人物生平拆解项目 · 李煜《重瞳·钟山隐》专题站</p>
+    <div class="card">
+      <h3 style="font-size:20px;color:#92400e;margin-top:0;">五大核心属性</h3>
+      <div id="attrPanel" style="margin-top:24px;"></div>
     </div>
-  </footer>
-
+    <div class="card">
+      <h3 style="font-size:20px;color:#92400e;margin-top:0;">已解锁标记（<span id="tagCount2">0</span>/22）</h3>
+      <div id="tagPanel" style="margin-top:16px;"></div>
+    </div>
+    <div style="text-align:center;">
+      <a href="progress.html" class="btn btn-primary" id="continueBtn">继续游玩</a>
+      <a href="journey.html" class="btn btn-secondary">查看人生轨迹</a>
+      <a href="appendix.html" class="btn btn-gray">查看拓展附录</a>
+      <button onclick="resetGame()" class="btn btn-danger">清空存档重开</button>
+    </div>
+  </div>
+  <p style="margin:0;">© 2026 历史人物生平拆解项目 · 李煜《重瞳·钟山隐》专题站</p></footer>
   
     const allTags = ["刻意的闲散","沉默的旁观者","寻求庇护","禅师的点拨","娥皇的承诺","民生初察","梨花誓约","迷途者","储君之念","避世未成","受诏东宫","仁主初政","故园之思","重光之煜","告别钟山","父亲的遗命","孤家寡人","祖父的预言","霓裳残谱","钟山旧友","澄心遗墨","金陵雨意"]
-    const attrMeta = [
-      {key:'poetry', name:'词心', color:'#f59e0b', desc:'对文学与自由的执念'},
-      {key:'power', name:'龙椅', color:'#92400e', desc:'向权力中心靠近的距离'},
-      {key:'love', name:'情缘', color:'#ec4899', desc:'与身边人的情感羁绊'},
-      {key:'people', name:'民心', color:'#10b981', desc:'对南唐百姓的责任感'},
-      {key:'sad', name:'愁绪', color:'#6b7280', desc:'命运带来的无力与沉重'}
+    const attrMeta=[
+      {key:'poetry',name:'词心',color:'#f59e0b',desc:'对文学与自由的执念'},
+      {key:'power',name:'龙椅',color:'#92400e',desc:'向权力中心靠近的距离'},
+      {key:'love',name:'情缘',color:'#ec4899',desc:'与身边人的情感羁绊'},
+      {key:'people',name:'民心',color:'#10b981',desc:'对南唐百姓的责任感'},
+      {key:'sad',name:'愁绪',color:'#6b7280',desc:'命运带来的无力与沉重'}
     ]
-
-    function loadState(){
-      const saved = localStorage.getItem('liyuGameSave')
-      if(saved) return JSON.parse(saved)
-      return {attr:{poetry:0,power:0,love:0,people:0,sad:0},tags:[],finished:false}
-    }
-    function updateStatus(s){
-      document.getElementById('attr-poetry').textContent = s.attr.poetry
-      document.getElementById('attr-power').textContent = s.attr.power
-      document.getElementById('attr-love').textContent = s.attr.love
-      document.getElementById('attr-people').textContent = s.attr.people
-      document.getElementById('attr-sad').textContent = s.attr.sad
-      document.getElementById('tagCount').textContent = s.tags.length
-      document.getElementById('tagCount2').textContent = s.tags.length
-      // 渲染属性条
-      const attrPanel = document.getElementById('attrPanel')
-      attrPanel.innerHTML = attrMeta.map(a=>{
-        const val = Math.max(0, s.attr[a.key])
-        const percent = Math.min(100, val*10)
-        return `
-          <div class="flex justify-between mb-2">
-            <span class="font-medium text-amber-800">${a.name}</span>
-            <span class="text-stone-600">${val} 点</span>
-          </div>
-          <div class="attr-bar">
-            <div class="attr-fill" style="width:${percent}%;background:${a.color}"></div>
-          </div>
-          <p class="text-xs text-stone-500 mt-1">${a.desc}</p>
-        </div>`
+    function loadState(){const s=localStorage.getItem('liyuGameSave');return s?JSON.parse(s):{attr:{poetry:0,power:0,love:0,people:0,sad:0},tags:[],finished:false}}
+    function updateUI(){
+      const s=loadState()
+      document.getElementById('attr-poetry').textContent=s.attr.poetry
+      document.getElementById('attr-power').textContent=s.attr.power
+      document.getElementById('attr-love').textContent=s.attr.love
+      document.getElementById('attr-people').textContent=s.attr.people
+      document.getElementById('attr-sad').textContent=s.attr.sad
+      document.getElementById('tagCount').textContent=s.tags.length
+      document.getElementById('tagCount2').textContent=s.tags.length
+      document.getElementById('attrPanel').innerHTML=attrMeta.map(a=>{
+        const val=Math.max(0,s.attr[a.key])
+        const pct=Math.min(100,val*10)
+        return `<div style="margin-bottom:24px;"><div style="display:flex;justify-content:space-between;margin-bottom:8px;"><span style="font-weight:500;color:#92400e;">${a.name}</span><span style="color:#57534e;">${val} 点</span></div><div class="attr-bar"><div class="attr-fill" style="width:${pct}%;background:${a.color}"></div></div><p style="font-size:12px;color:#78716c;margin:4px 0 0 0;">${a.desc}</p></div>`
       }).join('')
-      // 渲染标记
-      const tagPanel = document.getElementById('tagPanel')
-      tagPanel.innerHTML = allTags.map(t=>{
-        const unlocked = s.tags.includes(t)
-        return `<span class="px-3 py-1 rounded-full text-sm border ${unlocked ? 'bg-amber-100 border-amber-300 text-amber-800' : 'bg-stone-100 border-stone-200 text-stone-400 tag-locked'}">${unlocked ? t : '？？？'}</span>`
-      }).join('')
-      // 按钮状态
+      document.getElementById('tagPanel').innerHTML=allTags.map(t=>`<span class="tag ${s.tags.includes(t)?'tag-unlocked':'tag-locked'}">${s.tags.includes(t)?t:'？？？'}</span>`).join('')
       if(s.finished){
-        document.getElementById('continueBtn').textContent = '序章已完结'
-        document.getElementById('continueBtn').classList.add('opacity-50','pointer-events-none')
+        const btn=document.getElementById('continueBtn')
+        btn.textContent='序章已完结'
+        btn.style.opacity='0.5'
+        btn.style.pointerEvents='none'
       }
     }
-    function resetGame(){
-      if(confirm('确定要清空所有存档，重新开始吗？')){
-        localStorage.removeItem('liyuGameSave')
-        location.href = 'index.html'
-      }
-    }
-
-    const s = loadState()
-    setTimeout(()=>updateStatus(s), 100)
+    function resetGame(){if(confirm('确定要清空所有存档重新开始吗？')){localStorage.removeItem('liyuGameSave');location.href='index.html'}}
+    setTimeout(updateUI,100)
   </script>
 </body>
 </html>
