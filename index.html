@@ -1,52 +1,260 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>重瞳·钟山隐 · 李煜</title>
   <style>
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    body { font-family: "PingFang SC","Microsoft YaHei", sans-serif; background: #fffbf2; color: #292524; line-height: 1.8; }
-    a { text-decoration: none; color: inherit; }
-    nav { position: fixed; top: 0; left: 0; width: 100%; background: rgba(255,251,242,0.95); backdrop-filter: blur(8px); border-bottom: 1px solid #fef3c7; z-index: 50; }
-    .nav-inner { max-width: 1280px; margin: 0 auto; padding: 0 24px; height: 64px; display: flex; justify-content: space-between; align-items: center; }
-    .brand { font-size: 20px; font-weight: bold; color: #78350f; }
-    .nav-links { display: flex; flex-wrap: wrap; justify-content: center; }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: "PingFang SC", "Microsoft YaHei", sans-serif;
+      background: #fffbf2;
+      color: #292524;
+      line-height: 1.8;
+      padding-top: 64px;
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      background: rgba(255, 251, 242, 0.95);
+      backdrop-filter: blur(8px);
+      border-bottom: 1px solid #fef3c7;
+      z-index: 50;
+    }
+
+    .nav-inner {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 0 24px;
+      height: 64px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .brand {
+      font-size: 20px;
+      font-weight: bold;
+      color: #78350f;
+    }
+
+    .nav-links {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
     /* 四个导航项统一固定宽高，大小完全一致 */
-    .nav-item { font-size: 18px; color: #57534e; transition: color 0.2s; width: 120px; height: 64px; display: flex; align-items: center; justify-content: center; }
-    .nav-item:hover { color: #92400e; background: #fffbeb; border-radius: 6px; }
-    .nav-item.active { color: #92400e; font-weight: 500; background: #fffbeb; border-radius: 6px; }
-    .container { max-width: 900px; margin: 0 auto; padding: 120px 24px 96px; }
-    .hero { text-align: center; margin-bottom: 64px; padding: 48px 24px; background: linear-gradient(135deg,#fff7ed 0%,#fef3c7 100%); border-radius: 16px; }
-    .hero h1 { font-size: 48px; color: #78350f; margin: 0 0 16px; }
-    .hero .subtitle { font-size: 20px; color: #92400e; margin: 0 0 24px; }
-    .hero .desc { font-size: 16px; color: #57534e; max-width: 600px; margin: 0 auto 32px; line-height: 2; }
-    .btn-group { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
-    .btn { padding: 14px 32px; border-radius: 10px; border: none; cursor: pointer; font-size: 16px; transition: all 0.2s; display: inline-block; font-family: inherit; text-align: center; }
-    .btn-primary { background: #92400e; color: white; }
-    .btn-primary:hover { background: #78350f; transform: translateY(-2px); }
-    .btn-secondary { background: #fef3c7; color: #92400e; border: 1px solid #fcd34d; }
-    .btn-secondary:hover { background: #fde68a; transform: translateY(-2px); }
-    .intro-section { background: white; border-radius: 12px; padding: 32px; margin-bottom: 24px; box-shadow: 0 1px 3px rgba(0,0,0,0.05); }
-    .intro-section h2 { color: #78350f; font-size: 24px; margin: 0 0 16px; padding-bottom: 12px; border-bottom: 1px solid #fef3c7; }
-    .intro-section p { color: #57534e; margin: 12px 0; line-height: 2; text-indent: 2em; }
-    .feature-grid { display: grid; grid-template-columns: repeat(2,1fr); gap: 16px; margin-top: 24px; }
-    .feature-card { padding: 24px; background: #fffbeb; border-radius: 8px; border-left: 3px solid #fcd34d; }
-    .feature-card h4 { color: #92400e; margin: 0 0 8px; font-size: 18px; }
-    .feature-card p { margin: 0; color: #57534e; font-size: 15px; line-height: 1.7; }
-    footer { background: linear-gradient(135deg,#7c4a1c 0%,#5b3414 100%); color: #fffbeb; padding: 40px 20px; text-align: center; margin-top: 48px; }
-    footer p { margin: 0; }
+    .nav-item {
+      width: 120px;
+      height: 64px;
+      font-size: 18px;
+      color: #57534e;
+      transition: color 0.2s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .nav-item:hover {
+      color: #92400e;
+      background: #fffbeb;
+    }
+
+    .nav-item.active {
+      color: #92400e;
+      font-weight: 500;
+      background: #fffbeb;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 120px 24px 96px;
+    }
+
+    .hero {
+      text-align: center;
+      margin-bottom: 64px;
+      padding: 48px 24px;
+      background: linear-gradient(135deg, #fff7ed 0%, #fef3c7 100%);
+      border-radius: 16px;
+    }
+
+    .hero h1 {
+      font-size: 48px;
+      color: #78350f;
+      margin: 0 0 16px;
+    }
+
+    .hero .subtitle {
+      font-size: 20px;
+      color: #92400e;
+      margin: 0 0 24px;
+    }
+
+    .hero .desc {
+      font-size: 16px;
+      color: #57534e;
+      max-width: 600px;
+      margin: 0 auto 32px;
+      line-height: 2;
+    }
+
+    .btn-group {
+      display: flex;
+      gap: 16px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      padding: 14px 32px;
+      border-radius: 10px;
+      border: none;
+      cursor: pointer;
+      font-size: 16px;
+      transition: all 0.2s;
+      display: inline-block;
+      font-family: inherit;
+    }
+
+    .btn-primary {
+      background: #92400e;
+      color: white;
+    }
+
+    .btn-primary:hover {
+      background: #78350f;
+      transform: translateY(-2px);
+    }
+
+    .btn-secondary {
+      background: #fef3c7;
+      color: #92400e;
+      border: 1px solid #fcd34d;
+    }
+
+    .btn-secondary:hover {
+      background: #fde68a;
+      transform: translateY(-2px);
+    }
+
+    .intro-section {
+      background: white;
+      border-radius: 12px;
+      padding: 32px;
+      margin-bottom: 24px;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+    }
+
+    .intro-section h2 {
+      color: #78350f;
+      font-size: 24px;
+      margin: 0 0 16px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid #fef3c7;
+    }
+
+    .intro-section p {
+      color: #57534e;
+      margin: 12px 0;
+      line-height: 2;
+      text-indent: 2em;
+    }
+
+    .feature-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 16px;
+      margin-top: 24px;
+    }
+
+    .feature-card {
+      padding: 24px;
+      background: #fffbeb;
+      border-radius: 8px;
+      border-left: 3px solid #fcd34d;
+    }
+
+    .feature-card h4 {
+      color: #92400e;
+      margin: 0 0 8px;
+      font-size: 18px;
+    }
+
+    .feature-card p {
+      margin: 0;
+      color: #57534e;
+      text-indent: 0;
+      font-size: 15px;
+      line-height: 1.7;
+    }
+
+    footer {
+      background: linear-gradient(135deg, #7c4a1c 0%, #5b3414 100%);
+      color: #fffbeb;
+      padding: 40px 20px;
+      text-align: center;
+      margin-top: 48px;
+    }
+
+    footer p {
+      margin: 0;
+      font-size: 14px;
+    }
+
     @media (max-width: 800px) {
-      .nav-inner { flex-direction: column; justify-content: center; height: auto; padding: 12px 16px; gap: 8px; }
-      .nav-item { width: 100%; height: auto; padding: 8px 0; border-radius: 6px; }
-      nav { position: absolute; }
-      .container { padding: 140px 16px 64px; }
-      .hero { padding: 32px 16px; }
-      .hero h1 { font-size: 32px; }
-      .feature-grid { grid-template-columns: 1fr; }
+      .nav-inner {
+        flex-direction: column;
+        justify-content: center;
+        height: auto;
+        padding: 12px 16px;
+        gap: 8px;
+      }
+
+      .nav-item {
+        width: 100%;
+        height: auto;
+        padding: 8px 0;
+      }
+
+      nav {
+        position: absolute;
+      }
+
+      .container {
+        padding: 140px 16px 64px;
+      }
+
+      .hero {
+        padding: 32px 16px;
+      }
+
+      .hero h1 {
+        font-size: 32px;
+      }
+
+      .feature-grid {
+        grid-template-columns: 1fr;
+      }
     }
   </style>
 </head>
+
 <body>
   <nav>
     <div class="nav-inner">
@@ -60,29 +268,39 @@
     </div>
   </nav>
 
-  <main class="container" role="main">
-    <section class="hero" aria-labelledby="hero-title">
-      <h1 id="hero-title">重瞳·钟山隐</h1>
+  <main class="container">
+    <div class="hero">
+      <h1>重瞳·钟山隐</h1>
       <p class="subtitle">李煜序章 · 交互式人生体验</p>
-      <p class="desc">公元937年七夕，金陵宫城，一个生有重瞳的孩子降生。他本想做钟山脚下的隐士，命运却把他推上了帝王的宝座。从李从嘉到李煜，你将随着选择体验他青年时期的每一次抉择与内心变化。</p>
-      <div class="btn-group" role="navigation" aria-label="主要操作">
-        <a href="progress.html" class="btn btn-primary" role="button">开始序章旅程</a>
-        <a href="appendix.html" class="btn btn-secondary" role="button">查看背景资料</a>
+      <p class="desc">
+        公元937年七夕，金陵宫城，一个生有重瞳的孩子降生。他本想做钟山脚下的隐士，
+        命运却把他推上了帝王的宝座。从李从嘉到李煜，他的青年时代充满了选择与变数。
+        你将代替他行走，做出每一个关键抉择，见证并改变他的命运。
+      </p>
+      <div class="btn-group">
+        <a href="progress.html" class="btn btn-primary">开始序章旅程</a>
+        <a href="appendix.html" class="btn btn-secondary">查看背景资料</a>
       </div>
-    </section>
+    </div>
 
-    <section class="intro-section" aria-labelledby="about-title">
-      <h2 id="about-title">关于本作</h2>
-      <p>这是一个基于真实历史创作的交互式文字体验，以南唐后主李煜的青年时代为背景，完整覆盖他从出生到登基前夜的人生轨迹。你将做出每一个关键选择，推动剧情发展并影响人物命运。</p>
-      <p>所有剧情细节、人物设定、词作原文均以正史《南唐书》《五代史》及相关史料为依据，并在真实历史框架内进行合理的文学演绎。页面内的附录收录了时代背景与词作原文，便于阅读理解。</p>
-    </section>
+    <div class="intro-section">
+      <h2>关于本作</h2>
+      <p>
+        这是一个基于真实历史创作的交互式文字体验，以南唐后主李煜的青年时代为背景，
+        完整覆盖他从出生到登基前夜的人生轨迹。你将做出每一个关键选择，推动剧情朝向不同结局发展。
+      </p>
+      <p>
+        所有剧情细节、人物设定、词作原文均以正史《南唐书》《五代史》及《南唐二主词》为基础，
+        在真实历史框架内进行合理文学演绎。通过选择，你可以解锁隐藏内容和专属标记。
+      </p>
+    </div>
 
-    <section class="intro-section" aria-labelledby="howto-title">
-      <h2 id="howto-title">体验说明</h2>
+    <div class="intro-section">
+      <h2>体验说明</h2>
       <div class="feature-grid">
         <div class="feature-card">
           <h4>五大核心属性</h4>
-          <p>词心、龙椅、情缘、民心、愁绪。你的每一个选择都会影响属性成长，最终决定你的结局走向。</p>
+          <p>词心、龙椅、情缘、民心、愁绪，你的每一个选择都会影响属性成长，最终决定你的结局走向。</p>
         </div>
         <div class="feature-card">
           <h4>22个专属标记</h4>
@@ -97,7 +315,7 @@
           <p>附录页收录完整时代背景、核心人物介绍、金陵风物志、全词作原文与白话翻译，帮助你更好理解这段历史。</p>
         </div>
       </div>
-    </section>
+    </div>
   </main>
 
   <footer>
