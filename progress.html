@@ -142,7 +142,6 @@
   </style>
 </head>
 <body>
-
   <nav>
     <div class="nav-inner">
       <span style="font-weight:bold;font-size:20px;color:#78350f;">李煜 · 重瞳·钟山隐</span>
@@ -158,11 +157,26 @@
 
   <div id="statusBar">
     <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:12px;margin-bottom:8px;padding-bottom:8px;border-bottom:1px solid #fffbeb;">
-      <div style="text-align:center;padding:0 4px;"><p style="color:#b45309;font-weight:500;margin:0;">词心</p><p id="attr-poetry" style="color:#57534e;margin:4px 0 0 0;">0</p></div>
-      <div style="text-align:center;padding:0 4px;"><p style="color:#b45309;font-weight:500;margin:0;">龙椅</p><p id="attr-power" style="color:#57534e;margin:4px 0 0 0;">0</p></div>
-      <div style="text-align:center;padding:0 4px;"><p style="color:#b45309;font-weight:500;margin:0;">情缘</p><p id="attr-love" style="color:#57534e;margin:4px 0 0 0;">0</p></div>
-      <div style="text-align:center;padding:0 4px;"><p style="color:#b45309;font-weight:500;margin:0;">民心</p><p id="attr-people" style="color:#57534e;margin:4px 0 0 0;">0</p></div>
-      <div style="text-align:center;padding:0 4px;"><p style="color:#b45309;font-weight:500;margin:0;">愁绪</p><p id="attr-sad" style="color:#57534e;margin:4px 0 0 0;">0</p></div>
+      <div style="text-align:center;padding:0 4px;">
+        <p style="color:#b45309;font-weight:500;margin:0;">词心</p>
+        <p id="attr-poetry" style="color:#57534e;margin:4px 0 0 0;">0</p>
+      </div>
+      <div style="text-align:center;padding:0 4px;">
+        <p style="color:#b45309;font-weight:500;margin:0;">龙椅</p>
+        <p id="attr-power" style="color:#57534e;margin:4px 0 0 0;">0</p>
+      </div>
+      <div style="text-align:center;padding:0 4px;">
+        <p style="color:#b45309;font-weight:500;margin:0;">情缘</p>
+        <p id="attr-love" style="color:#57534e;margin:4px 0 0 0;">0</p>
+      </div>
+      <div style="text-align:center;padding:0 4px;">
+        <p style="color:#b45309;font-weight:500;margin:0;">民心</p>
+        <p id="attr-people" style="color:#57534e;margin:4px 0 0 0;">0</p>
+      </div>
+      <div style="text-align:center;padding:0 4px;">
+        <p style="color:#b45309;font-weight:500;margin:0;">愁绪</p>
+        <p id="attr-sad" style="color:#57534e;margin:4px 0 0 0;">0</p>
+      </div>
     </div>
     <p style="font-size:12px;color:#78716c;margin:0;">已收集标记：<span id="tagCount">0</span>/22</p>
   </div>
@@ -219,7 +233,7 @@
     const storyLines = [
       {
         title: "楔子 · 重瞳降生",
-        content: "公元937年，七夕。金陵宫城，梧桐未落。你在“重瞳”之名中降生，既被看作天命，也被当作一场风波。你站在命运的门口，第一次知道：一个人若想活得久，先要学会选择。",
+        content: "公元937年，七夕。金陵宫城，梧桐未落。你在“重瞳”之名中降生，既被看作天命，也被当作一场风波。你站在命运的门口，第一次知道：这个世界，不会因为你的出生而偏爱你。你要决定，下一步要靠什么去面对人生。",
         options: [
           {
             text: "偷偷翻出祖辈旧书，夜夜受教于诗笺",
@@ -255,7 +269,7 @@
       },
       {
         title: "过渡一 · 雨停辞山",
-        content: "你从小熟读典籍，却明白：若只会写词，终究不会成君。大哥在外求学与交游，信笺如雨落下。你听着雨声，忽然发现命运不在山野，而在城市与宫门之间。",
+        content: "你从小熟读典籍，却明白：若只会写词，终究不会成君。大哥在外求学与交游，信笺如雨落下。你听着雨声，忽然发现命运不在山野，而在那一纸一笔所能撬动的世界。你开始明白，真正的大事，常常从微小的决定里长出来。",
         options: [
           {
             text: "烧掉大哥的信，亲手写下《渔父词》明志",
@@ -292,7 +306,7 @@
       },
       {
         title: "第二幕 · 瑶光殿琵琶",
-        content: "你回到金陵城时，瑶光殿的琵琶声还在宫中盘旋，半是惊艳，半是哀伤。人群替你称赞，也替你议论。你忽然领悟，惊艳与争议都不是终点，真正的难关，是如何背着所有目光走向王座。",
+        content: "你回到金陵城时，瑶光殿的琵琶声还在宫中盘旋，半是惊艳，半是哀伤。人群替你称赞，也替你议论。你忽然领悟，惊艳与争议都不是终局，真正能决定命运的，是你如何在众目睽睽下保住自己的分寸和锋芒。",
         options: [
           {
             text: "在瑶光殿中尽情翻新曲调",
@@ -331,7 +345,7 @@
       },
       {
         title: "第三幕 · 东宫惊变",
-        content: "大哥病逝之时，金陵城刚刚开始把你看作“有望之人”。你是震惊的，也是失落的。传闻将大哥交代给你的那一日，原来生死比言辞更快地逼得人长大。",
+        content: "大哥病逝之时，金陵城刚刚开始把你看作“有望之人”。你是震惊的，也是失落的。传闻将大哥交代给你的那一日，原来生死比言辞更快，也比任何承诺都更冷静。你明白，所谓长成，往往在失去之后开始。",
         options: [
           {
             text: "拒绝哭泣，立刻奔赴父亲处求见",
@@ -369,7 +383,7 @@
       },
       {
         title: "第四幕 · 改名登基",
-        content: "父亲病逝，改名李煜。你站在长廊尽头，越过过去的人和声名，第一次明白：这世上最难的，不是换名，而是承担名字背后的责任。你在风与火里终于进入新一代的中央。",
+        content: "父亲病逝，改名李煜。你站在长廊尽头，越过过去的人和声名，第一次明白：这世上最难的，不是换名，而是承担名字背后的责任。你在最深的地方听见自己的心跳，知道必须把国与心，分别放在两边。",
         options: [
           {
             text: "宣令天下，重整文治与国局",
@@ -408,7 +422,7 @@
       },
       {
         title: "终幕 · 登基前夜",
-        content: "登基大典的前一晚，你独坐在澄心堂里，月色照进来。你忽然明白，所谓“重瞳”，从来不是看清一切，而是看见别人看不见的东西：王座是灼热的，诗词是柔软的，而人心永远比任何名义更难以捉摸。",
+        content: "登基大典的前一晚，你独坐在澄心堂里，月色照进来。你忽然明白，所谓“重瞳”，从来不是看清一切，而是看见别人看不见的东西：王者看见的是秩序，诗人看见的是人心，贵族看见的是名望，凡人看见的是命运。你终于知道，真正的选择，不是成为什么人，而是愿意承受什么。",
         options: [
           {
             text: "把所有情绪写成一阕词，留给后世与自己",
