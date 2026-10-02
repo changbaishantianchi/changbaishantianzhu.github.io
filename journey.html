@@ -1,97 +1,651 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>我的人生轨迹 · 重瞳·钟山隐</title>
+    <style>
+      :root {
+        --ink-900: #292524;
+        --ink-700: #57534e;
+        --ink-500: #78716c;
+        --gold-900: #78350f;
+        --gold-700: #92400e;
+        --gold-500: #b45309;
+        --gold-200: #fef3c7;
+        --gold-100: #fffbeb;
+        --paper: #fffbf2;
+        --white: #ffffff;
+        --line: #f5d9a5;
+        --shadow: rgba(41, 37, 36, 0.08);
+      }
 
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  我的人生轨迹 · 重瞳·钟山隐</title>
-  
-    *{box-sizing:border-box;}
-    body{font-family:"PingFang SC","Microsoft YaHei",sans-serif;background:#fffbf2;color:#292524;margin:0;line-height:1.6;}
-    .ink-gradient{background:linear-gradient(135deg,#7c4a1c 0%,#5b3414 100%);}
-    nav{position:fixed;width:100%;background:rgba(255,251,242,0.95);backdrop-filter:blur(8px);z-index:50;border-bottom:1px solid #fef3c7;top:0;}
-    .nav-inner{max-width:1280px;margin:0 auto;padding:0 24px;display:flex;justify-content:space-between;height:64px;align-items:center;}
-    .nav-item{text-decoration:none;color:#57534e;font-size:18px;cursor:pointer;}
-    .nav-item.active{color:#92400e;font-weight:500;}
-    .container{max-width:900px;margin:0 auto;padding:112px 24px 96px;}
-    #statusBar{position:fixed;top:80px;right:16px;background:rgba(255,255,255,0.9);padding:12px;border-radius:8px;box-shadow:0 4px 6px rgba(0,0,0,0.08);z-index:40;border:1px solid #fef3c7;font-size:14px;pointer-events:none;}
-    .scene-card{animation:fadeIn 0.6s ease;margin-bottom:48px;}
-    @keyframes fadeIn{from{opacity:0;transform:translateY(10px);}to{opacity:1;transform:translateY(0);}}
-    .choice-box{background:linear-gradient(135deg,#fff7ed,#fef3c7);border-left:4px solid #f59e0b;padding:20px;border-radius:0 8px 8px 0;margin-top:16px;}
-    footer{background:linear-gradient(135deg,#7c4a1c 0%,#5b3414 100%);color:#fffbeb;padding:40px 0;text-align:center;}
-    .final-card{background:white;padding:32px;border-radius:12px;box-shadow:0 1px 3px rgba(0,0,0,0.05);}
-    .btn{padding:12px 24px;border-radius:8px;border:none;cursor:pointer;text-decoration:none;display:inline-block;margin:8px;}
-    .btn-primary{background:#92400e;color:white;}
-    .btn-secondary{background:#e7e5e4;color:#44403c;}
-    .btn-danger{background:#fee2e2;color:#b91c1c;}
-  </style>
-</head>
+      * { box-sizing: border-box; }
 
-  
-    <div class="nav-inner">
-      <span style="font-weight:bold;font-size:20px;color:#78350f;">李煜 · 重瞳·钟山隐</span>
-      <div style="display:flex;gap:48px;">
-        <a href="index.html" class="nav-item">序章首页</a>
-        <a href="progress.html" class="nav-item">人生进度</a>
-        <a href="appendix.html" class="nav-item">拓展附录</a>
-        <a href="journey.html" class="nav-item active">我的人生轨迹</a>
-        <a href="bag.html" class="nav-item">我的属性背包</a>
+      html {
+        scroll-behavior: smooth;
+      }
+
+      body {
+        margin: 0;
+        font-family: "PingFang SC", "Microsoft YaHei", sans-serif;
+        background: linear-gradient(180deg, #fffaf4 0%, #fffbf2 100%);
+        color: var(--ink-900);
+        line-height: 1.7;
+      }
+
+      a {
+        text-decoration: none;
+      }
+
+      nav {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        background: rgba(255, 251, 242, 0.96);
+        backdrop-filter: blur(8px);
+        -webkit-backdrop-filter: blur(8px);
+        border-bottom: 1px solid var(--gold-200);
+        z-index: 50;
+      }
+
+      .nav-inner {
+        max-width: 1280px;
+        margin: 0 auto;
+        padding: 0 24px;
+        min-height: 64px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 20px;
+      }
+
+      .brand {
+        font-size: 20px;
+        font-weight: 700;
+        color: var(--gold-900);
+        white-space: nowrap;
+      }
+
+      .nav-links {
+        display: flex;
+        align-items: center;
+        gap: 36px;
+        flex-wrap: wrap;
+      }
+
+      .nav-item {
+        color: var(--ink-700);
+        font-size: 17px;
+        transition: color 0.2s ease;
+      }
+
+      .nav-item:hover,
+      .nav-item.active {
+        color: var(--gold-700);
+        font-weight: 600;
+      }
+
+      .container {
+        max-width: 900px;
+        margin: 0 auto;
+        padding: 112px 24px 96px;
+      }
+
+      #statusBar {
+        position: fixed;
+        top: 80px;
+        right: 16px;
+        width: min(260px, calc(100vw - 32px));
+        background: rgba(255, 255, 255, 0.92);
+        padding: 12px 14px;
+        border-radius: 12px;
+        box-shadow: 0 10px 24px var(--shadow);
+        border: 1px solid var(--gold-200);
+        z-index: 40;
+      }
+
+      .status-grid {
+        display: grid;
+        grid-template-columns: repeat(5, minmax(0, 1fr));
+        gap: 12px;
+        padding-bottom: 8px;
+        border-bottom: 1px solid #f7e6bf;
+      }
+
+      .status-item {
+        text-align: center;
+        padding: 2px 4px;
+      }
+
+      .status-item p {
+        margin: 0;
+      }
+
+      .status-label {
+        color: var(--gold-500);
+        font-weight: 600;
+        font-size: 13px;
+      }
+
+      .status-value {
+        color: var(--ink-700);
+        margin-top: 4px !important;
+        font-size: 15px;
+        font-weight: 700;
+      }
+
+      .tag-summary {
+        font-size: 12px;
+        color: var(--ink-500);
+        margin: 10px 0 0;
+      }
+
+      .page-header {
+        text-align: center;
+        margin-bottom: 42px;
+      }
+
+      .page-header h2 {
+        margin: 0 0 12px;
+        color: var(--gold-900);
+        font-size: clamp(28px, 3vw, 42px);
+      }
+
+      .page-header p {
+        margin: 0;
+        color: var(--ink-500);
+        font-size: 15px;
+      }
+
+      .timeline {
+        display: flex;
+        flex-direction: column;
+        gap: 28px;
+      }
+
+      .scene-card {
+        background: rgba(255,255,255,0.8);
+        border: 1px solid #f4d9a7;
+        border-left: 4px solid var(--gold-700);
+        border-radius: 12px;
+        padding: 22px 20px 18px;
+        box-shadow: 0 10px 24px rgba(120, 53, 15, 0.04);
+        animation: fadeIn 0.5s ease;
+      }
+
+      .scene-header {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        margin-bottom: 16px;
+      }
+
+      .scene-badge {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, var(--gold-700), var(--gold-900));
+        color: var(--white);
+        display: grid;
+        place-items: center;
+        font-weight: 700;
+        font-size: 14px;
+        flex-shrink: 0;
+      }
+
+      .scene-title {
+        margin: 0;
+        color: var(--gold-900);
+        font-size: 20px;
+      }
+
+      .scene-meta {
+        color: var(--ink-500);
+        font-size: 13px;
+        margin-top: 4px;
+      }
+
+      .scene-body {
+        margin: 0;
+        color: var(--ink-900);
+        font-size: 15px;
+      }
+
+      .choice-box {
+        background: linear-gradient(135deg, #fff7ed, #fef3c7);
+        border-left: 4px solid #f59e0b;
+        border-radius: 0 10px 10px 0;
+        padding: 16px 18px;
+        margin-top: 16px;
+      }
+
+      .choice-box strong {
+        display: block;
+        color: var(--gold-900);
+        font-size: 14px;
+        margin-bottom: 8px;
+      }
+
+      .choice-box p {
+        margin: 0;
+        color: var(--ink-700);
+      }
+
+      .chip-group {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        margin-top: 14px;
+      }
+
+      .chip {
+        display: inline-block;
+        padding: 4px 10px;
+        background: #fff7ed;
+        border: 1px solid #f9d28c;
+        border-radius: 999px;
+        color: var(--gold-700);
+        font-size: 12px;
+      }
+
+      .empty-state {
+        text-align: center;
+        padding: 48px 30px;
+        border-radius: 16px;
+        background: rgba(255,255,255,0.8);
+        border: 1px dashed #f3d7a0;
+        color: var(--ink-500);
+      }
+
+      .empty-state p {
+        margin: 0 0 12px;
+        font-size: 18px;
+      }
+
+      .final-card {
+        margin-top: 36px;
+      }
+
+      .final-card h3 {
+        margin: 0 0 16px;
+        text-align: center;
+        font-size: 24px;
+        color: var(--gold-700);
+      }
+
+      .final-attr {
+        display: grid;
+        grid-template-columns: repeat(5, minmax(0, 1fr));
+        gap: 16px;
+        text-align: center;
+        margin: 28px 0;
+      }
+
+      .final-attr-item {
+        padding: 18px 12px;
+        border-radius: 10px;
+        background: var(--gold-100);
+        border: 1px solid #f1d59a;
+      }
+
+      .final-attr-item p {
+        margin: 0;
+      }
+
+      .final-attr-name {
+        color: var(--gold-500);
+        font-weight: 700;
+        font-size: 14px;
+      }
+
+      .final-attr-value {
+        margin-top: 8px !important;
+        font-size: 28px;
+        font-weight: 800;
+        color: var(--ink-900);
+      }
+
+      .final-card h4 {
+        text-align: center;
+        margin: 0 0 16px;
+        color: var(--gold-700);
+        font-size: 18px;
+      }
+
+      .final-tags {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        justify-content: center;
+        margin-bottom: 22px;
+      }
+
+      .final-card p {
+        margin: 0;
+        color: var(--ink-700);
+      }
+
+      .final-text {
+        text-align: center;
+        line-height: 1.8;
+        margin-bottom: 20px !important;
+      }
+
+      .action-row {
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 12px;
+      }
+
+      .btn {
+        padding: 12px 22px;
+        border-radius: 10px;
+        display: inline-block;
+        border: none;
+        cursor: pointer;
+        font-size: 15px;
+        transition: transform 0.2s ease, opacity 0.2s ease;
+      }
+
+      .btn:hover {
+        transform: translateY(-1px);
+      }
+
+      .btn-primary {
+        background: var(--gold-700);
+        color: var(--white);
+      }
+
+      .btn-secondary {
+        background: #e7e5e4;
+        color: #44403c;
+      }
+
+      .btn-danger {
+        background: #fee2e2;
+        color: #b91c1c;
+      }
+
+      footer {
+        background: linear-gradient(135deg, #7c4a1c 0%, #5b3414 100%);
+        color: #fffbeb;
+        padding: 30px 20px;
+        text-align: center;
+      }
+
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(10px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      @media (max-width: 900px) {
+        #statusBar {
+          position: static;
+          width: calc(100% - 32px);
+          margin: 86px auto 0;
+        }
+
+        .container {
+          padding-top: 32px;
+        }
+      }
+
+      @media (max-width: 640px) {
+        .nav-inner {
+          flex-direction: column;
+          justify-content: center;
+          padding: 12px 20px 16px;
+        }
+
+        .nav-links {
+          justify-content: center;
+          gap: 14px 18px;
+        }
+
+        .final-attr {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <nav>
+      <div class="nav-inner">
+        <span class="brand">李煜 · 重瞳·钟山隐</span>
+        <div class="nav-links">
+          <a href="index.html" class="nav-item">序章首页</a>
+          <a href="progress.html" class="nav-item">人生进度</a>
+          <a href="appendix.html" class="nav-item">拓展附录</a>
+          <a href="journey.html" class="nav-item active">我的人生轨迹</a>
+          <a href="bag.html" class="nav-item">我的属性背包</a>
+        </div>
       </div>
-    </div>
-  </nav>
-  <div id="statusBar">
-    <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:12px;margin-bottom:8px;padding-bottom:8px;border-bottom:1px solid #fffbeb;">
-      <div style="text-align:center;padding:0 4px;"><p style="color:#b45309;font-weight:500;margin:0;">词心</p><p id="attr-poetry" style="color:#57534e;margin:4px 0 0 0;">0</p></div>
-      <div style="text-align:center;padding:0 4px;"><p style="color:#b45309;font-weight:500;margin:0;">龙椅</p><p id="attr-power" style="color:#57534e;margin:4px 0 0 0;">0</p></div>
-      <div style="text-align:center;padding:0 4px;"><p style="color:#b45309;font-weight:500;margin:0;">情缘</p><p id="attr-love" style="color:#57534e;margin:4px 0 0 0;">0</p></div>
-      <div style="text-align:center;padding:0 4px;"><p style="color:#b45309;font-weight:500;margin:0;">民心</p><p id="attr-people" style="color:#57534e;margin:4px 0 0 0;">0</p></div>
-      <div style="text-align:center;padding:0 4px;"><p style="color:#b45309;font-weight:500;margin:0;">愁绪</p><p id="attr-sad" style="color:#57534e;margin:4px 0 0 0;">0</p></div>
-    </div>
-    <p style="font-size:12px;color:#78716c;margin:0;">已收集标记：<span id="tagCount">0</span>/22</p>
-  </div>
-  <div class="container">
-    <div style="text-align:center;margin-bottom:64px;">
-      <h2 style="font-size:36px;color:#78350f;margin:0 0 16px 0;">我的人生轨迹</h2>
-      <p style="color:#78716c;margin:0;">这里完整记录了你选择的李煜序章人生全流程</p>
-    </div>
-    <div id="timeline"></div>
-    <div class="final-card scene-card">
-      <h3 style="font-size:24px;color:#92400e;text-align:center;margin-top:0;">序章完结 · 属性结算</h3>
-      <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:16px;text-align:center;margin:32px 0;" id="finalAttr"></div>
-      <h4 style="font-size:18px;color:#92400e;text-align:center;">解锁的专属标记</h4>
-      <div id="finalTags" style="display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-bottom:32px;"></div>
-      <p style="color:#57534e;text-align:center;line-height:1.6;">从李从嘉到李煜，你走完了序章的全部剧情，做出了属于你自己的选择。南唐国主的人生才刚刚开始，后续章节正在开发中。</p>
-      <div style="text-align:center;">
-        <a href="bag.html" class="btn btn-primary">查看属性背包</a>
-        <a href="appendix.html" class="btn btn-secondary">查看拓展附录</a>
-        <button onclick="resetGame()" class="btn btn-danger">清空存档重开</button>
+    </nav>
+
+    <aside id="statusBar" aria-label="属性状态">
+      <div class="status-grid">
+        <div class="status-item">
+          <p class="status-label">词心</p>
+          <p id="attr-poetry" class="status-value">0</p>
+        </div>
+        <div class="status-item">
+          <p class="status-label">龙椅</p>
+          <p id="attr-power" class="status-value">0</p>
+        </div>
+        <div class="status-item">
+          <p class="status-label">情缘</p>
+          <p id="attr-love" class="status-value">0</p>
+        </div>
+        <div class="status-item">
+          <p class="status-label">民心</p>
+          <p id="attr-people" class="status-value">0</p>
+        </div>
+        <div class="status-item">
+          <p class="status-label">愁绪</p>
+          <p id="attr-sad" class="status-value">0</p>
+        </div>
       </div>
-    </div>
-  </div>
-  <p style="margin:0;">© 2026 历史人物生平拆解项目 · 李煜《重瞳·钟山隐》专题站</p></footer>
-  
-    function loadState(){const s=localStorage.getItem('liyuGameSave');return s?JSON.parse(s):{attr:{poetry:0,power:0,love:0,people:0,sad:0},tags:[],choices:[],finished:false}}
-    function updateUI(s){
-      document.getElementById('attr-poetry').textContent=s.attr.poetry
-      document.getElementById('attr-power').textContent=s.attr.power
-      document.getElementById('attr-love').textContent=s.attr.love
-      document.getElementById('attr-people').textContent=s.attr.people
-      document.getElementById('attr-sad').textContent=s.attr.sad
-      document.getElementById('tagCount').textContent=s.tags.length
-    }
-    function resetGame(){if(confirm('确定要清空所有存档重新开始吗？')){localStorage.removeItem('liyuGameSave');location.href='index.html'}}
-    const s=loadState()
-    updateUI(s)
-    const tl=document.getElementById('timeline')
-    if(!s.finished && s.choices.length===0){
-      tl.innerHTML=`<div style="text-align:center;padding:48px;background:white;border-radius:12px;"><p style="color:#78716c;margin-bottom:24px;">你还没有开始游玩序章，暂时没有人生轨迹记录</p><a href="progress.html" class="btn btn-primary">开始序章剧情</a></div>`
-    }else{
-      tl.innerHTML=s.choices.map((c,i)=>`<div class="scene-card"><div style="display:flex;align-items:center;margin-bottom:16px;"><div style="width:40px;height:40px;border-radius:50%;background:#92400e;color:white;display:flex;align-items:center;justify-content:center;font-weight:bold;">${i+1}</div><h3 style="font-size:24px;color:#78350f;margin:0 0 0 16px;">${c.sceneTitle}</h3></div><div style="margin-left:56px;border-left:2px solid #fde68a;padding-left:24px;">${c.content}<div class="choice-box"><p style="font-weight:500;color:#78350f;margin:0 0 8px 0;">✨ 你的选择：${c.choiceText}</p>${c.choiceDesc?`<p style="font-size:14px;color:#57534e;margin:0 0 8px 0;">${c.choiceDesc}</p>`:''}${c.choiceEffect?`<p style="font-size:12px;color:#b45309;font-weight:500;margin:0;">${c.choiceEffect}</p>`:''}</div></div></div>`).join('')
-    }
-    document.getElementById('finalAttr').innerHTML=['poetry','power','love','people','sad'].map((k,i)=>{
-      const names=['词心','龙椅','情缘','民心','愁绪']
-      return `<div style="padding:16px;background:#fffbeb;border-radius:8px;"><p style="font-weight:500;color:#b45309;margin:0;">${names[i]}</p><p style="font-size:28px;font-weight:bold;color:#44403c;margin:8px 0 0 0;">${s.attr[k]}</p></div>`
-    }).join('')
-    document.getElementById('finalTags').innerHTML=s.tags.map(t=>`<span style="padding:4px 12px;border-radius:999px;background:#fef3c7;border:1px solid #fcd34d;color:#92400e;font-size:14px;">${t}</span>`).join('')
-  </script>
-</body>
+      <p class="tag-summary">已收集标记：<span id="tagCount">0</span>/22</p>
+    </aside>
+
+    <main class="container">
+      <header class="page-header">
+        <h2>我的人生轨迹</h2>
+        <p>这里完整记录了你选择的李煜序章人生全流程</p>
+      </header>
+
+      <section id="timeline" class="timeline" aria-live="polite"></section>
+
+      <section class="final-card scene-card" aria-label="结算区">
+        <h3>序章完结 · 属性结算</h3>
+        <div class="final-attr" id="finalAttr"></div>
+
+        <h4>解锁的专属标记</h4>
+        <div id="finalTags" class="final-tags"></div>
+
+        <p class="final-text">
+          从李从嘉到李煜，你走完了序章的全部剧情，做出了属于你自己的选择。南唐国主的人生才刚刚开始，真正的命运还在你手中书写。
+        </p>
+
+        <div class="action-row">
+          <a href="bag.html" class="btn btn-primary">查看属性背包</a>
+          <a href="appendix.html" class="btn btn-secondary">查看拓展附录</a>
+          <button type="button" class="btn btn-danger" onclick="resetGame()">清空存档重开</button>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      © 2026 历史人物生平拆解项目 · 李煜《重瞳·钟山隐》专题站
+    </footer>
+
+    <script>
+      const DEFAULT_STATE = {
+        attr: { poetry: 0, power: 0, love: 0, people: 0, sad: 0 },
+        tags: [],
+        choices: [],
+        finished: false
+      };
+
+      function escapeHtml(str) {
+        return String(str ?? '')
+          .replace(/&/g, '&amp;')
+          .replace(/</g, '&lt;')
+          .replace(/>/g, '&gt;')
+          .replace(/"/g, '&quot;')
+          .replace(/'/g, '&#039;');
+      }
+
+      function cloneDefaultState() {
+        return JSON.parse(JSON.stringify(DEFAULT_STATE));
+      }
+
+      function normalizeState(raw) {
+        const fallback = cloneDefaultState();
+        if (!raw || typeof raw !== 'object') return fallback;
+
+        const normalized = {
+          attr: {
+            poetry: Number(raw.attr?.poetry) || 0,
+            power: Number(raw.attr?.power) || 0,
+            love: Number(raw.attr?.love) || 0,
+            people: Number(raw.attr?.people) || 0,
+            sad: Number(raw.attr?.sad) || 0
+          },
+          tags: Array.isArray(raw.tags) ? raw.tags : [],
+          choices: Array.isArray(raw.choices) ? raw.choices : [],
+          finished: Boolean(raw.finished)
+        };
+
+        return { ...fallback, ...normalized, attr: { ...fallback.attr, ...normalized.attr } };
+      }
+
+      function loadState() {
+        try {
+          const saved = localStorage.getItem('liyuGameSave');
+          return normalizeState(saved ? JSON.parse(saved) : null);
+        } catch (error) {
+          return cloneDefaultState();
+        }
+      }
+
+      function updateUI(state) {
+        const attr = state.attr || DEFAULT_STATE.attr;
+        document.getElementById('attr-poetry').textContent = attr.poetry;
+        document.getElementById('attr-power').textContent = attr.power;
+        document.getElementById('attr-love').textContent = attr.love;
+        document.getElementById('attr-people').textContent = attr.people;
+        document.getElementById('attr-sad').textContent = attr.sad;
+        document.getElementById('tagCount').textContent = (state.tags || []).length;
+      }
+
+      function renderTimeline(state) {
+        const timeline = document.getElementById('timeline');
+        const choices = Array.isArray(state.choices) ? state.choices : [];
+
+        if (!state.finished && choices.length === 0) {
+          timeline.innerHTML = `
+            <div class="empty-state">
+              <p>你还没有开始游玩序章</p>
+              <span>暂时没有人生轨迹可供回顾，先去完成一段故事吧。</span>
+            </div>
+          `;
+          return;
+        }
+
+        if (choices.length === 0) {
+          timeline.innerHTML = `
+            <div class="empty-state">
+              <p>暂无可展示的剧情轨迹</p>
+              <span>请返回首页开始你的李煜人生旅程。</span>
+            </div>
+          `;
+          return;
+        }
+
+        timeline.innerHTML = choices.map((choice, index) => {
+          const title = choice.title || `第 ${index + 1} 段抉择`;
+          const text = choice.text || choice.desc || choice.choice || '你完成了一次关键决断。';
+          const effect = choice.effect || choice.summary || '';
+          const tags = Array.isArray(choice.tags) ? choice.tags : [];
+          const tagHtml = tags
+            .map(tag => `<span class="chip">${escapeHtml(tag)}</span>`)
+            .join('');
+
+          return `
+            <article class="scene-card">
+              <div class="scene-header">
+                <div class="scene-badge">${index + 1}</div>
+                <div>
+                  <h3 class="scene-title">${escapeHtml(title)}</h3>
+                  <div class="scene-meta">序章节点 · ${index + 1}/${choices.length}</div>
+                </div>
+              </div>
+              <p class="scene-body">${escapeHtml(text)}</p>
+              ${effect ? `
+                <div class="choice-box">
+                  <strong>选择影响</strong>
+                  <p>${escapeHtml(effect)}</p>
+                </div>
+              ` : ''}
+              ${tagHtml ? `<div class="chip-group">${tagHtml}</div>` : ''}
+            </article>
+          `;
+        }).join('');
+      }
+
+      function renderFinalAttributes(state) {
+        const attr = state.attr || DEFAULT_STATE.attr;
+        const names = ['词心', '龙椅', '情缘', '民心', '愁绪'];
+        const keys = ['poetry', 'power', 'love', 'people', 'sad'];
+
+        document.getElementById('finalAttr').innerHTML = keys.map((key, index) => {
+          const value = attr[key] ?? 0;
+          return `
+            <div class="final-attr-item">
+              <p class="final-attr-name">${names[index]}</p>
+              <p class="final-attr-value">${value}</p>
+            </div>
+          `;
+        }).join('');
+      }
+
+      function renderFinalTags(state) {
+        const tags = Array.isArray(state.tags) ? state.tags : [];
+        const container = document.getElementById('finalTags');
+
+        if (!tags.length) {
+          container.innerHTML = '<span class="chip">暂无专属标记</span>';
+          return;
+        }
+
+        container.innerHTML = tags
+          .map(tag => `<span class="chip">${escapeHtml(tag)}</span>`)
+          .join('');
+      }
+
+      function resetGame() {
+        if (!confirm('确定要清空所有存档重新开始吗？')) return;
+        localStorage.removeItem('liyuGameSave');
+        window.location.href = 'index.html';
+      }
+
+      document.addEventListener('DOMContentLoaded', () => {
+        const state = loadState();
+        updateUI(state);
+        renderTimeline(state);
+        renderFinalAttributes(state);
+        renderFinalTags(state);
+      });
+    </script>
+  </body>
 </html>
