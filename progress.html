@@ -42,57 +42,9 @@
       transition: color 0.2s;
       display: inline-block;
     }
-    .nav-item.active {
-      color: #92400e;
-      font-weight: 500;
-    }
-    .nav-item:hover {
-      color: #92400e;
-    }
-    #statusBar {
-      position: fixed;
-      top: 80px;
-      right: 16px;
-      background: rgba(255,255,255,0.9);
-      backdrop-filter: blur(4px);
-      padding: 14px;
-      border-radius: 8px;
-      box-shadow: 0 4px 6px rgba(0,0,0,0.08);
-      z-index: 40;
-      border: 1px solid #fef3c7;
-      font-size: 14px;
-      min-width: 240px;
-    }
-    .status-grid {
-      display:grid;
-      grid-template-columns:repeat(5,1fr);
-      gap:10px;
-      margin-bottom:10px;
-      padding-bottom:10px;
-      border-bottom:1px solid #fef3c7;
-    }
-    .status-item {
-      text-align:center;
-      padding:0 2px;
-    }
-    .status-item p {
-      color:#b45309;
-      font-weight:500;
-      margin:0;
-      font-size:13px;
-    }
-    .status-item .value {
-      color:#57534e;
-      margin:4px 0 0 0;
-      font-size:14px;
-      font-weight:500;
-    }
-    .status-tagline {
-      font-size:12px;
-      color:#78716c;
-      margin:0;
-      text-align:center;
-    }
+    .nav-item.active { color: #92400e; font-weight: 500; }
+    .nav-item:hover { color: #92400e; }
+
     .scene-card { animation: fadeIn 0.6s ease-in-out; }
     @keyframes fadeIn {
       from { opacity: 0; transform: translateY(12px); }
@@ -117,10 +69,8 @@
       border-color: #f6c68d;
       transform: translateY(-2px);
     }
-    .choice-btn:disabled {
-      opacity: 0.6;
-      cursor: not-allowed;
-    }
+    .choice-btn:disabled { opacity: 0.6; cursor: not-allowed; }
+
     .container {
       max-width: 900px;
       margin: 0 auto;
@@ -151,38 +101,153 @@
       padding: 40px 0;
       text-align: center;
     }
-    .restart-btn, .small-btn {
-      margin-top: 12px;
-      padding: 10px 16px;
-      background: #fef3c7;
-      color: #92400e;
-      border: none;
+    .btn {
+      padding: 10px 20px;
       border-radius: 8px;
+      border: none;
       cursor: pointer;
       font-size: 14px;
+      font-family: inherit;
+      transition: background 0.2s;
+      display: inline-block;
     }
-    .restart-btn:hover, .small-btn:hover {
-      background: #fde68a;
+    .btn-primary { background: #fef3c7; color: #92400e; }
+    .btn-primary:hover { background: #fde68a; }
+    .btn-secondary { background: #f5f5f4; color: #57534e; }
+    .btn-secondary:hover { background: #e7e5e4; }
+    .btn-danger { background: #fee2e2; color: #b91c1c; }
+    .btn-danger:hover { background: #fecaca; }
+
+    .progress-tip {
+      text-align: center;
+      color: #b45309;
+      font-size: 15px;
+      margin: 8px 0 0;
     }
-    .journey-badge {
-      display:inline-block;
-      background:#fff7ed;
-      color:#92400e;
-      border:1px solid #fde68a;
-      padding:4px 8px;
-      border-radius:12px;
-      margin:4px 6px 4px 0;
-      font-size:13px;
+    .progress-bar {
+      height: 8px;
+      background: #f5f5f4;
+      border-radius: 99px;
+      overflow: hidden;
+      margin: 16px auto 0;
+      max-width: 420px;
     }
-    .journey-item {
-      border-left:3px solid #fde68a;
-      padding:12px 16px;
-      margin-bottom:12px;
-      background:#fff;
-      border-radius:8px;
+    .progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, #b45309, #78350f);
+      border-radius: 99px;
+      transition: width 0.5s ease;
     }
-    .journey-meta { color:#78716c; font-size:13px; margin-top:6px; }
-    .controls-row { display:flex; gap:12px; flex-wrap:wrap; margin-top:16px; }
+
+    /* ===== 人生轨迹（已并入本页） ===== */
+    .timeline-card {
+      background: #ffffff;
+      border: 1px solid #f4d9a7;
+      border-left: 4px solid #92400e;
+      border-radius: 12px;
+      padding: 26px 28px;
+      margin-bottom: 24px;
+      box-shadow: 0 2px 10px rgba(120, 53, 15, 0.05);
+    }
+    .timeline-head {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+    .scene-badge {
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #92400e, #78350f);
+      color: #ffffff;
+      display: grid;
+      place-items: center;
+      font-weight: 700;
+      font-size: 14px;
+      flex-shrink: 0;
+    }
+    .timeline-title {
+      margin: 0;
+      color: #78350f;
+      font-size: 20px;
+      border-bottom: none;
+      padding-bottom: 0;
+    }
+    .timeline-narration {
+      margin: 0;
+      color: #44403c;
+      font-size: 16px;
+      line-height: 2;
+      white-space: pre-wrap;
+      text-indent: 2em;
+    }
+    .choice-box {
+      background: linear-gradient(135deg, #fff7ed, #fef3c7);
+      border-left: 3px solid #f59e0b;
+      border-radius: 0 10px 10px 0;
+      padding: 16px 20px;
+      margin-top: 18px;
+    }
+    .choice-box strong {
+      display: block;
+      color: #92400e;
+      font-size: 14px;
+      margin-bottom: 8px;
+    }
+    .choice-box p { margin: 0; color: #57534e; }
+    .tag-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 14px;
+    }
+    .tag {
+      padding: 4px 12px;
+      background: #fff7ed;
+      border: 1px solid #fcd34d;
+      color: #92400e;
+      border-radius: 999px;
+      font-size: 13px;
+    }
+    .final-card {
+      background: #ffffff;
+      border: 1px solid #f4d9a7;
+      border-radius: 12px;
+      padding: 32px;
+      margin-top: 48px;
+      box-shadow: 0 2px 14px rgba(120, 53, 15, 0.06);
+    }
+    .final-attr-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 16px;
+      margin: 24px 0;
+    }
+    .final-attr-item {
+      text-align: center;
+      padding: 20px 12px;
+      background: #fffbeb;
+      border-radius: 8px;
+      border: 1px solid #fde68a;
+    }
+    .final-attr-item .name { color: #b45309; font-weight: 600; margin: 0; font-size: 14px; }
+    .final-attr-item .val { font-size: 28px; font-weight: 700; color: #292524; margin: 8px 0 0; }
+    .ending-text {
+      text-align: center;
+      font-size: 16px;
+      line-height: 2;
+      color: #57534e;
+      margin: 24px 0;
+    }
+    .controls-row {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      justify-content: center;
+      margin-top: 24px;
+    }
+
     @media (max-width: 760px) {
       .nav-inner {
         flex-wrap: wrap;
@@ -191,19 +256,10 @@
         padding: 12px 16px;
         gap: 8px 16px;
       }
-      .nav-item {
-        font-size: 14px;
-      }
-      #statusBar {
-        position: static;
-        width: calc(100% - 24px);
-        margin: 84px auto 0;
-        right: auto;
-        top: auto;
-      }
-      .container {
-        padding-top: 32px;
-      }
+      .nav-item { font-size: 14px; }
+      .container { padding-top: 120px; }
+      .bg-amber50, .bg-stone50, .timeline-card, .final-card { padding: 20px 16px; }
+      .final-attr-grid { grid-template-columns: repeat(2, 1fr); }
     }
   </style>
 </head>
@@ -211,51 +267,17 @@
   <nav>
     <div class="nav-inner">
       <span style="font-weight:bold;font-size:20px;color:#78350f;">李煜 · 重瞳·钟山隐</span>
-      <div style="display:flex;gap:48px;flex-wrap:wrap;justify-content:flex-end;">
-        <a href="index.html" class="nav-item" id="nav-home">序章首页</a>
-        <a href="progress.html" class="nav-item active" id="nav-progress">人生进度</a>
-        <a href="appendix.html" class="nav-item" id="nav-appendix">拓展附录</a>
-        <a href="#journey" class="nav-item" id="nav-journey">我的人生轨迹</a>
-        <a href="bag.html" class="nav-item" id="nav-bag">我的属性背包</a>
+      <div style="display:flex;gap:32px;flex-wrap:wrap;justify-content:center;">
+        <a href="index.html" class="nav-item">序章首页</a>
+        <a href="progress.html" class="nav-item active">人生进度</a>
+        <a href="appendix.html" class="nav-item">拓展附录</a>
+        <a href="bag.html" class="nav-item">我的属性背包</a>
       </div>
     </div>
   </nav>
 
-  <div id="statusBar">
-    <div class="status-grid">
-      <div class="status-item">
-        <p>词心</p>
-        <p id="attr-poetry" class="value">0</p>
-      </div>
-      <div class="status-item">
-        <p>龙椅</p>
-        <p id="attr-power" class="value">0</p>
-      </div>
-      <div class="status-item">
-        <p>情缘</p>
-        <p id="attr-love" class="value">0</p>
-      </div>
-      <div class="status-item">
-        <p>民心</p>
-        <p id="attr-people" class="value">0</p>
-      </div>
-      <div class="status-item">
-        <p>愁绪</p>
-        <p id="attr-sad" class="value">0</p>
-      </div>
-    </div>
-    <p class="status-tagline">已收集标记：<span id="tagCount">0</span>/22</p>
-  </div>
-
   <main class="container">
-    <div id="storyContainer"></div>
-
-    <div style="text-align:center;margin-top:18px;">
-      <button class="restart-btn" onclick="restartGame()">重新开始序章</button>
-      <button class="restart-btn" onclick="renderJourney()" style="margin-left:12px;">查看人生轨迹</button>
-    </div>
-
-    <div id="journeySection" style="margin-top:36px; display:none;"></div>
+    <div id="mainContent"></div>
   </main>
 
   <footer>
@@ -264,13 +286,7 @@
 
   <script>
     const STORAGE_KEY = 'liyuGameSave';
-    const ATTR_LABELS = {
-      poetry: '词心',
-      power: '龙椅',
-      love: '情缘',
-      people: '民心',
-      sad: '愁绪'
-    };
+    const ATTR_LABELS = { poetry: '词心', power: '龙椅', love: '情缘', people: '民心', sad: '愁绪' };
 
     function getDefaultState() {
       return {
@@ -278,9 +294,17 @@
         tags: [],
         currentScene: 0,
         choices: [],
-        started: true,
         finished: false
       };
+    }
+
+    function escapeHtml(str) {
+      return String(str == null ? '' : str)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#039;');
     }
 
     function normalizeState(raw) {
@@ -304,7 +328,6 @@
         next.currentScene = storyLines.length - 1;
         next.finished = true;
       }
-
       return next;
     }
 
@@ -324,40 +347,15 @@
       } catch (e) {
         console.warn('无法写入 localStorage:', e);
       }
-      updateUI();
-    }
-
-    function clearState() {
-      try {
-        localStorage.removeItem(STORAGE_KEY);
-      } catch (e) {
-        console.warn('无法清除 localStorage:', e);
-      }
     }
 
     function restartGame() {
-      if (confirm('确定要重新开始序章吗？当前所有进度和选择将会被清空。')) {
-        clearState();
-        window.location.reload();
-      }
+      if (!confirm('确定要重新开始序章吗？当前所有进度和选择将会被清空。')) return;
+      try { localStorage.removeItem(STORAGE_KEY); } catch (e) { console.warn(e); }
+      window.location.reload();
     }
 
-    function updateUI() {
-      const poetry = document.getElementById('attr-poetry');
-      const power = document.getElementById('attr-power');
-      const love = document.getElementById('attr-love');
-      const people = document.getElementById('attr-people');
-      const sad = document.getElementById('attr-sad');
-      const tagCount = document.getElementById('tagCount');
-
-      if (poetry) poetry.textContent = String(gameState.attr.poetry ?? 0);
-      if (power) power.textContent = String(gameState.attr.power ?? 0);
-      if (love) love.textContent = String(gameState.attr.love ?? 0);
-      if (people) people.textContent = String(gameState.attr.people ?? 0);
-      if (sad) sad.textContent = String(gameState.attr.sad ?? 0);
-      if (tagCount) tagCount.textContent = String(gameState.tags.length ?? 0);
-    }
-
+    /* ================= 序章剧本 ================= */
     const storyLines = [
       {
         title: '楔子 · 重瞳降生',
@@ -371,21 +369,21 @@
             text: '偷偷翻出祖辈旧书，夜夜受教于诗笺',
             desc: '把心思放在词章与典籍之上，词心渐长。',
             effect: { poetry: 2 },
-            tags: ['词心·书卷'],
+            tags: ['刻意的闲散'],
             next: 1
           },
           {
             text: '明日入宫，向父亲请缨尽快立名',
             desc: '注重家族地位与权柄，龙椅之念开始萌动。',
             effect: { power: 2 },
-            tags: ['龙椅·志向'],
+            tags: ['储君之念'],
             next: 1
           },
           {
             text: '在兄弟间留心亲情与旧爱',
             desc: '你明白情分会比权谋更早地伤人。',
             effect: { love: 2 },
-            tags: ['情缘·亲族'],
+            tags: ['娥皇的承诺'],
             next: 1
           }
         ]
@@ -401,21 +399,21 @@
             text: '烧掉大哥的信，亲手写下《渔父词》明志',
             desc: '你选择把思绪留在文字中，而不让旧怨埋住前程。',
             effect: { poetry: 3 },
-            tags: ['渔父之志'],
+            tags: ['避世未成'],
             next: 2
           },
           {
             text: '把信压在书案最底层，假装什么都没发生',
             desc: '你沉默地把秘密埋起来，却也把心事埋得更深。',
             effect: { sad: 2 },
-            tags: ['压抑的心事'],
+            tags: ['沉默的旁观者'],
             next: 2
           },
           {
             text: '披蓑冒雨进宫，去澄心堂见父亲',
             desc: '你决定先把命运掰回自己的手里。',
             effect: { power: 2, people: 1 },
-            tags: ['澄心堂·勇气'],
+            tags: ['寻求庇护'],
             next: 2
           }
         ]
@@ -431,21 +429,21 @@
             text: '在瑶光殿中尽情翻新曲调',
             desc: '你把词心扩展成一场宫廷风潮。',
             effect: { poetry: 3, people: 2 },
-            tags: ['瑶光殿·新声'],
+            tags: ['金陵风月'],
             next: 3
           },
           {
             text: '将琵琶声藏进深宫，拒绝成为笑柄',
             desc: '你不愿被外界轻易定义，选择沉稳而冷峻。',
             effect: { power: 2, sad: 1 },
-            tags: ['深宫之沉'],
+            tags: ['诗酒流连'],
             next: 3
           },
           {
             text: '故意留宿宫中，和人同饮长谈',
             desc: '你用温柔换取人心，却也不知会失去多少边界。',
             effect: { love: 3, people: 1 },
-            tags: ['宫宴之情'],
+            tags: ['梨花誓约'],
             next: 3
           }
         ]
@@ -461,21 +459,21 @@
             text: '拒绝哭泣，立刻奔赴父亲处求见',
             desc: '你把悲伤压在胸腔里，想争取下一步的决定权。',
             effect: { power: 3 },
-            tags: ['强忍之志'],
+            tags: ['宫廷权谋'],
             next: 4
           },
           {
             text: '听闻神色忽变，独自回到书案沉思',
             desc: '你把重压藏进深深的文字里，试图慢慢理解成败。',
             effect: { poetry: 2, sad: 2 },
-            tags: ['书案中的沉默'],
+            tags: ['孤城夜语'],
             next: 4
           },
           {
             text: '去寻兄弟旧友，打探政局与人心',
             desc: '你知道，真正的王道，不是理想，而是对人心的掌控。',
             effect: { people: 3, love: 1 },
-            tags: ['人心·探访'],
+            tags: ['故友旧怨'],
             next: 4
           }
         ]
@@ -491,21 +489,21 @@
             text: '宣令天下，重整文治与国局',
             desc: '你选择把诗意与秩序并列，不再让情绪拖累国家。',
             effect: { poetry: 2, power: 3 },
-            tags: ['文治与国政'],
+            tags: ['受诏东宫'],
             next: 5
           },
           {
             text: '以温和与情感抚慰百官与民心',
             desc: '你不想用刀口面对臣民，而想让治理像风一样柔和。',
             effect: { love: 2, people: 3 },
-            tags: ['温柔之治'],
+            tags: ['民生初察'],
             next: 5
           },
           {
             text: '压住情绪，暗中筹划一场稳固权柄的改革',
             desc: '你明白权力必须有秩序，情绪只能是深处的小火。',
             effect: { power: 2, sad: 2 },
-            tags: ['深层筹谋'],
+            tags: ['朝堂初试'],
             next: 5
           }
         ]
@@ -521,40 +519,37 @@
             text: '把所有情绪写成一阕词，留给后世与自己',
             desc: '你选择把时代和心绪一并留在诗里。',
             effect: { poetry: 5, sad: 1 },
-            tags: ['诗词留名'],
+            tags: ['千古一词'],
             next: -1
           },
           {
             text: '闭门沉思，决定以国事压住旧日情绪',
             desc: '你选择把终局当成一场必须掌握的命运。',
             effect: { power: 5, people: 1 },
-            tags: ['圣主之志'],
+            tags: ['天命未决'],
             next: -1
           },
           {
             text: '睡前写下几句温柔的心事，送给天下与自己',
             desc: '你知道，一个人如果不敢承认自己的软弱，就永远无法真心懂人。',
             effect: { love: 4, people: 2 },
-            tags: ['温柔与人心'],
+            tags: ['归隐意向'],
             next: -1
           }
         ]
       }
     ];
 
+    let gameState = null;
+    let previewMode = false;
+
     function addTag(tag) {
       const str = String(tag || '').trim();
       if (!str) return;
-      if (!gameState.tags.includes(str)) {
-        gameState.tags.push(str);
-      }
+      if (!gameState.tags.includes(str)) gameState.tags.push(str);
     }
 
     function applyChoice(opt, scene) {
-      if (!gameState.choices) {
-        gameState.choices = [];
-      }
-
       if (opt.effect) {
         Object.entries(opt.effect).forEach(([key, value]) => {
           if (gameState.attr[key] !== undefined) {
@@ -562,28 +557,48 @@
           }
         });
       }
-
-      if (opt.tags) {
-        opt.tags.forEach(addTag);
-      }
+      if (opt.tags) opt.tags.forEach(addTag);
 
       gameState.choices.push({
-        sceneIndex: gameState.currentScene,
         sceneTitle: scene.title,
-        sceneContent: scene.content,
+        narration: scene.content,
         choiceText: opt.text,
         choiceDesc: opt.desc,
-        choiceEffect: opt.effect,
-        choiceTags: opt.tags,
-        timestamp: new Date().toISOString()
+        effect: opt.effect,
+        tags: opt.tags
       });
+
+      gameState.currentScene = opt.next;
+      if (opt.next === -1) {
+        gameState.finished = true;
+        addTag('序章珍藏');
+      }
+      saveState();
     }
 
-    function renderScene() {
-      const container = document.getElementById('storyContainer');
-      const journeySection = document.getElementById('journeySection');
-      if (!container) return;
+    function formatEffect(effect) {
+      if (!effect) return '';
+      return Object.entries(effect)
+        .map(([k, v]) => `${ATTR_LABELS[k] || k} ${v > 0 ? '+' : ''}${v}`)
+        .join(' / ');
+    }
 
+    function getEnding() {
+      const a = gameState.attr;
+      const ranked = [
+        ['poetry', '你最终选择以词心映照山河，把一生的悲欢都写进词句里。千年之后，帝王将相的功业终将随风散去，而你的词作会永远留在世间，成为一代词帝的永恒注脚。'],
+        ['power', '你收起了词人的柔软，选择扛起南唐国主的重担。深宫的灯火长明，你将在权谋与国运的漩涡中走出属于自己的帝王之路，是守成还是开拓，前路皆在你手中。'],
+        ['love', '你始终以温柔心待世间人，不论是身边的爱人、朝中的臣子还是境内的百姓，都感受过你的赤诚。哪怕风雨欲来，这份柔软也会成为你最坚韧的力量。'],
+        ['people', '你始终把百姓放在心上，宁可自己为难，也不肯让江南多一户流离的人家。多年以后，金陵的巷陌之间，仍有人念起你名字时的一声叹息。'],
+        ['sad', '你在矛盾与挣扎中走完了序章，愁绪深深刻进了生命里。这份敏感与惆怅，最终会成为你词作里最动人的底色，也成为你一生解不开的结。']
+      ];
+      let best = ranked[0];
+      ranked.forEach(item => { if (a[item[0]] > a[best[0]]) best = item; });
+      return best[1];
+    }
+
+    /* ================= 游玩视图 ================= */
+    function renderScene() {
       const scene = storyLines[gameState.currentScene];
       if (!scene) {
         gameState.finished = true;
@@ -591,20 +606,27 @@
         renderJourney();
         return;
       }
+      const total = storyLines.length;
+      const current = gameState.currentScene + 1;
+      const percent = Math.round((gameState.currentScene / total) * 100);
 
-      if (journeySection) journeySection.style.display = 'none';
-
-      container.innerHTML = `
-        <div class="text-center scene-card" style="margin-bottom:48px;text-align:center;">
-          <h2 style="font-size:30px;margin-bottom:12px;">序章 · 交互式人生轨迹</h2>
-          <p style="color:#78716c;margin:0;">你正在书写李煜的前半段命运，选择将决定你的指向。</p>
-          <p style="color:#b45309;font-size:15px;margin:8px 0 0 0;">第 ${gameState.currentScene + 1} 幕 / 共 ${storyLines.length} 幕</p>
+      const main = document.getElementById('mainContent');
+      main.innerHTML = `
+        <div class="scene-card" style="text-align:center;margin-bottom:32px;">
+          <h2 style="font-size:32px;margin:0 0 12px;">序章 · 重瞳·钟山隐</h2>
+          <p style="color:#78716c;margin:0;">你正在书写李煜的前半段命运，每一个选择都将塑造他的人生轨迹。</p>
+          <p class="progress-tip">第 ${current} 幕 / 共 ${total} 幕</p>
+          <div class="progress-bar"><div class="progress-fill" style="width:${percent}%"></div></div>
         </div>
-        <div class="${scene.title.includes('楔子') ? 'bg-amber50' : 'bg-stone50'} scene-card">
-          <h3 style="font-size:28px; margin:0 0 16px; line-height:1.4;">${scene.title}</h3>
-          <p style="font-size:18px;color:#44403c;margin:0; white-space:pre-wrap; line-height:1.9;">${scene.content}</p>
+        <div class="${scene.title.indexOf('楔子') === 0 ? 'bg-amber50' : 'bg-stone50'} scene-card">
+          <h3 style="font-size:26px; margin:0 0 20px; line-height:1.4;">${escapeHtml(scene.title)}</h3>
+          <p style="font-size:17px;color:#44403c;margin:0; white-space:pre-wrap; line-height:2;">${escapeHtml(scene.content)}</p>
         </div>
         <div id="optBox" style="margin-top:32px;"></div>
+        <div class="controls-row">
+          <button class="btn btn-secondary" id="previewBtn" ${gameState.choices.length ? '' : 'disabled'}>回顾已走过的轨迹</button>
+          <button class="btn btn-primary" onclick="restartGame()">重新开始序章</button>
+        </div>
       `;
 
       const box = document.getElementById('optBox');
@@ -614,181 +636,122 @@
         btn.innerHTML = `
           <span style="font-weight:500;font-size:18px;display:block;">${escapeHtml(opt.text)}</span>
           ${opt.desc ? `<p style="font-size:14px;color:#78716c;margin:8px 0 0 0;">${escapeHtml(opt.desc)}</p>` : ''}
-          ${opt.effect ? `<p style="font-size:12px;color:#92400e;margin:10px 0 0 0;">属性变化：${Object.entries(opt.effect).map(([k, v]) => {
-            return `${ATTR_LABELS[k] || k}: ${v > 0 ? '+' : ''}${v}`;
-          }).join(' / ')}</p>` : ''}
+          ${opt.effect ? `<p style="font-size:12px;color:#92400e;margin:10px 0 0 0;">属性变化：${formatEffect(opt.effect)}</p>` : ''}
         `;
-
         btn.onclick = () => {
-          document.querySelectorAll('.choice-btn').forEach((b) => b.disabled = true);
+          document.querySelectorAll('.choice-btn').forEach((b) => { b.disabled = true; });
           applyChoice(opt, scene);
-
-          gameState.currentScene = opt.next;
-          if (opt.next === -1) {
-            gameState.finished = true;
-          }
-
-          saveState();
-
           setTimeout(() => {
             if (gameState.finished) {
+              previewMode = false;
               renderJourney();
             } else {
-              window.location.reload();
+              renderScene();
             }
-          }, 500);
+          }, 450);
         };
-
         box.appendChild(btn);
       });
 
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-      setActiveNav('nav-progress');
+      const previewBtn = document.getElementById('previewBtn');
+      if (previewBtn) {
+        previewBtn.onclick = () => { previewMode = true; renderJourney(); };
+      }
+      window.scrollTo(0, 0);
     }
 
+    /* ================= 人生轨迹视图（已并入本页） ================= */
     function renderJourney() {
-      const container = document.getElementById('storyContainer');
-      const journeySection = document.getElementById('journeySection');
-      if (!journeySection) return;
+      const main = document.getElementById('mainContent');
 
-      const attrHtml = `
-        <div style="display:flex;gap:12px;flex-wrap:wrap;margin-bottom:12px;">
-          <div class="journey-badge">词心: ${gameState.attr.poetry}</div>
-          <div class="journey-badge">龙椅: ${gameState.attr.power}</div>
-          <div class="journey-badge">情缘: ${gameState.attr.love}</div>
-          <div class="journey-badge">民心: ${gameState.attr.people}</div>
-          <div class="journey-badge">愁绪: ${gameState.attr.sad}</div>
-        </div>
-        <div style="margin-bottom:8px;">
-          已收集标记：${gameState.tags.length > 0 ? gameState.tags.map((t) => `<span class="journey-badge">${escapeHtml(String(t))}</span>`).join('') : '<span style="color:#78716c;">（无）</span>'}
-        </div>
-      `;
-
-      let historyHtml = '';
-      if (!gameState.choices || gameState.choices.length === 0) {
-        historyHtml = '<p style="color:#78716c;">你还没有做出任何选择。返回序章开始你的旅程。</p>';
+      let timelineHtml = '';
+      if (!gameState.choices.length) {
+        timelineHtml = `<div style="text-align:center;padding:48px;color:#78716c;background:#ffffff;border-radius:12px;">你还没有做出任何选择，先回到序章开始你的旅程吧。</div>`;
       } else {
-        historyHtml = gameState.choices.map((c, idx) => {
-          const effectText = c.choiceEffect ? Object.entries(c.choiceEffect).map(([k, v]) => {
-            return `${ATTR_LABELS[k] || k}: ${v > 0 ? '+' : ''}${v}`;
-          }).join(' / ') : '';
-
-          const tagsHtml = c.choiceTags && c.choiceTags.length ? c.choiceTags.map((t) => `<span class="journey-badge">${escapeHtml(String(t))}</span>`).join('') : '';
-
-          let timeText = '时间未知';
-          if (c.timestamp) {
-            const parsed = Date.parse(c.timestamp);
-            if (!isNaN(parsed)) {
-              timeText = new Date(parsed).toLocaleString();
-            }
-          }
-
-          return `
-            <div class="journey-item">
-              <strong>第 ${idx + 1} 步 · ${escapeHtml(c.sceneTitle || '剧情')}</strong>
-              <div class="journey-meta">${timeText}</div>
-              <p style="margin:8px 0 6px 0;color:#444;">${escapeHtml(c.sceneContent || '').slice(0, 240)}${(c.sceneContent || '').length > 240 ? '…' : ''}</p>
-              <div style="margin-top:8px;">
-                <div style="font-weight:500;color:#92400e;">你的选择：${escapeHtml(c.choiceText || '')}</div>
-                ${c.choiceDesc ? `<div style="color:#78716c;margin-top:6px;">${escapeHtml(c.choiceDesc)}</div>` : ''}
-                ${effectText ? `<div style="margin-top:8px;color:#78350f;font-size:13px;">属性变化：${effectText}</div>` : ''}
-                <div style="margin-top:8px;">${tagsHtml}</div>
-              </div>
+        timelineHtml = gameState.choices.map((item, idx) => `
+          <article class="timeline-card">
+            <div class="timeline-head">
+              <div class="scene-badge">${idx + 1}</div>
+              <h4 class="timeline-title">${escapeHtml(item.sceneTitle)}</h4>
             </div>
-          `;
-        }).join('');
+            <p class="timeline-narration">${escapeHtml(item.narration)}</p>
+            <div class="choice-box">
+              <strong>你的选择</strong>
+              <p>${escapeHtml(item.choiceText)}</p>
+              ${item.choiceDesc ? `<p style="font-size:14px;color:#78716c;margin-top:6px;">${escapeHtml(item.choiceDesc)}</p>` : ''}
+              ${item.effect ? `<p style="font-size:13px;color:#b45309;margin-top:8px;">属性变化：${formatEffect(item.effect)}</p>` : ''}
+            </div>
+            ${item.tags && item.tags.length ? `
+              <div class="tag-group">
+                ${item.tags.map(t => `<span class="tag">${escapeHtml(t)}</span>`).join('')}
+              </div>` : ''}
+          </article>
+        `).join('');
       }
 
-      const finishedNote = gameState.finished
-        ? '<p style="color:#92400e;font-weight:500;margin-top:6px;">当前已完成序章，可在下方查看完整回顾或选择重新开始。</p>'
-        : '<p style="color:#78716c;margin-top:6px;">序章尚未完成，你可以返回继续选择，或导出当前存档备份。</p>';
-
-      journeySection.innerHTML = `
-        <div class="text-center scene-card" style="margin-bottom:18px;text-align:center;">
-          <h2 style="font-size:28px;margin-bottom:8px;">人生轨迹 · 回顾</h2>
-          <p style="color:#78716c;margin:0;">在此查看你在序章中所做出的选择、属性变化与收集到的标记。</p>
-        </div>
-        <div class="bg-stone50 scene-card">
-          <h3 style="font-size:22px;margin-top:0;">属性与标记</h3>
-          ${attrHtml}
-          ${finishedNote}
-          <div class="controls-row">
-            <button class="small-btn" onclick="exportSave()">导出存档</button>
-            <button class="small-btn" onclick="resumeFromJourney()">返回序章</button>
-            <button class="small-btn" onclick="restartGame()">重置并重新开始</button>
+      let finalHtml = '';
+      if (gameState.finished) {
+        finalHtml = `
+          <div class="final-card">
+            <h3 style="text-align:center;color:#78350f;font-size:26px;margin:0 0 8px;">序章完结 · 人生结算</h3>
+            <p style="text-align:center;color:#78716c;margin:0;font-size:14px;">你走过的每一幕旁白与选择，都完整保留在上方</p>
+            <div class="final-attr-grid">
+              <div class="final-attr-item"><p class="name">词心</p><p class="val">${gameState.attr.poetry}</p></div>
+              <div class="final-attr-item"><p class="name">龙椅</p><p class="val">${gameState.attr.power}</p></div>
+              <div class="final-attr-item"><p class="name">情缘</p><p class="val">${gameState.attr.love}</p></div>
+              <div class="final-attr-item"><p class="name">民心</p><p class="val">${gameState.attr.people}</p></div>
+              <div class="final-attr-item"><p class="name">愁绪</p><p class="val">${gameState.attr.sad}</p></div>
+            </div>
+            <h4 style="text-align:center;color:#92400e;font-size:18px;margin:24px 0 12px;">你解锁的全部标记</h4>
+            <div class="tag-group" style="justify-content:center;">
+              ${gameState.tags.length ? gameState.tags.map(t => `<span class="tag">${escapeHtml(t)}</span>`).join('') : '<span class="tag">暂无标记</span>'}
+            </div>
+            <p class="ending-text">${escapeHtml(getEnding())}</p>
+            <p class="ending-text" style="font-size:14px;color:#78716c;">从李从嘉到李煜，你走完了序章的全部剧情。南唐国主的人生才刚刚开始，真正的命运还在你手中书写。</p>
+            <div class="controls-row">
+              <a href="bag.html" class="btn btn-primary">查看属性背包</a>
+              <a href="appendix.html" class="btn btn-secondary">查看拓展附录</a>
+              <button class="btn btn-danger" onclick="restartGame()">清空存档重开</button>
+            </div>
           </div>
+        `;
+      } else {
+        finalHtml = `
+          <div class="controls-row">
+            <button class="btn btn-primary" id="backBtn">返回继续游玩</button>
+            <button class="btn btn-secondary" onclick="restartGame()">重新开始序章</button>
+          </div>
+        `;
+      }
+
+      main.innerHTML = `
+        <div style="text-align:center;margin-bottom:40px;">
+          <h2 style="font-size:32px;margin:0 0 12px;">我的人生轨迹</h2>
+          <p style="color:#78716c;margin:0;">${gameState.finished ? '这里完整记录了你做出的每一个选择，旁白与抉择连缀成篇' : '以下是你目前为止走过的人生片段'}</p>
         </div>
-        <div style="margin-top:24px;">
-          <h3 style="font-size:22px;margin-bottom:12px;">选择历史</h3>
-          ${historyHtml}
-        </div>
+        ${timelineHtml}
+        ${finalHtml}
       `;
 
-      if (container) container.innerHTML = '';
-      journeySection.style.display = 'block';
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-      setActiveNav('nav-journey');
+      const backBtn = document.getElementById('backBtn');
+      if (backBtn) backBtn.onclick = () => { previewMode = false; renderScene(); };
+
+      window.scrollTo(0, 0);
     }
 
-    function resumeFromJourney() {
-      if (gameState.finished) {
-        gameState.currentScene = Math.max(0, storyLines.length - 1);
-        gameState.finished = false;
-        saveState();
-      }
-      renderScene();
-    }
-
-    function exportSave() {
-      try {
-        const dataStr = JSON.stringify(gameState, null, 2);
-        const blob = new Blob([dataStr], { type: 'application/json' });
-        const url = URL.createObjectURL(blob);
-        const a = document.createElement('a');
-        a.href = url;
-        a.download = `liyuGameSave_${new Date().toISOString().slice(0, 19).replace(/[:T]/g, '-')}.json`;
-        document.body.appendChild(a);
-        a.click();
-        a.remove();
-        URL.revokeObjectURL(url);
-      } catch (e) {
-        alert('导出失败：' + e.message);
-      }
-    }
-
-    function escapeHtml(str) {
-      if (!str) return '';
-      return String(str)
-        .replace(/&/g, '&amp;')
-        .replace(/</g, '&lt;')
-        .replace(/>/g, '&gt;')
-        .replace(/"/g, '&quot;')
-        .replace(/'/g, '&#39;');
-    }
-
-    function setActiveNav(id) {
-      document.querySelectorAll('.nav-item').forEach((n) => n.classList.remove('active'));
-      const el = document.getElementById(id);
-      if (el) el.classList.add('active');
-    }
-
-    let gameState = loadState();
-
-    function initPage() {
-      updateUI();
-      if (gameState.finished) {
+    function render() {
+      if (previewMode || gameState.finished) {
         renderJourney();
       } else {
         renderScene();
       }
     }
 
-    document.getElementById('nav-journey').addEventListener('click', function (event) {
-      event.preventDefault();
-      renderJourney();
+    document.addEventListener('DOMContentLoaded', () => {
+      gameState = loadState();
+      render();
     });
-
-    initPage();
   </script>
 </body>
 </html>
+<!--17155914652395614730100301-->
