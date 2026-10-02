@@ -1,120 +1,125 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
-<head>
+
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>重瞳·钟山隐</title>
+  重瞳·钟山隐</title>
   <script src="https://cdn.tailwindcss.com"></script>
-  <style>
+  
     html { scroll-behavior: smooth; }
     body {
       font-family: "PingFang SC", "Microsoft YaHei", "Noto Sans SC", sans-serif;
       background: #fffbf2;
       color: #292524;
+      margin: 0;
     }
     .ink-gradient {
       background: linear-gradient(135deg, #7c4a1c 0%, #5b3414 100%);
     }
+    .nav-item {
+      text-decoration: none;
+      cursor: pointer;
+    }
     .nav-item:hover {
       color: #92400e;
     }
+    button { cursor: pointer; }
   </style>
 </head>
-<body class="min-h-screen">
+
   <!-- 顶部固定导航 -->
-  <nav class="fixed w-full bg-amber-50/95 backdrop-blur-md shadow-sm z-50 border-b border-amber-100">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="flex justify-between h-16 items-center">
-        <div class="flex items-center">
-          <span class="font-bold text-xl text-amber-900">李煜 · 重瞳·钟山隐</span>
+  <nav style="position:fixed;width:100%;background:rgba(255,251,242,0.95);backdrop-filter:blur(8px);box-shadow:0 1px 3px rgba(0,0,0,0.05);z-index:50;border-bottom:1px solid #fef3c7;">
+    <div style="max-width:1280px;margin:0 auto;padding:0 24px;">
+      <div style="display:flex;justify-content:space-between;height:64px;align-items:center;">
+        
+          <span style="font-weight:bold;font-size:20px;color:#78350f;">李煜 · 重瞳·钟山隐</span>
         </div>
-        <div class="hidden md:flex space-x-12">
-          <a href="index.html" class="nav-item text-amber-700 font-medium text-lg transition">序章首页</a>
-          <a href="progress.html" class="nav-item text-stone-600 hover:text-amber-700 font-medium text-lg transition">人生进度</a>
-          <a href="appendix.html" class="nav-item text-stone-600 hover:text-amber-700 font-medium text-lg transition">拓展附录</a>
-          <a href="journey.html" class="nav-item text-stone-600 hover:text-amber-700 font-medium text-lg transition">我的人生轨迹</a>
-          <a href="bag.html" class="nav-item text-stone-600 hover:text-amber-700 font-medium text-lg transition">我的属性背包</a>
+        <div style="display:flex;gap:48px;">
+          <a href="index.html" style="color:#92400e;font-weight:500;font-size:18px;" class="nav-item">序章首页</a>
+          <a href="progress.html" style="color:#57534e;" class="nav-item">人生进度</a>
+          <a href="appendix.html" style="color:#57534e;" class="nav-item">拓展附录</a>
+          <a href="journey.html" style="color:#57534e;" class="nav-item">我的人生轨迹</a>
+          <a href="bag.html" style="color:#57534e;" class="nav-item">我的属性背包</a>
         </div>
       </div>
     </div>
   </nav>
 
   <!-- 全局属性状态栏 -->
-  <div id="statusBar" class="fixed top-20 right-4 bg-white/90 backdrop-blur-sm p-3 rounded-lg shadow-md z-40 border border-amber-100 text-sm">
-    <div class="grid grid-cols-5 gap-3 mb-2 pb-2 border-b border-amber-50">
-      <div class="text-center px-2"><p class="text-amber-700 font-medium">词心</p><p id="attr-poetry" class="text-stone-600">0</p></div>
-      <div class="text-center px-2"><p class="text-amber-700 font-medium">龙椅</p><p id="attr-power" class="text-stone-600">0</p></div>
-      <div class="text-center px-2"><p class="text-amber-700 font-medium">情缘</p><p id="attr-love" class="text-stone-600">0</p></div>
-      <div class="text-center px-2"><p class="text-amber-700 font-medium">民心</p><p id="attr-people" class="text-stone-600">0</p></div>
-      <div class="text-center px-2"><p class="text-amber-700 font-medium">愁绪</p><p id="attr-sad" class="text-stone-600">0</p></div>
+  <div id="statusBar" style="position:fixed;top:80px;right:16px;background:rgba(255,255,255,0.9);backdrop-filter:blur(4px);padding:12px;border-radius:8px;box-shadow:0 4px 6px rgba(0,0,0,0.08);z-index:40;border:1px solid #fef3c7;font-size:14px;pointer-events:none;">
+    <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:12px;margin-bottom:8px;padding-bottom:8px;border-bottom:1px solid #fffbeb;">
+      <div style="text-align:center;padding:0 8px;"><p style="color:#b45309;font-weight:500;margin:0;">词心</p><p id="attr-poetry" style="color:#57534e;margin:4px 0 0 0;">0</p></div>
+      <div style="text-align:center;padding:0 8px;"><p style="color:#b45309;font-weight:500;margin:0;">龙椅</p><p id="attr-power" style="color:#57534e;margin:4px 0 0 0;">0</p></div>
+      <div style="text-align:center;padding:0 8px;"><p style="color:#b45309;font-weight:500;margin:0;">情缘</p><p id="attr-love" style="color:#57534e;margin:4px 0 0 0;">0</p></div>
+      <div style="text-align:center;padding:0 8px;"><p style="color:#b45309;font-weight:500;margin:0;">民心</p><p id="attr-people" style="color:#57534e;margin:4px 0 0 0;">0</p></div>
+      <div style="text-align:center;padding:0 8px;"><p style="color:#b45309;font-weight:500;margin:0;">愁绪</p><p id="attr-sad" style="color:#57534e;margin:4px 0 0 0;">0</p></div>
     </div>
-    <p class="text-xs text-stone-500">已收集标记：<span id="tagCount">0</span>/22</p>
+    <p style="font-size:12px;color:#78716c;margin:0;">已收集标记：<span id="tagCount">0</span>/22</p>
   </div>
 
   <!-- 封面英雄区 -->
-  <section class="min-h-screen flex flex-col justify-center items-center pt-16 px-6 text-center">
-    <h1 class="text-7xl md:text-8xl font-bold text-amber-900 mb-10 tracking-wide">重瞳·钟山隐</h1>
-    <p class="text-2xl md:text-3xl text-stone-600 max-w-5xl mx-auto mb-10 leading-relaxed">
+  <section style="min-height:100vh;display:flex;flex-direction:column;justify-content:center;align-items:center;padding-top:64px;padding-left:24px;padding-right:24px;text-align:center;">
+    <h1 style="font-size:clamp(48px,8vw,88px);font-weight:bold;color:#7c2d12;margin-bottom:40px;letter-spacing:4px;margin-top:0;">重瞳·钟山隐</h1>
+    <p style="font-size:clamp(20px,3vw,32px);color:#57534e;max-width:1000px;margin:0 auto 40px;line-height:1.6;">
       公元937年七夕，金陵宫城梧桐未落。六皇子李从嘉降生，生来一目重瞳。他本想做钟山脚下的富贵闲人，却被命运一步步推上南唐国主的位置。
     </p>
-    <p class="text-xl md:text-2xl text-stone-500 mb-16 leading-relaxed max-w-6xl">
+    <p style="font-size:clamp(18px,2.5vw,24px);color:#78716c;margin-bottom:64px;line-height:1.6;max-width:1100px;">
       从“李从嘉”到“李煜”，不是改名，是命运把一个人劈成了两半。一半留在钟山书斋，一半走进凤阁龙楼。
     </p>
-    <button onclick="goProgress()" id="startBtn" class="px-12 py-5 bg-amber-800 text-white rounded-xl hover:bg-amber-900 transition shadow-md text-2xl font-medium">
+    <button onclick="goProgress()" id="startBtn" style="padding:20px 48px;background:#7c2d12;color:white;border-radius:12px;border:none;box-shadow:0 4px 12px rgba(0,0,0,0.1);font-size:24px;font-weight:500;transition:all 0.3s;">
       开启他的人生选择之旅
     </button>
   </section>
 
   <!-- 页脚 -->
-  <footer class="ink-gradient text-amber-50 py-10">
-    <div class="max-w-7xl mx-auto px-4 text-center">
-      <p>© 2026 历史人物生平拆解项目 · 李煜《重瞳·钟山隐》专题站</p>
-      <p class="text-sm text-amber-200 mt-2">做一个只属于你的南唐后主人生故事</p>
+  <footer style="background:linear-gradient(135deg, #7c4a1c 0%, #5b3414 100%);color:#fffbeb;padding:40px 0;">
+    <div style="max-width:1280px;margin:0 auto;padding:0 24px;text-align:center;">
+      <p style="margin:0;">© 2026 历史人物生平拆解项目 · 李煜《重瞳·钟山隐》专题站</p>
+      <p style="font-size:14px;color:#fde68a;margin-top:8px;margin-bottom:0;">做一个只属于你的南唐后主人生故事</p>
     </div>
   </footer>
 
-  <script>
-    // 读取存档
-    function loadState() {
-      const saved = localStorage.getItem('liyuGameSave');
-      if (saved) return JSON.parse(saved);
+  
+    function loadState(){
+      const saved = localStorage.getItem('liyuGameSave')
+      if(saved) return JSON.parse(saved)
       return {
-        attr: { poetry: 0, power: 0, love: 0, people: 0, sad: 0 },
+        attr: {poetry:0,power:0,love:0,people:0,sad:0},
         tags: [],
         currentScene: 0,
         choices: [],
         started: false,
         finished: false
-      };
-    }
-
-    function updateStatus() {
-      const state = loadState();
-      document.getElementById('attr-poetry').textContent = state.attr.poetry;
-      document.getElementById('attr-power').textContent = state.attr.power;
-      document.getElementById('attr-love').textContent = state.attr.love;
-      document.getElementById('attr-people').textContent = state.attr.people;
-      document.getElementById('attr-sad').textContent = state.attr.sad;
-      document.getElementById('tagCount').textContent = state.tags.length;
-
-      const btn = document.getElementById('startBtn');
-      if (state.finished) {
-        btn.textContent = '查看我的人生轨迹';
-      } else if (state.started) {
-        btn.textContent = '继续我的南唐人生';
       }
     }
 
-    function goProgress() {
-      const state = loadState();
-      if (state.finished) {
-        location.href = 'journey.html';
+    function updateStatus(){
+      const state = loadState()
+      document.getElementById('attr-poetry').textContent = state.attr.poetry
+      document.getElementById('attr-power').textContent = state.attr.power
+      document.getElementById('attr-love').textContent = state.attr.love
+      document.getElementById('attr-people').textContent = state.attr.people
+      document.getElementById('attr-sad').textContent = state.attr.sad
+      document.getElementById('tagCount').textContent = state.tags.length
+      
+      const btn = document.getElementById('startBtn')
+      if(state.finished){
+        btn.textContent = '查看我的人生轨迹'
+      } else if(state.started){
+        btn.textContent = '继续我的南唐人生'
+      }
+    }
+
+    function goProgress(){
+      const state = loadState()
+      if(state.finished){
+        location.href = 'journey.html'
       } else {
-        location.href = 'progress.html';
+        location.href = 'progress.html'
       }
     }
 
-    updateStatus();
+    updateStatus()
   </script>
 </body>
 </html>
