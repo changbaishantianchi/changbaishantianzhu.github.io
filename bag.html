@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
-<head>
+
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>我的属性背包 · 重瞳·钟山隐</title>
-  <style>
+  我的属性背包 · 重瞳·钟山隐</title>
+  
     *{box-sizing:border-box;margin:0;padding:0;}
     body{font-family:"PingFang SC","Microsoft YaHei",sans-serif;background:#fffbf2;color:#292524;margin:0;line-height:1.8;}
     a{text-decoration:none;color:inherit;}
@@ -51,8 +51,8 @@
     }
   </style>
 </head>
-<body>
-  <nav>
+
+  
     <div class="nav-inner">
       <span style="font-weight:bold;font-size:20px;color:#78350f;">李煜 · 重瞳·钟山隐</span>
       <div style="display:flex;gap:32px;flex-wrap:wrap;justify-content:center;">
@@ -66,17 +66,17 @@
 
   <div class="container">
     <div style="text-align:center;margin-bottom:48px;">
-      <h2>我的属性背包</h2>
+      我的属性背包</h2>
       <p class="meta-small" style="margin:0;">这里记录了你在所有选择中积累的属性与解锁的标记</p>
     </div>
 
     <div class="card">
-      <h3>五大核心属性</h3>
+      五大核心属性</h3>
       <div id="attrPanel" style="margin-top:24px;"></div>
     </div>
 
     <div class="card">
-      <h3>已解锁标记（<span id="tagCount2">0</span>/22）</h3>
+      已解锁标记（<span id="tagCount2">0</span>/20）</h3>
       <div id="tagPanel" style="margin-top:16px;"></div>
     </div>
 
@@ -87,18 +87,17 @@
     </div>
   </div>
 
-  <footer>
-    <p>© 2026 历史人物生平拆解项目 · 李煜《重瞳·钟山隐》专题站</p>
+  
+    © 2026 历史人物生平拆解项目 · 李煜《重瞳·钟山隐》专题站</p>
   </footer>
 
-  <script>
-    // 统一使用全局22个正式标记
+  
+    // 统一使用全局正式标记（已移除"天命未决""千古一词"）
     const allTags = [
-      "刻意的闲散","沉默的旁观者","寻求庇护","禅师的点拨","娥皇的承诺",
-      "祖父的预言","梨花誓约","迷途者","储君之念","避世未成",
-      "父亲的遗命","无言的继承","《霓裳羽衣曲》（残谱）","旧梦难寻","金陵风月",
-      "娥皇的陪伴","宫廷权谋","孤城夜语","归隐意向","天命未决",
-      "千古一词","序章珍藏"
+      "刻意的闲散","储君之念","寻求庇护","情比金坚","刻意的闲散",
+      "沉默的旁观者","梨花誓约","寻求庇护","娥皇的承诺","《霓裳羽衣曲》（残谱）",
+      "宫廷权谋","孤城夜语","娥皇的陪伴","接受命运","告别过去",
+      "告别钟山","太庙立誓","奉宋为尊","回望钟山","序章珍藏"
     ];
 
     // 属性元数据 —— 柔和低饱和暖色系，与整体风格协调
@@ -136,7 +135,7 @@
           return `
             <div style="margin-bottom:24px;">
               <div class="attr-row">
-                <div>
+                
                   <div style="font-weight:500;color:#92400e;font-size:16px;">${a.name}</div>
                   <div class="meta-small">${a.desc}</div>
                 </div>
