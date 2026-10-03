@@ -6,13 +6,19 @@
   <title>人生进度 · 重瞳·钟山隐</title>
   <style>
     * { box-sizing: border-box; }
-    html { scroll-behavior: smooth; }
+    html, body { height: 100%; }
+    /* 让页面成为列方向弹性布局，main 占据剩余高度，从而把 footer 推到底部 */
     body {
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
       font-family: "PingFang SC", "Microsoft YaHei", "Noto Sans SC", sans-serif;
       background: #fffbf2;
       color: #292524;
       margin: 0;
       line-height: 1.6;
+      /* 保留顶部空间避免固定 nav 覆盖内容（nav 高度 64px） */
+      padding-top: 64px;
     }
     a { text-decoration: none; }
     nav {
@@ -71,11 +77,15 @@
     }
     .choice-btn:disabled { opacity: 0.6; cursor: not-allowed; }
 
-    .container {
+    /* main 容器：让它在弹性布局中占据剩余高度，确保 footer 在视口底部 */
+    main.container {
+      flex: 1 0 auto;
       max-width: 900px;
       margin: 0 auto;
-      padding: 112px 24px 96px;
+      padding: 112px 24px 96px; /* 保留你原先的内边距设置以免遮挡或视觉突兀 */
+      width: 100%;
     }
+
     .bg-amber50 {
       background: #fffbeb;
       padding: 32px;
@@ -100,6 +110,7 @@
       color: #fffbeb;
       padding: 40px 0;
       text-align: center;
+      /* 确保 footer 不被固定（保持文档流），由 body:flex 布局放置底部 */
     }
     .btn {
       padding: 10px 20px;
@@ -257,7 +268,7 @@
         gap: 8px 16px;
       }
       .nav-item { font-size: 14px; }
-      .container { padding-top: 120px; }
+      main.container { padding-top: 120px; }
       .bg-amber50, .bg-stone50, .timeline-card, .final-card { padding: 20px 16px; }
       .final-attr-grid { grid-template-columns: repeat(2, 1fr); }
     }
@@ -609,11 +620,11 @@
     function getEnding() {
       const a = gameState.attr;
       const ranked = [
-        ['poetry', '你最终选择以词心映照山河，把一生的悲欢都写进词句里。千年之后，帝王将相的功业终将随风散去，而你的词作会永远留在世间，成为[...]
-        ['power', '你收起了词人的柔软，选择扛起南唐国主的重担。深宫的灯火长明，你将在权谋与国运的漩涡中走出属于自己的帝王之路，是守成还是开�[...]
-        ['love', '你始终以温柔心待世间人，不论是身边的爱人、朝中的臣子还是境内的百姓，都感受过你的赤诚。哪怕风雨欲来，这份柔软也会成为你最��[...]
-        ['people', '你始终把百姓放在心上，宁可自己为难，也不肯让江南多一户流离的人家。多年以后，金陵的巷陌之间，仍有人念起你名字时的一声叹息[...]
-        ['sad', '你在矛盾与挣扎中走完了序章，愁绪深深刻进了生命里。这份敏感与惆怅，最终会成为你词作里最动人的底色，也成为你一生解不开的结。[...]
+        ['poetry', '你最终选择以词心映照山河，把一生的悲欢都写进词句里。千年之后，帝王将相的功业终将随风散去，而你的词作会永远留在世间，成为[...]'],
+        ['power', '你收起了词人的柔软，选择扛起南唐国主的重担。深宫的灯火长明，你将在权谋与国运的漩涡中走出属于自己的帝王之路，是守成还是开[...]'],
+        ['love', '你始终以温柔心待世间人，不论是身边的爱人、朝中的臣子还是境内的百姓，都感受过你的赤诚。哪怕风雨欲来，这份柔软也会成为你最[...]'],
+        ['people', '你始终把百姓放在心上，宁可自己为难，也不肯让江南多一户流离的人家。多年以后，金陵的巷陌之间，仍有人念起你名字时的一声叹息[...]'],
+        ['sad', '你在矛盾与挣扎中走完了序章，愁绪深深刻进了生命里。这份敏感与惆怅，最终会成为你词作里最动人的底色，也成为你一生解不开的结。[...]']
       ];
       let best = ranked[0];
       ranked.forEach(item => { if (a[item[0]] > a[best[0]]) best = item; });
@@ -653,7 +664,7 @@
       });
 
       const titleText = gameState.finished ? '序章终局' : '人生轨迹回顾';
-      const descText = gameState.finished ? '你已经走完了李煜序章的全部旅程，以下是你做出的所有选择。' : '你已完成 ' + choices.length + ' / ' + total + ' 幕，以下��[...]
+      const descText = gameState.finished ? '你已经走完了李煜序章的全部旅程，以下是你做出的所有选择。' : '你已完成 ' + choices.length + ' / ' + total + ' 幕，以下为你已走过的轨迹。';
       let progressHtml = '';
       if (!gameState.finished) {
         const percent = Math.round((choices.length / total) * 100);
