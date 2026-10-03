@@ -628,75 +628,78 @@
       
       let timelineHtml = '';
       choices.forEach((item, idx) => {
-        timelineHtml += `
-          <div class="timeline-card scene-card">
-            <div class="timeline-head">
-              <div class="scene-badge">${idx + 1}</div>
-              <h4 class="timeline-title">${escapeHtml(item.sceneTitle)}</h4>
-            </div>
-            <p class="timeline-narration">${escapeHtml(item.narration)}</p>
-            <div class="choice-box">
-              你的选择：</strong>
-              <p style="font-weight:500;color:#78350f;margin-bottom:6px;">${escapeHtml(item.choiceText)}</p>
-              <p style="font-size:14px;">${escapeHtml(item.choiceDesc)}</p>
-              ${item.effect ? `<p style="font-size:12px;color:#b45309;margin-top:8px;margin-bottom:0;">属性变化：${formatEffect(item.effect)}</p>` : ''}
-            </div>
-            ${item.tags && item.tags.length ? `
-              <div class="tag-group">
-                ${item.tags.map(t => `<span class="tag">${escapeHtml(t)}</span>`).join('')}
-              </div>
-            ` : ''}
-          </div>
-        `;
+        // 提前计算属性效果HTML
+        let effectHtml = '';
+        if (item.effect) {
+          effectHtml = '<p style="font-size:12px;color:#b45309;margin-top:8px;margin-bottom:0;">属性变化：' + formatEffect(item.effect) + '</p>';
+        }
+        // 提前计算标签HTML
+        let tagHtml = '';
+        if (item.tags && item.tags.length) {
+          tagHtml = '<div class="tag-group">' + item.tags.map(t => '<span class="tag">' + escapeHtml(t) + '</span>').join('') + '</div>';
+        }
+        // 拼接单条轨迹，全部用单引号避免嵌套反引号问题
+        timelineHtml += '<div class="timeline-card scene-card">' +
+          '<div class="timeline-head">' +
+            '<div class="scene-badge">' + (idx + 1) + '</div>' +
+            '<h4 class="timeline-title">' + escapeHtml(item.sceneTitle) + '</h4>' +
+          '</div>' +
+          '<p class="timeline-narration">' + escapeHtml(item.narration) + '</p>' +
+          '<div class="choice-box">' +
+            '你的选择：</strong>' +
+            '<p style="font-weight:500;color:#78350f;margin-bottom:6px;">' + escapeHtml(item.choiceText) + '</p>' +
+            '<p style="font-size:14px;">' + escapeHtml(item.choiceDesc) + '</p>' +
+            effectHtml +
+          '</div>' +
+          tagHtml +
+        '</div>';
       });
 
+      // 提前计算头部内容
+      const titleText = gameState.finished ? '序章终局' : '人生轨迹回顾';
+      const descText = gameState.finished ? '你已经走完了李煜序章的全部旅程，以下是你做出的所有选择。' : '你已完成 ' + choices.length + ' / ' + total + ' 幕，以下是你迄今为止的选择。';
+      let progressHtml = '';
+      if (!gameState.finished) {
+        const percent = Math.round((choices.length / total) * 100);
+        progressHtml = '<p class="progress-tip">进度：' + percent + '%</p><div class="progress-bar"><div class="progress-fill" style="width:' + percent + '%"></div></div>';
+      }
+
+      // 提前计算结局卡片HTML
+      let finalHtml = '';
+      if (gameState.finished) {
+        const tagsHtml = gameState.tags.map(t => '<span class="tag">' + escapeHtml(t) + '</span>').join('');
+        finalHtml = '<div class="final-card scene-card">' +
+          '<h3 style="text-align:center;font-size:24px;margin-top:0;">序章结局</h3>' +
+          '<div class="final-attr-grid">' +
+            '<div class="final-attr-item"><p class="name">词心</p><p class="val">' + a.poetry + '</p></div>' +
+            '<div class="final-attr-item"><p class="name">龙椅</p><p class="val">' + a.power + '</p></div>' +
+            '<div class="final-attr-item"><p class="name">情缘</p><p class="val">' + a.love + '</p></div>' +
+            '<div class="final-attr-item"><p class="name">民心</p><p class="val">' + a.people + '</p></div>' +
+            '<div class="final-attr-item"><p class="name">愁绪</p><p class="val">' + a.sad + '</p></div>' +
+          '</div>' +
+          '<p class="ending-text">' + getEnding() + '</p>' +
+          '<div class="tag-group" style="justify-content:center;">' + tagsHtml + '</div>' +
+        '</div>';
+      }
+
+      // 提前计算按钮
+      let backBtnHtml = '';
+      if (!gameState.finished) {
+        backBtnHtml = '<button class="btn btn-primary" id="backGameBtn">返回继续游玩</button>';
+      }
+
       const main = document.getElementById('mainContent');
-      main.innerHTML = `
-        <div class="scene-card" style="text-align:center;margin-bottom:32px;">
-          <h2 style="font-size:32px;margin:0 0 12px;">${gameState.finished ? '序章终局' : '人生轨迹回顾'}</h2>
-          <p style="color:#78716c;margin:0;">${gameState.finished ? '你已经走完了李煜序章的全部旅程，以下是你做出的所有选择。' : `你已完成 ${choices.length} / ${total} 幕，以下是你迄今为止的选择。`}</p>
-          ${!gameState.finished ? `<p class="progress-tip">进度：${Math.round((choices.length / total) * 100)}%</p><div class="progress-bar"><div class="progress-fill" style="width:${Math.round((choices.length / total) * 100)}%"></div></div>` : ''}
-        </div>
-
-        ${timelineHtml}
-
-        ${gameState.finished ? `
-          <div class="final-card scene-card">
-            <h3 style="text-align:center;font-size:24px;margin-top:0;">序章结局</h3>
-            <div class="final-attr-grid">
-              <div class="final-attr-item">
-                <p class="name">词心</p>
-                <p class="val">${a.poetry}</p>
-              </div>
-              <div class="final-attr-item">
-                <p class="name">龙椅</p>
-                <p class="val">${a.power}</p>
-              </div>
-              <div class="final-attr-item">
-                <p class="name">情缘</p>
-                <p class="val">${a.love}</p>
-              </div>
-              <div class="final-attr-item">
-                <p class="name">民心</p>
-                <p class="val">${a.people}</p>
-              </div>
-              <div class="final-attr-item">
-                <p class="name">愁绪</p>
-                <p class="val">${a.sad}</p>
-              </div>
-            </div>
-            <p class="ending-text">${getEnding()}</p>
-            <div class="tag-group" style="justify-content:center;">
-              ${gameState.tags.map(t => `<span class="tag">${escapeHtml(t)}</span>`).join('')}
-            </div>
-          </div>
-        ` : ''}
-
-        <div class="controls-row">
-          ${!gameState.finished ? `<button class="btn btn-primary" id="backGameBtn">返回继续游玩</button>` : ''}
-          <button class="btn btn-danger" onclick="restartGame()">重新开始序章</button>
-        </div>
-      `;
+      main.innerHTML = '<div class="scene-card" style="text-align:center;margin-bottom:32px;">' +
+          '<h2 style="font-size:32px;margin:0 0 12px;">' + titleText + '</h2>' +
+          '<p style="color:#78716c;margin:0;">' + descText + '</p>' +
+          progressHtml +
+        '</div>' +
+        timelineHtml +
+        finalHtml +
+        '<div class="controls-row">' +
+          backBtnHtml +
+          '<button class="btn btn-danger" onclick="restartGame()">重新开始序章</button>' +
+        '</div>';
 
       const backBtn = document.getElementById('backGameBtn');
       if (backBtn) {
@@ -720,35 +723,38 @@
       const total = storyLines.length;
       const current = gameState.currentScene + 1;
       const percent = Math.round((gameState.currentScene / total) * 100);
+      const cardClass = scene.title.indexOf('楔子') === 0 ? 'bg-amber50' : 'bg-stone50';
+      const previewDisabled = gameState.choices.length ? '' : 'disabled';
 
       const main = document.getElementById('mainContent');
-      main.innerHTML = `
-        <div class="scene-card" style="text-align:center;margin-bottom:32px;">
-          <h2 style="font-size:32px;margin:0 0 12px;">序章 · 重瞳·钟山隐</h2>
-          <p style="color:#78716c;margin:0;">你正在书写李煜的前半段命运，每一个选择都将塑造他的人生轨迹。</p>
-          <p class="progress-tip">第 ${current} 幕 / 共 ${total} 幕</p>
-          <div class="progress-bar"><div class="progress-fill" style="width:${percent}%"></div></div>
-        </div>
-        <div class="${scene.title.indexOf('楔子') === 0 ? 'bg-amber50' : 'bg-stone50'} scene-card">
-          <h3 style="font-size:26px; margin:0 0 20px; line-height:1.4;">${escapeHtml(scene.title)}</h3>
-          <p style="font-size:17px;color:#44403c;margin:0; white-space:pre-wrap; line-height:2;">${escapeHtml(scene.content)}</p>
-        </div>
-        <div id="optBox" style="margin-top:32px;"></div>
-        <div class="controls-row">
-          <button class="btn btn-secondary" id="previewBtn" ${gameState.choices.length ? '' : 'disabled'}>回顾已走过的轨迹</button>
-          <button class="btn btn-danger" onclick="restartGame()">重新开始序章</button>
-        </div>
-      `;
+      main.innerHTML = '<div class="scene-card" style="text-align:center;margin-bottom:32px;">' +
+          '<h2 style="font-size:32px;margin:0 0 12px;">序章 · 重瞳·钟山隐</h2>' +
+          '<p style="color:#78716c;margin:0;">你正在书写李煜的前半段命运，每一个选择都将塑造他的人生轨迹。</p>' +
+          '<p class="progress-tip">第 ' + current + ' 幕 / 共 ' + total + ' 幕</p>' +
+          '<div class="progress-bar"><div class="progress-fill" style="width:' + percent + '%"></div></div>' +
+        '</div>' +
+        '<div class="' + cardClass + ' scene-card">' +
+          '<h3 style="font-size:26px; margin:0 0 20px; line-height:1.4;">' + escapeHtml(scene.title) + '</h3>' +
+          '<p style="font-size:17px;color:#44403c;margin:0; white-space:pre-wrap; line-height:2;">' + escapeHtml(scene.content) + '</p>' +
+        '</div>' +
+        '<div id="optBox" style="margin-top:32px;"></div>' +
+        '<div class="controls-row">' +
+          '<button class="btn btn-secondary" id="previewBtn" ' + previewDisabled + '>回顾已走过的轨迹</button>' +
+          '<button class="btn btn-danger" onclick="restartGame()">重新开始序章</button>' +
+        '</div>';
 
       const box = document.getElementById('optBox');
       scene.options.forEach((opt) => {
         const btn = document.createElement('button');
         btn.className = 'choice-btn';
-        btn.innerHTML = `
-          <span style="font-weight:500;font-size:18px;display:block;">${escapeHtml(opt.text)}</span>
-          ${opt.desc ? `<p style="font-size:14px;color:#78716c;margin:8px 0 0 0;">${escapeHtml(opt.desc)}</p>` : ''}
-          ${opt.effect ? `<p style="font-size:12px;color:#92400e;margin:10px 0 0 0;">属性变化：${formatEffect(opt.effect)}</p>` : ''}
-        `;
+        let btnContent = '<span style="font-weight:500;font-size:18px;display:block;">' + escapeHtml(opt.text) + '</span>';
+        if (opt.desc) {
+          btnContent += '<p style="font-size:14px;color:#78716c;margin:8px 0 0 0;">' + escapeHtml(opt.desc) + '</p>';
+        }
+        if (opt.effect) {
+          btnContent += '<p style="font-size:12px;color:#92400e;margin:10px 0 0 0;">属性变化：' + formatEffect(opt.effect) + '</p>';
+        }
+        btn.innerHTML = btnContent;
         btn.onclick = () => {
           document.querySelectorAll('.choice-btn').forEach((b) => { b.disabled = true; });
           applyChoice(opt, scene);
