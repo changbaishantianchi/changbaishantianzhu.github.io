@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
-<head>
+
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>我的属性背包 · 重瞳·钟山隐</title>
-  <style>
+  我的属性背包 · 重瞳·钟山隐</title>
+  
     * { box-sizing: border-box; margin: 0; padding: 0; }
     html, body { height: 100%; }
     body {
@@ -245,8 +245,8 @@
     }
   </style>
 </head>
-<body>
-  <nav>
+
+  
     <div class="nav-inner">
       <span class="brand">李煜 · 重瞳·钟山隐</span>
       <div class="nav-links">
@@ -260,17 +260,17 @@
 
   <main class="container">
     <div class="page-title">
-      <h2>我的属性背包</h2>
+      我的属性背包</h2>
       <p class="meta-small">这里记录了你在所有选择中积累的属性与解锁的标记</p>
     </div>
 
     <section class="card">
-      <h3>五大核心属性</h3>
+      五大核心属性</h3>
       <div id="attrPanel"></div>
     </section>
 
     <section class="card">
-      <h3>已解锁标记（<span id="tagCount2">0</span>/<span id="tagTotal">0</span>）</h3>
+      已解锁标记（<span id="tagCount2">0</span>/<span id="tagTotal">0</span>）</h3>
       <div id="tagPanel" class="tag-panel"></div>
     </section>
 
@@ -281,14 +281,14 @@
     </div>
   </main>
 
-  <footer>
-    <p>© 2026 历史人物生平拆解项目 · 李煜《重瞳·钟山隐》专题站</p>
+  
+    © 2026 历史人物生平拆解项目 · 李煜《重瞳·钟山隐》专题站</p>
   </footer>
 
-  <script>
+  
     const STORAGE_KEY = 'liyuGameSave';
 
-    // 统一使用唯一标签，不重复
+    // 统一使用全局 20 个正式标记，无重复
     const allTags = [
       "刻意的闲散",
       "储君之念",
@@ -307,6 +307,8 @@
       "太庙立誓",
       "奉宋为尊",
       "回望钟山",
+      "天命未决",
+      "千古一词",
       "序章珍藏"
     ];
 
