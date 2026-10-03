@@ -299,6 +299,13 @@
     const STORAGE_KEY = 'liyuGameSave';
     const ATTR_LABELS = { poetry: '词心', power: '龙椅', love: '情缘', people: '民心', sad: '愁绪' };
 
+    function sanitizeNarrative(value) {
+      return String(value == null ? '' : value)
+        .replace(/�+/g, '')
+        .replace(/\[\.\.\.\]/g, '……')
+        .replace(/\[\.\.\]/g, '……');
+    }
+
     function getDefaultState() {
       return {
         attr: { poetry: 0, power: 0, love: 0, people: 0, sad: 0 },
@@ -314,7 +321,7 @@
         .replace(/&/g, '&amp;')
         .replace(/</g, '&lt;')
         .replace(/>/g, '&gt;')
-        .replace(/"/g, '&quot;')
+        .replace(/\"/g, '&quot;')
         .replace(/'/g, '&#039;');
     }
 
@@ -324,7 +331,7 @@
 
       const next = { ...base, ...raw };
       next.attr = { ...base.attr, ...(raw.attr || {}) };
-      next.tags = Array.isArray(raw.tags) ? raw.tags.filter(Boolean) : [];
+      next.tags = Array.isArray(raw.tags) ? raw.tags.filter(Boolean).map(sanitizeNarrative) : [];
       next.choices = Array.isArray(raw.choices) ? raw.choices : [];
       next.currentScene = Number.isInteger(raw.currentScene) ? raw.currentScene : 0;
       next.finished = !!raw.finished;
@@ -422,28 +429,28 @@
       },
       {
         title: '第一幕 · 钟山书斋·雨',
-        content: `  钟山脚下，书斋。窗外细雨如丝。案上摊着宣纸，墨已研好。你今年十六岁，坐在窗前听雨。
-  这是你最喜欢的地方。金陵宫城太吵，朝堂太险，只有这里，是你的天地。你在这里写词，在这里弹琴，在这里和僧人谈禅，你希望所有人都相信：李[...]
-  可是今天，一封信从宫中送来，你拆开一看，是大哥李弘冀的手书。信上只有一行字：
-  "叔父李景遂，已除。"`,
+        content: `钟山脚下，书斋。窗外细雨如丝。案上摊着宣纸，墨已研好。你今年十六岁，坐在窗前听雨。
+这是你最喜欢的地方。金陵宫城太吵，朝堂太险，只有这里，是你的天地。你在这里写词，在这里弹琴，在这里和僧人谈禅，你希望所有人都相信：李从嘉不仅是个爱写词的少年，他还有一颗不愿被世俗吞没的心。
+可是今天，一封信从宫中送来，你拆开一看，是大哥李弘冀的手书。信上只有一行字：
+“叔父李景遂，已除。”`,
         options: [
           {
             text: '烧掉信，写一首《渔父》词，表明心志',
-            desc: '你把信凑到烛火上，看着它化为灰烬。然后你提笔，写下：“浪花有意千里雪，桃花无言一队春。一壶酒，一竿纶，世上如侬有几人。”�[...]',
+            desc: '你把信凑到烛火上，看着它化为灰烬。然后你提笔，写下：“浪花有意千里雪，桃花无言一队春。一壶酒，一竿纶，世上如侬有几人。”',
             effect: { poetry: 3 },
             tags: ['刻意的闲散'],
             next: 2
           },
           {
             text: '把信压在书案最底层，假装什么都没发生',
-            desc: '你把信折好，压在书案最底层。你继续研墨，继续写你的词。但你写的每一个字，都带着那行字的重量。告诉自己:不看不听不想，就不会[...]',
+            desc: '你把信折好，压在书案最底层。你继续研墨，继续写你的词。但你写的每一个字，都带着那行字的重量。告诉自己：不看不听不想，就不会害怕。',
             effect: { sad: 2 },
             tags: ['沉默的旁观者'],
             next: 2
           },
           {
             text: '冒雨进宫，去见父亲',
-            desc: '你披上蓑衣，骑马入城。澄心堂里，父亲正在看一幅画。你跪坐在他身旁，犹豫了很久，终于开口："父亲，大哥他……"父亲没有抬头，��[...]',
+            desc: '你披上蓑衣，骑马入城。澄心堂里，父亲正在看一幅画。你跪坐在他身旁，犹豫了很久，终于开口：“父亲，大哥他……”父亲没有抬头，只淡淡说了一句：“去看看叔父。”',
             effect: { power: 2, people: 1 },
             tags: ['寻求庇护'],
             next: 2
@@ -452,36 +459,36 @@
       },
       {
         title: '第二幕 · 瑶光殿·琵琶',
-        content: `  雨停了。你骑马从钟山回金陵城。城门在望。你本可以直接回宫，也可以绕道去别处。你勒住了马。
-  从钟山到金陵，不过二十里路。你走过无数次。小时候，父亲带你走；后来，你一个人走。每一次，你都是回宫，回那个你不喜欢的地方。
-  但今天，你不想那么早回去。
-  你勒住马，站在岔路口。左边，是宫城的方向。右边，是瑶光殿——娥皇在那里。
-  你想起大哥信上那行字。你想起叔父李景遂。你心里很乱。你想找个人说说话。
-  你调转马头，向瑶光殿走去。你告诉自己：我只是去听她弹琵琶。我只是去坐一坐。我只是……不想一个人待着。
-  金陵宫城，瑶光殿。大周后娥皇正在调琵琶。你进来时，她抬头看了你一眼，没有问你为什么来，也没有问你从哪里来。她只是把琵琶往旁边一搁，给[...]
-  你走进瑶光殿的时候，娥皇正在调弦。她听见脚步声，抬起头，看见是你，笑了。
-  她说：“从嘉，你脸色不好。是不是又淋雨了？”
-  你没有回答。你坐在她对面，看着她手里的琵琶。那是一把烧槽琵琶，是父亲赐给她的。她说这把琵琶的音色像江南的雨。
-  她放下琵琶，看着你，说：“从嘉，你今日心神不宁。你每次心里有事，就会用拇指去捻袖口。你今天已经捻了十七次了。”
-  你低下头。你确实在捻袖口。你想说点什么。关于大哥，关于叔父，关于那个你逃不掉的未来。但话到嘴边，又咽了回去。`,
+        content: `雨停了。你骑马从钟山回金陵城。城门在望。你本可以直接回宫，也可以绕道去别处。你勒住了马。
+从钟山到金陵，不过二十里路。你走过无数次。小时候，父亲带你走；后来，你一个人走。每一次，你都是回宫，回那个你不喜欢的地方。
+但今天，你不想那么早回去。
+你勒住马，站在岔路口。左边，是宫城的方向。右边，是瑶光殿——娥皇在那里。
+你想起大哥信上那行字。你想起叔父李景遂。你心里很乱。你想找个人说说话。
+你调转马头，向瑶光殿走去。你告诉自己：我只是去听她弹琵琶。我只是去坐一坐。我只是……不想一个人待着。
+金陵宫城，瑶光殿。大周后娥皇正在调琵琶。你进来时，她抬头看了你一眼，没有问你为什么来，也没有问你从哪里来。她只是把琵琶往旁边一搁，给你留了个坐处。
+你走进瑶光殿的时候，娥皇正在调弦。她听见脚步声，抬起头，看见是你，笑了。
+她說：“从嘉，你脸色不好。是不是又淋雨了？”
+你沒有回答。你坐在她对面，看着她手里的琵琶。那是一把烧槽琵琶，是父亲赐给她的。她說这把琵琶的音色像江南的雨。
+她放下琵琶，看着你，说：“从嘉，你今日心神不宁。你每次心里有事，就会用拇指去捻袖口。你今天已经捻了十七次了。”
+你低下头。你确实在捻袖口。你想说点什么。关于大哥，关于叔父，关于那个你逃不掉的未来。但话到嘴边，又咽了回去。`,
         options: [
           {
             text: '告诉她李弘冀毒杀叔父的事',
-            desc: '你说：“大哥杀了叔父。下一个，可能就是我。”娥皇沉默了片刻，然后握住你的手，说：“从嘉，无论发生什么，我都陪着你。如果你�[...]',
+            desc: '你说：“大哥杀了叔父。下一个，可能就是我。”娥皇沉默了片刻，然后握住你的手，说：“从嘉，无论发生什么，我都陪着你。如果你想哭，就哭。哭过之后，我们再想办法。”',
             effect: { love: 2, sad: 1 },
             tags: ['娥皇的承诺'],
             next: 3
           },
           {
             text: '不提朝事，专心和她整理《霓裳羽衣曲》',
-            desc: '你说：“别说那些了。来，我们把这段残谱补完。”你和她一起坐到琴案前。她弹琵琶，你吹箫。那一刻，你忘了宫城，忘了大哥，忘了�[...]',
-            effect: { poetry: 2, love: 3},
+            desc: '你说：“别说那些了。来，我们把这段残谱补完。”你和她一起坐到琴案前。她弹琵琶，你吹箫。那一刻，你忘了宫城，忘了大哥，忘了所有要面对的事。',
+            effect: { poetry: 2, love: 3 },
             tags: ['《霓裳羽衣曲》（残谱）'],
             next: 3
           },
           {
             text: '问她，如果有一天你不得不当皇帝，她怎么想',
-            desc: '娥皇放下琵琶，看了你很久。然后她说：“你不会的。你生来就是写词的人，不是坐龙椅的人。”你苦笑。你说：“可万一呢？”她说：�[...]',
+            desc: '娥皇放下琵琶，看了你很久。然后她说：“你不会的。你生来就是写词的人，不是坐龙椅的人。”你苦笑。你说：“可万一呢？”她說：“那也要记得，你不是你的父亲。”',
             effect: { love: 3, power: 2 },
             tags: ['梨花誓约'],
             next: 3
@@ -501,21 +508,21 @@
         options: [
           {
             text: '立刻入宫，去见父亲。',
-            desc: '你骑马入城。澄心堂里，父亲坐在黑暗中，没有点灯。你跪在他面前。他说：“从嘉，你大哥走了。”你说：“父亲，我……”他说：“�[...]',
+            desc: '你骑马入城。澄心堂里，父亲坐在黑暗中，没有点灯。你跪在他面前。他说：“从嘉，你大哥走了。”你说：“父亲，我……”他说：“你先回去，明日再说。”',
             effect: { power: 3 },
             tags: ['宫廷权谋'],
             next: 4
           },
           {
             text: '回到书斋，写一首词，纪念大哥',
-            desc: '你回到书斋，提笔，想写一首词。但你写了又撕，撕了又写。你想起大哥的眼神，想起他毒杀叔父的传闻，想起他每一次看你时那种猜忌�[...]',
+            desc: '你回到书斋，提笔，想写一首词。但你写了又撕，撕了又写。你想起大哥的眼神，想起他毒杀叔父的传闻，想起他每一次看你时那种猜忌与压迫。',
             effect: { poetry: 2, sad: 2 },
             tags: ['孤城夜语'],
             next: 4
           },
           {
             text: '去瑶光殿，找娥皇',
-            desc: '你去了瑶光殿。娥皇看见你，什么都没问。她只是给你倒了一杯茶，然后坐在你旁边，握着你的手。你坐了很久。最后你说：“娥皇，我�[...]',
+            desc: '你去了瑶光殿。娥皇看见你，什么都没问。她只是给你倒了一杯茶，然后坐在你旁边，握着你的手。你坐了很久。最后你说：“娥皇，我不知道自己会不会被推上皇位。”',
             effect: { sad: 2, love: 1 },
             tags: ['娥皇的陪伴'],
             next: 4
@@ -527,13 +534,13 @@
         content: `显德六年，大哥死后，父亲立你为太子。
 诏书里写的是：“第六子从嘉，仁孝聪敏，雅有文才，可立为太子。”
 但你知道，真正的原因不是“仁孝聪敏”。真正的原因是：父亲没有别的选择了。
-长子弘冀死了。次子弘茂早夭。三子弘庆、四子弘昉、五子弘雅，也都先后不在。活到成年的儿子里，你最长，也最得父亲喜爱。七弟从善还小，撑不��[...]
+长子弘冀死了。次子弘茂早夭。三子弘庆、四子弘昉、五子弘雅，也都先后不在。活到成年的儿子里，你最长，也最得父亲喜爱。七弟从善还小，撑不住大任。
 南唐北有宋国，内有朋党。父亲病重，他需要一个能立刻坐上储位的人。哪怕这个人，只想写词。
 建隆二年，父亲病逝于洪州。
 父亲病逝前，曾把你叫到榻前。
-他说：“从嘉，你原名从嘉，字重光。‘从嘉’二字，是你祖父取的。他希望你能追随善道，嘉言懿行。可你如今要做的，不是‘从嘉’，是‘煜’。��[...]
+他说：“从嘉，你原名从嘉，字重光。‘从嘉’二字，是你祖父取的。他希望你能追随善道，嘉言懿行。可你如今要做的，不是‘从嘉’，是‘煜’。”
 你问：“‘煜’是什么意思？”
-父亲说：“煜，照耀也。日以煜乎昼，月以煜乎夜。你生来重瞳，本就是异相。你祖父说‘他日必大贵’，也许不是说你官大，而是说你会像火一样，��[...]
+父亲说：“煜，照耀也。日以煜乎昼，月以煜乎夜。你生来重瞳，本就是异相。你祖父说‘他日必大贵’，也许不是说你官大，而是说你会像火一样，照亮人心。”
 你苦笑：“照亮南唐吗？”
 父亲没有回答。他只是说：“从今以后，你叫李煜。字重光，还是重光。但‘从嘉’那个名字，留给钟山书斋里的少年吧。”
 你跪下，叩首。
@@ -545,22 +552,21 @@
         options: [
           {
             text: '接受命运',
-            desc: '你对自己说：既然逃不掉，那就做吧。但你要按自己的方式做。
-你想起娥皇说的“不要变成你大哥那样的人”。你对自己说：我不会。',
+            desc: '你对自己说：既然逃不掉，那就做吧。但你要按自己的方式做。你想起娥皇说的“不要变成你大哥那样的人”。你对自己说：我不会。',
             effect: { poetry: 2, power: 3 },
             tags: ['接受命运'],
             next: 5
           },
           {
             text: '最后写一首词，告别过去',
-            desc: '你提笔，写下：“往事只堪哀，对景难排。秋风庭院藓侵阶。一任珠帘闲不卷，终日谁来。”你写完，把笔放下。你对自己说：这是李从�[...]',
+            desc: '你提笔，写下：“往事只堪哀，对景难排。秋风庭院藓侵阶。一任珠帘闲不卷，终日谁来。”你写完，把笔放下。你对自己说：这是李从嘉最后一次把心事写在纸上的日子。',
             effect: { poetry: 2, sad: 3 },
             tags: ['告别过去'],
             next: 5
           },
           {
             text: '去钟山书斋，最后看一眼',
-            desc: '你骑马出城，去了钟山书斋。你站在书斋里，看着那张你写了十年字的书案，看着窗外的雨，看着案上那方砚台。你拿起砚台，想带走。�[...]',
+            desc: '你骑马出城，去了钟山书斋。你站在书斋里，看着那张你写了十年字的书案，看着窗外的雨，看着案上那方砚台。你拿起砚台，想带走。可终究你只把它放回原处。',
             effect: { poetry: 2, sad: 2 },
             tags: ['告别钟山'],
             next: 5
@@ -569,41 +575,41 @@
       },
       {
         title: '终幕 · 登基',
-        content: `建隆二年（961年）六月，金陵宫城。天未亮，太庙内烛火通明。你身着玄衣纁裳，冕垂十二旒，立于丹墀之下。殿外群臣肃立；丹墀之下��[...]
-  天还没亮，你就醒了。
-  你在黑暗里睁着眼睛，听更漏一声、一声地漏下去。今天是建隆二年六月，父亲走了已经半年。
-  今天，你要登基。
-  礼官跪在榻前，双手捧着衮冕，声音压得很低：“殿下，时辰到了。”
-  你起身。有人替你穿上玄衣纁裳，系上朱绂，戴上冕旒。十二串玉珠垂落眼前，把整个世界切成十二道细缝。你隔着珠子看出去，烛火、宫墙、人影，[...]
-  你想：从今以后，我再看什么，都要隔着这十二串珠子了。
-  你走出寝殿。钟鼓齐鸣，一声压着一声，像要把这座城从黎明里劈开。
-  太庙里，香烟缭绕。你跪在列祖列宗的神位前。抬起头，你看见祖父李昪的画像——那个曾把你抱在膝上、说你“此儿有异相，他日必大贵”的人。
-  你想起父亲临死前那句话：“你祖父说的‘大贵’，也许不是皇位。也许……是别的。”
-  你想起钟山书斋，想起那首没写完的《渔父》，想起“一壶酒，一竿纶，世上如侬有几人”。 
-  你想起大哥李弘冀的眼睛，想起叔父李景遂的那杯毒酒，想起五个哥哥一个一个走光，只剩你和年幼的从善。
-  你想起娥皇。想起她在瑶光殿里调弦的样子，想起她说过：“从嘉，无论发生什么，我都陪着你。”也想起她那一句叮嘱：“无论多难，都不要变成你[...]
-  殿外，宋国的使者立在丹墀之下，隔着珠帘，看不清表情。
-  礼官高声唱道：“请新君——升殿。”
-  你站起来。你不再是李从嘉了。
-  你是李煜。南唐的国主。`,
+        content: `建隆二年（961年）六月，金陵宫城。天未亮，太庙内烛火通明。你身着玄衣纁裳，冕垂十二旒，立于丹墀之下。殿外群臣肃立；丹墀之下，钟鼓齐鸣，仿佛要把黎明敲碎。
+天还没亮，你就醒了。
+你在黑暗里睁着眼睛，听更漏一声、一声地漏下去。今天是建隆二年六月，父亲走了已经半年。
+今天，你要登基。
+礼官跪在榻前，双手捧着衮冕，声音压得很低：“殿下，时辰到了。”
+你起身。有人替你穿上玄衣纁裳，系上朱绂，戴上冕旒。十二串玉珠垂落眼前，把整个世界切成十二道细缝。你隔着珠子看出去，烛火、宫墙、人影，全部都变得模糊而冷清。
+你想：从今以后，我再看什么，都要隔着这十二串珠子了。
+你走出寝殿。钟鼓齐鸣，一声压着一声，像要把这座城从黎明里劈开。
+太庙里，香烟缭绕。你跪在列祖列宗的神位前。抬起头，你看见祖父李昪的画像——那个曾把你抱在膝上、说你“此儿有异相，他日必大贵”的人。
+你想起父亲临死前那句话：“你祖父说的‘大贵’，也许不是皇位。也许……是别的。”
+你想起钟山书斋，想起那首没写完的《渔父》，想起“一壶酒，一竿纶，世上如侬有几人”。
+你想起大哥李弘冀的眼睛，想起叔父李景遂的那杯毒酒，想起五个哥哥一个一个走光，只剩你和年幼的从善。
+你想起娥皇。想起她在瑶光殿里调弦的样子，想起她说过：“从嘉，无论发生什么，我都陪着你。”也想起她那一句叮嘱：“无论多难，都不要变成你大哥那样的人。”
+殿外，宋国的使者立在丹墀之下，隔着珠帘，看不清表情。
+礼官高声唱道：“请新君——升殿。”
+你站起来。你不再是李从嘉了。
+你是李煜。南唐的国主。`,
         options: [
           {
             text: '在太庙当众立誓，守住南唐，不负祖父的预言',
-            desc: '你转过身，面对列祖列宗，也面对殿外所有的眼睛。你说：“孙儿李煜，承祖父与先君之业，主江南之政。只要有一口气在，必守此土，�[...]',
+            desc: '你转过身，面对列祖列宗，也面对殿外所有的眼睛。你说：“孙儿李煜，承祖父与先君之业，主江南之政。只要有一口气在，必守此土，不负先祖。”',
             effect: { poetry: 5, sad: 1 },
             tags: ['太庙立誓'],
             next: -1
           },
           {
             text: '先在宋国使者面前表明恭顺，践行父亲的遗命',
-            desc: '你登基之前，先命人请宋使入殿。你说：“唐国世为宋臣。先君遗命，谨奉宋室，不敢有二。愿两国永息干戈，江南百姓，得以安耕织。�[...]',
+            desc: '你登基之前，先命人请宋使入殿。你说：“唐国世为宋臣。先君遗命，谨奉宋室，不敢有二。愿两国永息干戈，江南百姓，得以安耕织。”',
             effect: { power: 5, people: 1 },
             tags: ['奉宋为尊'],
             next: -1
           },
           {
             text: '在群臣叩拜、钟鼓齐鸣之际，越过丹墀，望向钟山的方向',
-            desc: '你走上丹墀，接受群臣朝贺。山呼万岁的声音像潮水一样涌上来，把你托得很高，也很空。而你却在那一刻，把目光越过满殿的朱紫，越�[...]',
+            desc: '你走上丹墀，接受群臣朝贺。山呼万岁的声音像潮水一样涌上来，把你托得很高，也很空。而你却在那一刻，把目光越过满殿的朱紫，越过宫墙，望向钟山的方向。',
             effect: { love: 4, people: 2 },
             tags: ['回望钟山'],
             next: -1
@@ -632,12 +638,12 @@
       if (opt.tags) opt.tags.forEach(addTag);
 
       gameState.choices.push({
-        sceneTitle: scene.title,
-        narration: scene.content,
-        choiceText: opt.text,
-        choiceDesc: opt.desc,
+        sceneTitle: sanitizeNarrative(scene.title),
+        narration: sanitizeNarrative(scene.content),
+        choiceText: sanitizeNarrative(opt.text),
+        choiceDesc: sanitizeNarrative(opt.desc),
         effect: opt.effect,
-        tags: opt.tags
+        tags: (opt.tags || []).map(sanitizeNarrative)
       });
 
       gameState.currentScene = opt.next;
@@ -658,7 +664,7 @@
     function getEnding() {
       const a = gameState.attr;
       const ranked = [
-        ['poetry', '你最终选择以词心映照山河，把一生的悲欢都写进词句里。千年之后，帝王将相的功业终将随风散去，而你的词作会永远留在世间，成为[...]'],
+        ['poetry', '你最终选择以词心映照山河，把一生的悲欢都写进词句里。千年之后，帝王将相的功业终将随风散去，而你的词作会永远留在世间，成为后人心中一座不朽的山河。'],
         ['power', '你收起了词人的柔软，选择扛起南唐国主的重担。深宫的灯火长明，你将在权谋与国运的漩涡中走出属于自己的帝王之路。'],
         ['love', '你始终以温柔之心待世间人，不论是身边的爱人、朝中的臣子还是境内的百姓，都感受过你的赤诚。温柔是你最强的力量。'],
         ['people', '你始终把百姓放在心上，宁可自己为难，也不肯让江南多一户流离的人家。多年以后，人们仍会因为你的仁政而低声称道。'],
@@ -674,27 +680,30 @@
       const a = gameState.attr;
       const choices = gameState.choices;
       const total = storyLines.length;
-      
+
       let timelineHtml = '';
       choices.forEach((item, idx) => {
+        const narration = sanitizeNarrative(item.narration || '');
+        const choiceText = sanitizeNarrative(item.choiceText || '');
+        const choiceDesc = sanitizeNarrative(item.choiceDesc || '');
         let effectHtml = '';
         if (item.effect) {
           effectHtml = '<p style="font-size:12px;color:#b45309;margin-top:8px;margin-bottom:0;">属性变化：' + formatEffect(item.effect) + '</p>';
         }
         let tagHtml = '';
         if (item.tags && item.tags.length) {
-          tagHtml = '<div class="tag-group">' + item.tags.map(t => '<span class="tag">' + escapeHtml(t) + '</span>').join('') + '</div>';
+          tagHtml = '<div class="tag-group">' + item.tags.map(t => '<span class="tag">' + escapeHtml(sanitizeNarrative(t)) + '</span>').join('') + '</div>';
         }
         timelineHtml += '<div class="timeline-card scene-card">' +
           '<div class="timeline-head">' +
             '<div class="scene-badge">' + (idx + 1) + '</div>' +
-            '<h4 class="timeline-title">' + escapeHtml(item.sceneTitle) + '</h4>' +
+            '<h4 class="timeline-title">' + escapeHtml(sanitizeNarrative(item.sceneTitle)) + '</h4>' +
           '</div>' +
-          '<p class="timeline-narration">' + escapeHtml(item.narration) + '</p>' +
+          '<p class="timeline-narration">' + escapeHtml(narration) + '</p>' +
           '<div class="choice-box">' +
             '<strong>你的选择：</strong>' +
-            '<p style="font-weight:500;color:#78350f;margin-bottom:6px;">' + escapeHtml(item.choiceText) + '</p>' +
-            '<p style="font-size:14px;">' + escapeHtml(item.choiceDesc) + '</p>' +
+            '<p style="font-weight:500;color:#78350f;margin-bottom:6px;">' + escapeHtml(choiceText) + '</p>' +
+            '<p style="font-size:14px;">' + escapeHtml(choiceDesc) + '</p>' +
             effectHtml +
           '</div>' +
           tagHtml +
@@ -713,7 +722,7 @@
 
       let finalHtml = '';
       if (gameState.finished) {
-        const tagsHtml = gameState.tags.map(t => '<span class="tag">' + escapeHtml(t) + '</span>').join('');
+        const tagsHtml = gameState.tags.map(t => '<span class="tag">' + escapeHtml(sanitizeNarrative(t)) + '</span>').join('');
         finalHtml = '<div class="final-card scene-card">' +
           '<h3 style="text-align:center;font-size:24px;margin-top:0;">序章结局</h3>' +
           '<div class="final-attr-grid">' +
@@ -777,8 +786,8 @@
         '<div class="progress-bar"><div class="progress-fill" style="width:' + percent + '%"></div></div>' +
         '</div>' +
         '<div class="' + cardClass + ' scene-card">' +
-          '<h3 style="font-size:26px; margin:0 0 20px; line-height:1.4;">' + escapeHtml(scene.title) + '</h3>' +
-          '<p style="font-size:17px;color:#44403c;margin:0; white-space:pre-wrap; line-height:2;">' + escapeHtml(scene.content) + '</p>' +
+          '<h3 style="font-size:26px; margin:0 0 20px; line-height:1.4;">' + escapeHtml(sanitizeNarrative(scene.title)) + '</h3>' +
+          '<p style="font-size:17px;color:#44403c;margin:0; white-space:pre-wrap; line-height:2;">' + escapeHtml(sanitizeNarrative(scene.content)) + '</p>' +
         '</div>' +
         '<div id="optBox" style="margin-top:32px;"></div>' +
         '<div class="controls-row">' +
@@ -790,8 +799,8 @@
       scene.options.forEach((opt) => {
         const btn = document.createElement('button');
         btn.className = 'choice-btn';
-        let btnContent = '<span style="font-weight:500;font-size:18px;display:block;">' + escapeHtml(opt.text) + '</span>';
-        if (opt.desc) btnContent += '<p style="font-size:14px;color:#78716c;margin:8px 0 0 0;">' + escapeHtml(opt.desc) + '</p>';
+        let btnContent = '<span style="font-weight:500;font-size:18px;display:block;">' + escapeHtml(sanitizeNarrative(opt.text)) + '</span>';
+        if (opt.desc) btnContent += '<p style="font-size:14px;color:#78716c;margin:8px 0 0 0;">' + escapeHtml(sanitizeNarrative(opt.desc)) + '</p>';
         if (opt.effect) btnContent += '<p style="font-size:12px;color:#92400e;margin:10px 0 0 0;">属性变化：' + formatEffect(opt.effect) + '</p>';
         btn.innerHTML = btnContent;
         btn.onclick = () => {
