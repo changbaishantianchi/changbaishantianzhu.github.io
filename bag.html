@@ -1,41 +1,235 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
-
+<head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  我的属性背包 · 重瞳·钟山隐</title>
-  
-    *{box-sizing:border-box;margin:0;padding:0;}
-    body{font-family:"PingFang SC","Microsoft YaHei",sans-serif;background:#fffbf2;color:#292524;margin:0;line-height:1.8;}
-    a{text-decoration:none;color:inherit;}
-    nav{position:fixed;width:100%;background:rgba(255,251,242,0.95);backdrop-filter:blur(8px);z-index:50;border-bottom:1px solid #fef3c7;top:0;}
-    .nav-inner{max-width:1280px;margin:0 auto;padding:0 24px;display:flex;justify-content:space-between;height:64px;align-items:center;}
-    .brand{font-weight:bold;font-size:20px;color:#78350f;}
-    .nav-links{display:flex;gap:32px;flex-wrap:wrap;justify-content:center;}
-    .nav-item{color:#57534e;font-size:18px;cursor:pointer;transition:color 0.2s;}
-    .nav-item:hover{color:#92400e;}
-    .nav-item.active{color:#92400e;font-weight:500;}
-    .container{max-width:1000px;margin:0 auto;padding:112px 24px 96px;}
-    .card{background:white;padding:32px;border-radius:12px;box-shadow:0 1px 3px rgba(0,0,0,0.05);margin-bottom:32px;}
-    footer{background:linear-gradient(135deg,#7c4a1c 0%,#5b3414 100%);color:#fffbeb;padding:40px 0;text-align:center;margin-top:48px;}
-    footer p{margin:0;}
-    h2{font-size:36px;color:#78350f;margin:0 0 12px;}
-    h3{font-size:20px;color:#92400e;margin-top:0;margin-bottom:12px;}
-    .attr-bar{height:10px;border-radius:6px;background:#f5f5f4;overflow:hidden;margin-top:10px;}
-    .attr-fill{height:100%;transition:width 1s ease;border-radius:6px;}
-    .btn{padding:12px 24px;border-radius:8px;border:none;cursor:pointer;display:inline-block;margin:8px;font-size:15px;font-family:inherit;transition:all 0.2s;}
-    .btn-primary{background:#92400e;color:white;}
-    .btn-primary:hover{background:#78350f;transform:translateY(-2px);}
-    .btn-secondary{background:#fef3c7;color:#92400e;border:1px solid #fcd34d;}
-    .btn-secondary:hover{background:#fde68a;transform:translateY(-2px);}
-    .btn-danger{background:#fee2e2;color:#b91c1c;}
-    .btn-danger:hover{background:#fecaca;transform:translateY(-2px);}
-    .tag{padding:6px 12px;border-radius:999px;font-size:14px;display:inline-block;margin:6px;transition:all 0.2s;}
-    .tag-unlocked{background:#fef3c7;border:1px solid #fcd34d;color:#92400e;}
-    .tag-locked{background:#f5f5f4;border:1px solid #e7e5e4;color:#a8a29e;opacity:0.6;}
-    .meta-small{font-size:13px;color:#78716c;}
-    .attr-row{display:flex;justify-content:space-between;align-items:center;}
-    .attr-value{font-weight:600;color:#374151;font-size:18px;}
+  <title>我的属性背包 · 重瞳·钟山隐</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body { height: 100%; }
+    body {
+      font-family: "PingFang SC", "Microsoft YaHei", sans-serif;
+      background: #fffbf2;
+      color: #292524;
+      margin: 0;
+      line-height: 1.8;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    a { text-decoration: none; color: inherit; }
+
+    nav {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      background: rgba(255, 251, 242, 0.95);
+      backdrop-filter: blur(8px);
+      z-index: 50;
+      border-bottom: 1px solid #fef3c7;
+    }
+
+    .nav-inner {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 0 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      height: 64px;
+    }
+
+    .brand {
+      font-weight: bold;
+      font-size: 20px;
+      color: #78350f;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 32px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .nav-item {
+      color: #57534e;
+      font-size: 18px;
+      cursor: pointer;
+      transition: color 0.2s;
+    }
+
+    .nav-item:hover { color: #92400e; }
+    .nav-item.active { color: #92400e; font-weight: 500; }
+
+    main.container {
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 112px 24px 96px;
+      width: 100%;
+      flex: 1;
+    }
+
+    .page-title {
+      text-align: center;
+      margin-bottom: 48px;
+    }
+
+    h2 {
+      font-size: 36px;
+      color: #78350f;
+      margin: 0 0 12px;
+    }
+
+    h3 {
+      font-size: 20px;
+      color: #92400e;
+      margin-top: 0;
+      margin-bottom: 12px;
+    }
+
+    .card {
+      background: white;
+      padding: 32px;
+      border-radius: 12px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+      margin-bottom: 32px;
+    }
+
+    .attr-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 12px;
+    }
+
+    .attr-name-wrap {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .attr-name {
+      font-weight: 500;
+      color: #92400e;
+      font-size: 16px;
+    }
+
+    .attr-value {
+      font-weight: 600;
+      color: #374151;
+      font-size: 18px;
+    }
+
+    .meta-small {
+      font-size: 13px;
+      color: #78716c;
+    }
+
+    .attr-bar {
+      height: 10px;
+      border-radius: 6px;
+      background: #f5f5f4;
+      overflow: hidden;
+      margin-top: 10px;
+      margin-bottom: 18px;
+    }
+
+    .attr-fill {
+      height: 100%;
+      transition: width 1s ease;
+      border-radius: 6px;
+    }
+
+    .tag-panel {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 16px;
+    }
+
+    .tag {
+      padding: 6px 12px;
+      border-radius: 999px;
+      font-size: 14px;
+      display: inline-block;
+      transition: all 0.2s;
+      user-select: none;
+    }
+
+    .tag-unlocked {
+      background: #fef3c7;
+      border: 1px solid #fcd34d;
+      color: #92400e;
+    }
+
+    .tag-locked {
+      background: #f5f5f4;
+      border: 1px solid #e7e5e4;
+      color: #a8a29e;
+      opacity: 0.6;
+    }
+
+    .btn {
+      padding: 12px 24px;
+      border-radius: 8px;
+      border: none;
+      cursor: pointer;
+      display: inline-block;
+      margin: 8px;
+      font-size: 15px;
+      font-family: inherit;
+      transition: all 0.2s;
+    }
+
+    .btn-primary {
+      background: #92400e;
+      color: white;
+    }
+
+    .btn-primary:hover {
+      background: #78350f;
+      transform: translateY(-2px);
+    }
+
+    .btn-secondary {
+      background: #fef3c7;
+      color: #92400e;
+      border: 1px solid #fcd34d;
+    }
+
+    .btn-secondary:hover {
+      background: #fde68a;
+      transform: translateY(-2px);
+    }
+
+    .btn-danger {
+      background: #fee2e2;
+      color: #b91c1c;
+    }
+
+    .btn-danger:hover {
+      background: #fecaca;
+      transform: translateY(-2px);
+    }
+
+    .action-row {
+      text-align: center;
+      margin-top: 8px;
+    }
+
+    footer {
+      background: linear-gradient(135deg, #7c4a1c 0%, #5b3414 100%);
+      color: #fffbeb;
+      padding: 40px 0;
+      text-align: center;
+      margin-top: 48px;
+    }
+
+    footer p { margin: 0; }
+
     @media (max-width: 760px) {
       .nav-inner {
         flex-wrap: wrap;
@@ -44,15 +238,15 @@
         padding: 12px 16px;
         gap: 8px 16px;
       }
+
       .nav-item { font-size: 14px; }
-      .container { padding-top: 120px; }
-      .bg-amber50, .bg-stone50, .timeline-card, .final-card { padding: 20px 16px; }
-      .final-attr-grid { grid-template-columns: repeat(2, 1fr); }
+
+      main.container { padding-top: 120px; }
     }
   </style>
 </head>
-
-  
+<body>
+  <nav>
     <div class="nav-inner">
       <span class="brand">李煜 · 重瞳·钟山隐</span>
       <div class="nav-links">
@@ -64,104 +258,153 @@
     </div>
   </nav>
 
-  <div class="container">
-    <div style="text-align:center;margin-bottom:48px;">
-      我的属性背包</h2>
-      <p class="meta-small" style="margin:0;">这里记录了你在所有选择中积累的属性与解锁的标记</p>
+  <main class="container">
+    <div class="page-title">
+      <h2>我的属性背包</h2>
+      <p class="meta-small">这里记录了你在所有选择中积累的属性与解锁的标记</p>
     </div>
 
-    <div class="card">
-      五大核心属性</h3>
-      <div id="attrPanel" style="margin-top:24px;"></div>
-    </div>
+    <section class="card">
+      <h3>五大核心属性</h3>
+      <div id="attrPanel"></div>
+    </section>
 
-    <div class="card">
-      已解锁标记（<span id="tagCount2">0</span>/20）</h3>
-      <div id="tagPanel" style="margin-top:16px;"></div>
-    </div>
+    <section class="card">
+      <h3>已解锁标记（<span id="tagCount2">0</span>/<span id="tagTotal">0</span>）</h3>
+      <div id="tagPanel" class="tag-panel"></div>
+    </section>
 
-    <div style="text-align:center;margin-top:8px;">
+    <div class="action-row">
       <a href="progress.html" class="btn btn-primary" id="continueBtn">继续游玩</a>
       <a href="appendix.html" class="btn btn-secondary">查看拓展附录</a>
-      <button onclick="resetGame()" class="btn btn-danger">清空存档重开</button>
+      <button type="button" class="btn btn-danger" onclick="resetGame()">清空存档重开</button>
     </div>
-  </div>
+  </main>
 
-  
-    © 2026 历史人物生平拆解项目 · 李煜《重瞳·钟山隐》专题站</p>
+  <footer>
+    <p>© 2026 历史人物生平拆解项目 · 李煜《重瞳·钟山隐》专题站</p>
   </footer>
 
-  
-    // 统一使用全局正式标记（已移除"天命未决""千古一词"）
+  <script>
+    const STORAGE_KEY = 'liyuGameSave';
+
+    // 统一使用唯一标签，不重复
     const allTags = [
-      "刻意的闲散","储君之念","寻求庇护","情比金坚","刻意的闲散",
-      "沉默的旁观者","梨花誓约","寻求庇护","娥皇的承诺","《霓裳羽衣曲》（残谱）",
-      "宫廷权谋","孤城夜语","娥皇的陪伴","接受命运","告别过去",
-      "告别钟山","太庙立誓","奉宋为尊","回望钟山","序章珍藏"
+      "刻意的闲散",
+      "储君之念",
+      "寻求庇护",
+      "情比金坚",
+      "沉默的旁观者",
+      "梨花誓约",
+      "娥皇的承诺",
+      "《霓裳羽衣曲》（残谱）",
+      "宫廷权谋",
+      "孤城夜语",
+      "娥皇的陪伴",
+      "接受命运",
+      "告别过去",
+      "告别钟山",
+      "太庙立誓",
+      "奉宋为尊",
+      "回望钟山",
+      "序章珍藏"
     ];
 
-    // 属性元数据 —— 柔和低饱和暖色系，与整体风格协调
     const attrMeta = [
-      {key:'poetry',name:'词心',color:'#f5c86c',desc:'对文学与自由的执念'},
-      {key:'power',name:'龙椅',color:'#c48a55',desc:'向权力中心靠近的距离'},
-      {key:'love',name:'情缘',color:'#e6b2a7',desc:'与身边人的情感羁绊'},
-      {key:'people',name:'民心',color:'#b3c99c',desc:'对南唐百姓的责任感'},
-      {key:'sad',name:'愁绪',color:'#b8afa4',desc:'命运带来的无力与沉重'}
+      { key: 'poetry', name: '词心', color: '#f5c86c', desc: '对文学与自由的执念' },
+      { key: 'power', name: '龙椅', color: '#c48a55', desc: '向权力中心靠近的距离' },
+      { key: 'love', name: '情缘', color: '#e6b2a7', desc: '与身边人的情感羁绊' },
+      { key: 'people', name: '民心', color: '#b3c99c', desc: '对南唐百姓的责任感' },
+      { key: 'sad', name: '愁绪', color: '#b8afa4', desc: '命运带来的无力与沉重' }
     ];
 
-    function loadState(){
+    function loadState() {
       try {
-        const s = localStorage.getItem('liyuGameSave');
-        if(!s) return {attr:{poetry:0,power:0,love:0,people:0,sad:0},tags:[],finished:false};
-        return JSON.parse(s);
-      } catch(e) {
+        const raw = localStorage.getItem(STORAGE_KEY);
+        if (!raw) {
+          return {
+            attr: { poetry: 0, power: 0, love: 0, people: 0, sad: 0 },
+            tags: [],
+            finished: false
+          };
+        }
+
+        const parsed = JSON.parse(raw);
+        return {
+          attr: {
+            poetry: Number(parsed?.attr?.poetry || 0),
+            power: Number(parsed?.attr?.power || 0),
+            love: Number(parsed?.attr?.love || 0),
+            people: Number(parsed?.attr?.people || 0),
+            sad: Number(parsed?.attr?.sad || 0)
+          },
+          tags: Array.isArray(parsed?.tags) ? parsed.tags.filter(Boolean) : [],
+          finished: !!parsed?.finished
+        };
+      } catch (e) {
         console.warn('存档解析失败，重置默认', e);
-        localStorage.removeItem('liyuGameSave');
-        return {attr:{poetry:0,power:0,love:0,people:0,sad:0},tags:[],finished:false};
+        localStorage.removeItem(STORAGE_KEY);
+        return {
+          attr: { poetry: 0, power: 0, love: 0, people: 0, sad: 0 },
+          tags: [],
+          finished: false
+        };
       }
     }
 
-    function updateUI(){
+    function updateUI() {
       const s = loadState();
-      const tagCountElem = document.getElementById('tagCount2');
-      if(tagCountElem) tagCountElem.textContent = s.tags.length;
+      const safeTags = Array.isArray(s.tags) ? s.tags.filter(Boolean) : [];
 
-      // 渲染属性条
+      const tagTotalElem = document.getElementById('tagTotal');
+      const tagCountElem = document.getElementById('tagCount2');
+      if (tagTotalElem) tagTotalElem.textContent = allTags.length;
+      if (tagCountElem) {
+        const unlockedCount = safeTags.filter(tag => allTags.includes(tag)).length;
+        tagCountElem.textContent = unlockedCount;
+      }
+
       const attrPanel = document.getElementById('attrPanel');
-      if(attrPanel){
-        attrPanel.innerHTML = attrMeta.map(a=>{
+      if (attrPanel) {
+        attrPanel.innerHTML = attrMeta.map(a => {
           const val = Math.max(0, Number((s.attr && s.attr[a.key]) || 0));
           const pct = Math.min(100, val * 10);
+
           return `
-            <div style="margin-bottom:24px;">
+            <div style="margin-bottom: 24px;">
               <div class="attr-row">
-                
-                  <div style="font-weight:500;color:#92400e;font-size:16px;">${a.name}</div>
+                <div class="attr-name-wrap">
+                  <div class="attr-name">${a.name}</div>
                   <div class="meta-small">${a.desc}</div>
                 </div>
                 <div class="attr-value">${val}</div>
               </div>
               <div class="attr-bar">
-                <div class="attr-fill" style="width:${pct}%;background:${a.color};"></div>
+                <div class="attr-fill" style="width:${pct}%; background:${a.color};"></div>
               </div>
             </div>
           `;
         }).join('');
       }
 
-      // 渲染标记
       const tagPanel = document.getElementById('tagPanel');
-      if(tagPanel){
-        tagPanel.innerHTML = allTags.map(t=>{
-          const unlocked = Array.isArray(s.tags) && s.tags.includes(t);
-          return `<span class="tag ${unlocked ? 'tag-unlocked' : 'tag-locked'}" title="${unlocked ? t : '未解锁，通过剧情选择获取'}">${unlocked ? t : '？？？'}</span>`;
+      if (tagPanel) {
+        tagPanel.innerHTML = allTags.map(tag => {
+          const unlocked = safeTags.includes(tag);
+          return `
+            <span
+              class="tag ${unlocked ? 'tag-unlocked' : 'tag-locked'}"
+              title="${unlocked ? tag : '未解锁，通过剧情选择获取'}"
+            >
+              ${unlocked ? tag : '？？？'}
+            </span>
+          `;
         }).join('');
       }
 
-      // 完结状态处理
-      if(s.finished){
+      if (s.finished) {
         const btn = document.getElementById('continueBtn');
-        if(btn){
+        if (btn) {
           btn.textContent = '序章已完结';
           btn.style.opacity = '0.6';
           btn.style.pointerEvents = 'none';
@@ -169,14 +412,16 @@
       }
     }
 
-    function resetGame(){
-      if(confirm('确定要清空所有存档重新开始吗？')){
-        localStorage.removeItem('liyuGameSave');
-        location.href = 'index.html';
+    function resetGame() {
+      if (confirm('确定要清空所有存档重新开始吗？')) {
+        localStorage.removeItem(STORAGE_KEY);
+        window.location.href = 'index.html';
       }
     }
 
-    document.addEventListener('DOMContentLoaded', ()=> setTimeout(updateUI, 50));
+    document.addEventListener('DOMContentLoaded', () => {
+      updateUI();
+    });
   </script>
 </body>
 </html>
