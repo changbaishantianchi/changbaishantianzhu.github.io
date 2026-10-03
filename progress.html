@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
-<head>
+
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>人生进度 · 重瞳·钟山隐</title>
-  <style>
+  人生进度 · 重瞳·钟山隐</title>
+  
     * { box-sizing: border-box; }
     html, body { height: 100%; }
     /* 让页面成为列方向弹性布局，main 占据剩余高度，从而把 footer 推到底部 */
@@ -274,8 +274,8 @@
     }
   </style>
 </head>
-<body>
-  <nav>
+
+  
     <div class="nav-inner">
       <span style="font-weight:bold;font-size:20px;color:#78350f;">李煜 · 重瞳·钟山隐</span>
       <div style="display:flex;gap:32px;flex-wrap:wrap;justify-content:center;">
@@ -291,19 +291,19 @@
     <div id="mainContent"></div>
   </main>
 
-  <footer>
+  
     <p style="margin:0;">© 2026 历史人物生平拆解项目 · 李煜《重瞳·钟山隐》专题站</p>
   </footer>
 
-  <script>
+  
     const STORAGE_KEY = 'liyuGameSave';
     const ATTR_LABELS = { poetry: '词心', power: '龙椅', love: '情缘', people: '民心', sad: '愁绪' };
 
     function sanitizeNarrative(value) {
       return String(value == null ? '' : value)
         .replace(/�+/g, '')
-        .replace(/\[\.\.\.\]/g, '……')
-        .replace(/\[\.\.\]/g, '……');
+        .replace(/$\.\.\.$/g, '……')
+        .replace(/$\.\.$/g, '……');
     }
 
     function getDefaultState() {
@@ -321,7 +321,7 @@
         .replace(/&/g, '&amp;')
         .replace(/</g, '&lt;')
         .replace(/>/g, '&gt;')
-        .replace(/\"/g, '&quot;')
+        .replace(/"/g, '&quot;')
         .replace(/'/g, '&#039;');
     }
 
@@ -688,156 +688,114 @@
         const choiceDesc = sanitizeNarrative(item.choiceDesc || '');
         let effectHtml = '';
         if (item.effect) {
-          effectHtml = '<p style="font-size:12px;color:#b45309;margin-top:8px;margin-bottom:0;">属性变化：' + formatEffect(item.effect) + '</p>';
+          effectHtml = formatEffect(item.effect);
         }
-        let tagHtml = '';
-        if (item.tags && item.tags.length) {
-          tagHtml = '<div class="tag-group">' + item.tags.map(t => '<span class="tag">' + escapeHtml(sanitizeNarrative(t)) + '</span>').join('') + '</div>';
-        }
-        timelineHtml += '<div class="timeline-card scene-card">' +
-          '<div class="timeline-head">' +
-            '<div class="scene-badge">' + (idx + 1) + '</div>' +
-            '<h4 class="timeline-title">' + escapeHtml(sanitizeNarrative(item.sceneTitle)) + '</h4>' +
-          '</div>' +
-          '<p class="timeline-narration">' + escapeHtml(narration) + '</p>' +
-          '<div class="choice-box">' +
-            '<strong>你的选择：</strong>' +
-            '<p style="font-weight:500;color:#78350f;margin-bottom:6px;">' + escapeHtml(choiceText) + '</p>' +
-            '<p style="font-size:14px;">' + escapeHtml(choiceDesc) + '</p>' +
-            effectHtml +
-          '</div>' +
-          tagHtml +
-        '</div>';
+
+        const tagHtml = (item.tags || [])
+          .map(t => `<span class="tag">${escapeHtml(t)}</span>`)
+          .join('');
+
+        timelineHtml += `
+          <div class="timeline-card">
+            <div class="timeline-head">
+              <div class="scene-badge">${idx + 1}</div>
+              <h3 class="timeline-title">${escapeHtml(item.sceneTitle || '')}</h3>
+            </div>
+            <p class="timeline-narration">${escapeHtml(narration)}</p>
+            <div class="choice-box">
+              你的选择</strong>
+              ${escapeHtml(choiceText)}</p>
+              ${choiceDesc ? `<p style="margin-top:8px;font-size:14px;color:#78716c;">${escapeHtml(choiceDesc)}</p>` : ''}
+            </div>
+            ${effectHtml ? `<p class="progress-tip">属性变化：${escapeHtml(effectHtml)}</p>` : ''}
+            ${tagHtml ? `<div class="tag-group">${tagHtml}</div>` : ''}
+          </div>
+        `;
       });
 
-      const titleText = gameState.finished ? '序章终局' : '人生轨迹回顾';
-      const descText = gameState.finished
-        ? '你已经走完了李煜序章的全部旅程，以下是你做出的所有选择。'
-        : ('你已完成 ' + choices.length + ' / ' + total + ' 幕，以下是你已走过的选择：');
-      let progressHtml = '';
-      if (!gameState.finished) {
-        const percent = Math.round((choices.length / total) * 100);
-        progressHtml = '<p class="progress-tip">进度：' + percent + '%</p><div class="progress-bar"><div class="progress-fill" style="width:' + percent + '%"></div></div>';
-      }
+      const attrHtml = Object.keys(ATTR_LABELS)
+        .map(key => `
+            <div class="final-attr-item">
+              <p class="name">${escapeHtml(ATTR_LABELS[key])}</p>
+              <p class="val">${Number(a[key]) || 0}</p>
+            </div>`)
+        .join('');
 
-      let finalHtml = '';
-      if (gameState.finished) {
-        const tagsHtml = gameState.tags.map(t => '<span class="tag">' + escapeHtml(sanitizeNarrative(t)) + '</span>').join('');
-        finalHtml = '<div class="final-card scene-card">' +
-          '<h3 style="text-align:center;font-size:24px;margin-top:0;">序章结局</h3>' +
-          '<div class="final-attr-grid">' +
-            '<div class="final-attr-item"><p class="name">词心</p><p class="val">' + a.poetry + '</p></div>' +
-            '<div class="final-attr-item"><p class="name">龙椅</p><p class="val">' + a.power + '</p></div>' +
-            '<div class="final-attr-item"><p class="name">情缘</p><p class="val">' + a.love + '</p></div>' +
-            '<div class="final-attr-item"><p class="name">民心</p><p class="val">' + a.people + '</p></div>' +
-            '<div class="final-attr-item"><p class="name">愁绪</p><p class="val">' + a.sad + '</p></div>' +
-          '</div>' +
-          '<p class="ending-text">' + getEnding() + '</p>' +
-          '<div class="tag-group" style="justify-content:center;">' + tagsHtml + '</div>' +
-        '</div>';
-      }
+      const finalHtml = `
+        <div class="final-card">
+          <h2 style="margin-top:0;text-align:center;">序章 · 完</h2>
+          <p class="progress-tip">你已走过 ${choices.length} / ${total} 幕</p>
+          <div class="final-attr-grid">${attrHtml}</div>
+          <p class="ending-text">${escapeHtml(getEnding())}</p>
+          <div class="controls-row">
+            <a class="btn btn-primary" href="bag.html">查看我的属性背包</a>
+            <a class="btn btn-secondary" href="index.html">回到序章首页</a>
+            <button type="button" class="btn btn-danger" onclick="restartGame()">重新开始序章</button>
+          </div>
+        </div>
+      `;
 
-      let backBtnHtml = '';
-      if (!gameState.finished) backBtnHtml = '<button class="btn btn-primary" id="backGameBtn">返回继续游玩</button>';
-
-      const main = document.getElementById('mainContent');
-      main.innerHTML = '<div class="scene-card" style="text-align:center;margin-bottom:32px;">' +
-        '<h2 style="font-size:32px;margin:0 0 12px;">' + titleText + '</h2>' +
-        '<p style="color:#78716c;margin:0;">' + descText + '</p>' +
-        progressHtml +
-        '</div>' +
-        timelineHtml +
-        finalHtml +
-        '<div class="controls-row">' +
-          backBtnHtml +
-          '<button class="btn btn-danger" onclick="restartGame()">重新开始序章</button>' +
-        '</div>';
-
-      const backBtn = document.getElementById('backGameBtn');
-      if (backBtn) {
-        backBtn.onclick = () => {
-          previewMode = false;
-          renderScene();
-          window.scrollTo({ top: 0, behavior: 'smooth' });
-        };
-      }
+      return timelineHtml + finalHtml;
     }
 
-    /* ================= 游玩视图 ================= */
+    /* ================= 当前场景渲染 ================= */
     function renderScene() {
       const scene = storyLines[gameState.currentScene];
-      if (!scene) {
-        gameState.finished = true;
-        saveState();
-        renderJourney();
-        return;
-      }
+      if (!scene) return renderJourney();
+
       const total = storyLines.length;
       const current = gameState.currentScene + 1;
-      const percent = Math.round((gameState.currentScene / total) * 100);
-      const cardClass = scene.title.indexOf('楔子') === 0 ? 'bg-amber50' : 'bg-stone50';
-      const previewDisabled = gameState.choices.length ? '' : 'disabled';
+      const pct = Math.round((current / total) * 100);
 
-      const main = document.getElementById('mainContent');
-      main.innerHTML = '<div class="scene-card" style="text-align:center;margin-bottom:32px;">' +
-        '<h2 style="font-size:32px;margin:0 0 12px;">序章 · 重瞳·钟山隐</h2>' +
-        '<p style="color:#78716c;margin:0;">你正在书写李煜的前半段命运，每一个选择都将塑造他的人生轨迹。</p>' +
-        '<p class="progress-tip">第 ' + current + ' 幕 / 共 ' + total + ' 幕</p>' +
-        '<div class="progress-bar"><div class="progress-fill" style="width:' + percent + '%"></div></div>' +
-        '</div>' +
-        '<div class="' + cardClass + ' scene-card">' +
-          '<h3 style="font-size:26px; margin:0 0 20px; line-height:1.4;">' + escapeHtml(sanitizeNarrative(scene.title)) + '</h3>' +
-          '<p style="font-size:17px;color:#44403c;margin:0; white-space:pre-wrap; line-height:2;">' + escapeHtml(sanitizeNarrative(scene.content)) + '</p>' +
-        '</div>' +
-        '<div id="optBox" style="margin-top:32px;"></div>' +
-        '<div class="controls-row">' +
-          '<button class="btn btn-secondary" id="previewBtn" ' + previewDisabled + '>回顾已走过的轨迹</button>' +
-          '<button class="btn btn-danger" onclick="restartGame()">重新开始序章</button>' +
-        '</div>';
+      const optionsHtml = scene.options.map((opt, i) => `
+          <button type="button" class="choice-btn" data-idx="${i}">${escapeHtml(opt.text)}</button>`)
+        .join('');
 
-      const box = document.getElementById('optBox');
-      scene.options.forEach((opt) => {
-        const btn = document.createElement('button');
-        btn.className = 'choice-btn';
-        let btnContent = '<span style="font-weight:500;font-size:18px;display:block;">' + escapeHtml(sanitizeNarrative(opt.text)) + '</span>';
-        if (opt.desc) btnContent += '<p style="font-size:14px;color:#78716c;margin:8px 0 0 0;">' + escapeHtml(sanitizeNarrative(opt.desc)) + '</p>';
-        if (opt.effect) btnContent += '<p style="font-size:12px;color:#92400e;margin:10px 0 0 0;">属性变化：' + formatEffect(opt.effect) + '</p>';
-        btn.innerHTML = btnContent;
-        btn.onclick = () => {
-          document.querySelectorAll('.choice-btn').forEach((b) => { b.disabled = true; });
-          applyChoice(opt, scene);
-          setTimeout(() => {
-            if (gameState.finished) {
-              previewMode = false;
-              renderJourney();
-            } else {
-              renderScene();
-            }
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-          }, 450);
-        };
-        box.appendChild(btn);
-      });
-
-      const previewBtn = document.getElementById('previewBtn');
-      if (previewBtn) {
-        previewBtn.onclick = () => {
-          previewMode = true;
-          renderJourney();
-          window.scrollTo({ top: 0, behavior: 'smooth' });
-        };
-      }
+      return `
+        <section class="scene-card bg-amber50">
+          <h2 style="margin-top:0;">${escapeHtml(scene.title)}</h2>
+          <p class="timeline-narration">${escapeHtml(sanitizeNarrative(scene.content))}</p>
+          <p class="progress-tip">进度 ${current} / ${total}</p>
+          <div class="progress-bar">
+            <div class="progress-fill" style="width:${pct}%;"></div>
+          </div>
+        </section>
+        <section class="bg-stone50">
+          请做出你的选择</h3>
+          <div id="choiceList">${optionsHtml}</div>
+        </section>
+      `;
     }
 
-    /* ================= 页面初始化 ================= */
-    document.addEventListener('DOMContentLoaded', () => {
+    function bindChoiceEvents() {
+      const buttons = document.querySelectorAll('.choice-btn[data-idx]');
+      buttons.forEach((btn) => {
+        btn.addEventListener('click', () => {
+          if (gameState.finished) return;
+          const idx = Number(btn.dataset.idx);
+          const scene = storyLines[gameState.currentScene];
+          const opt = scene && scene.options[idx];
+          if (!opt) return;
+          buttons.forEach((b) => { b.disabled = true; });
+          applyChoice(opt, scene);
+          render();
+        });
+      });
+    }
+
+    function render() {
+      const host = document.getElementById('mainContent');
+      if (!host) return;
+      host.innerHTML = (gameState.finished || previewMode) ? renderJourney() : renderScene();
+      bindChoiceEvents();
+    }
+
+    function init() {
       gameState = loadState();
-      if (gameState.finished || previewMode) {
-        renderJourney();
-      } else {
-        renderScene();
-      }
-    });
+      render();
+    }
+
+    document.addEventListener('DOMContentLoaded', init);
   </script>
 </body>
 </html>
