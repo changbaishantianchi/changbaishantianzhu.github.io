@@ -311,14 +311,14 @@
       const base = getDefaultState();
       if (!raw || typeof raw !== 'object') return base;
 
-      const next = Object.assign({}, base, raw);
-      next.attr = Object.assign({}, base.attr, raw.attr || {});
+      const next = { ...base, ...raw };
+      next.attr = { ...base.attr, ...(raw.attr || {}) };
       next.tags = Array.isArray(raw.tags) ? raw.tags.filter(Boolean) : [];
       next.choices = Array.isArray(raw.choices) ? raw.choices : [];
       next.currentScene = Number.isInteger(raw.currentScene) ? raw.currentScene : 0;
       next.finished = !!raw.finished;
 
-      Object.keys(next.attr).forEach(function (key) {
+      Object.keys(next.attr).forEach((key) => {
         const value = Number(next.attr[key]);
         next.attr[key] = Number.isFinite(value) ? value : 0;
       });
@@ -569,14 +569,14 @@
     function addTag(tag) {
       const str = String(tag || '').trim();
       if (!str) return;
-      if (gameState.tags.indexOf(str) === -1) gameState.tags.push(str);
+      if (!gameState.tags.includes(str)) gameState.tags.push(str);
     }
 
     function applyChoice(opt, scene) {
       if (opt.effect) {
-        Object.keys(opt.effect).forEach(function (key) {
+        Object.entries(opt.effect).forEach(([key, value]) => {
           if (gameState.attr[key] !== undefined) {
-            gameState.attr[key] += Number(opt.effect[key]) || 0;
+            gameState.attr[key] += Number(value) || 0;
           }
         });
       }
@@ -601,11 +601,8 @@
 
     function formatEffect(effect) {
       if (!effect) return '';
-      return Object.keys(effect)
-        .map(function (k) {
-          const v = effect[k];
-          return (ATTR_LABELS[k] || k) + ' ' + (v > 0 ? '+' : '') + v;
-        })
+      return Object.entries(effect)
+        .map(([k, v]) => `${ATTR_LABELS[k] || k} ${v > 0 ? '+' : ''}${v}`)
         .join(' / ');
     }
 
@@ -619,7 +616,7 @@
         ['sad', '你在矛盾与挣扎中走完了序章，愁绪深深刻进了生命里。这份敏感与惆怅，最终会成为你词作里最动人的底色，也成为你一生解不开的结。']
       ];
       let best = ranked[0];
-      ranked.forEach(function (item) { if (a[item[0]] > a[best[0]]) best = item; });
+      ranked.forEach(item => { if (a[item[0]] > a[best[0]]) best = item; });
       return best[1];
     }
 
@@ -628,16 +625,16 @@
       const a = gameState.attr;
       const choices = gameState.choices;
       const total = storyLines.length;
-
+      
       let timelineHtml = '';
-      choices.forEach(function (item, idx) {
+      choices.forEach((item, idx) => {
         let effectHtml = '';
         if (item.effect) {
           effectHtml = '<p style="font-size:12px;color:#b45309;margin-top:8px;margin-bottom:0;">属性变化：' + formatEffect(item.effect) + '</p>';
         }
         let tagHtml = '';
         if (item.tags && item.tags.length) {
-          tagHtml = '<div class="tag-group">' + item.tags.map(function (t) { return '<span class="tag">' + escapeHtml(t) + '</span>'; }).join('') + '</div>';
+          tagHtml = '<div class="tag-group">' + item.tags.map(t => '<span class="tag">' + escapeHtml(t) + '</span>').join('') + '</div>';
         }
         timelineHtml += '<div class="timeline-card scene-card">' +
           '<div class="timeline-head">' +
@@ -665,7 +662,7 @@
 
       let finalHtml = '';
       if (gameState.finished) {
-        const tagsHtml = gameState.tags.map(function (t) { return '<span class="tag">' + escapeHtml(t) + '</span>'; }).join('');
+        const tagsHtml = gameState.tags.map(t => '<span class="tag">' + escapeHtml(t) + '</span>').join('');
         finalHtml = '<div class="final-card scene-card">' +
           '<h3 style="text-align:center;font-size:24px;margin-top:0;">序章结局</h3>' +
           '<div class="final-attr-grid">' +
@@ -681,15 +678,13 @@
       }
 
       let backBtnHtml = '';
-      if (!gameState.finished) {
-        backBtnHtml = '<button class="btn btn-primary" id="backGameBtn">返回继续游玩</button>';
-      }
+      if (!gameState.finished) backBtnHtml = '<button class="btn btn-primary" id="backGameBtn">返回继续游玩</button>';
 
       const main = document.getElementById('mainContent');
       main.innerHTML = '<div class="scene-card" style="text-align:center;margin-bottom:32px;">' +
-          '<h2 style="font-size:32px;margin:0 0 12px;">' + titleText + '</h2>' +
-          '<p style="color:#78716c;margin:0;">' + descText + '</p>' +
-          progressHtml +
+        '<h2 style="font-size:32px;margin:0 0 12px;">' + titleText + '</h2>' +
+        '<p style="color:#78716c;margin:0;">' + descText + '</p>' +
+        progressHtml +
         '</div>' +
         timelineHtml +
         finalHtml +
@@ -700,7 +695,7 @@
 
       const backBtn = document.getElementById('backGameBtn');
       if (backBtn) {
-        backBtn.onclick = function () {
+        backBtn.onclick = () => {
           previewMode = false;
           renderScene();
           window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -725,10 +720,10 @@
 
       const main = document.getElementById('mainContent');
       main.innerHTML = '<div class="scene-card" style="text-align:center;margin-bottom:32px;">' +
-          '<h2 style="font-size:32px;margin:0 0 12px;">序章 · 重瞳·钟山隐</h2>' +
-          '<p style="color:#78716c;margin:0;">你正在书写李煜的前半段命运，每一个选择都将塑造他的人生轨迹。</p>' +
-          '<p class="progress-tip">第 ' + current + ' 幕 / 共 ' + total + ' 幕</p>' +
-          '<div class="progress-bar"><div class="progress-fill" style="width:' + percent + '%"></div></div>' +
+        '<h2 style="font-size:32px;margin:0 0 12px;">序章 · 重瞳·钟山隐</h2>' +
+        '<p style="color:#78716c;margin:0;">你正在书写李煜的前半段命运，每一个选择都将塑造他的人生轨迹。</p>' +
+        '<p class="progress-tip">第 ' + current + ' 幕 / 共 ' + total + ' 幕</p>' +
+        '<div class="progress-bar"><div class="progress-fill" style="width:' + percent + '%"></div></div>' +
         '</div>' +
         '<div class="' + cardClass + ' scene-card">' +
           '<h3 style="font-size:26px; margin:0 0 20px; line-height:1.4;">' + escapeHtml(scene.title) + '</h3>' +
@@ -741,21 +736,17 @@
         '</div>';
 
       const box = document.getElementById('optBox');
-      scene.options.forEach(function (opt) {
+      scene.options.forEach((opt) => {
         const btn = document.createElement('button');
         btn.className = 'choice-btn';
         let btnContent = '<span style="font-weight:500;font-size:18px;display:block;">' + escapeHtml(opt.text) + '</span>';
-        if (opt.desc) {
-          btnContent += '<p style="font-size:14px;color:#78716c;margin:8px 0 0 0;">' + escapeHtml(opt.desc) + '</p>';
-        }
-        if (opt.effect) {
-          btnContent += '<p style="font-size:12px;color:#92400e;margin:10px 0 0 0;">属性变化：' + formatEffect(opt.effect) + '</p>';
-        }
+        if (opt.desc) btnContent += '<p style="font-size:14px;color:#78716c;margin:8px 0 0 0;">' + escapeHtml(opt.desc) + '</p>';
+        if (opt.effect) btnContent += '<p style="font-size:12px;color:#92400e;margin:10px 0 0 0;">属性变化：' + formatEffect(opt.effect) + '</p>';
         btn.innerHTML = btnContent;
-        btn.onclick = function () {
-          document.querySelectorAll('.choice-btn').forEach(function (b) { b.disabled = true; });
+        btn.onclick = () => {
+          document.querySelectorAll('.choice-btn').forEach((b) => { b.disabled = true; });
           applyChoice(opt, scene);
-          setTimeout(function () {
+          setTimeout(() => {
             if (gameState.finished) {
               previewMode = false;
               renderJourney();
@@ -770,7 +761,7 @@
 
       const previewBtn = document.getElementById('previewBtn');
       if (previewBtn) {
-        previewBtn.onclick = function () {
+        previewBtn.onclick = () => {
           previewMode = true;
           renderJourney();
           window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -779,7 +770,7 @@
     }
 
     /* ================= 页面初始化 ================= */
-    document.addEventListener('DOMContentLoaded', function () {
+    document.addEventListener('DOMContentLoaded', () => {
       gameState = loadState();
       if (gameState.finished || previewMode) {
         renderJourney();
