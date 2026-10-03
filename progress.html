@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
-<head>
+
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>人生进度 · 重瞳·钟山隐</title>
-  <style>
+  人生进度 · 重瞳·钟山隐</title>
+  
     * { box-sizing: border-box; }
     html { scroll-behavior: smooth; }
     body {
@@ -139,7 +139,7 @@
       transition: width 0.5s ease;
     }
 
-    /* ===== 人生轨迹（已并入本页） ===== */
+    /* ===== 人生轨迹 ===== */
     .timeline-card {
       background: #ffffff;
       border: 1px solid #f4d9a7;
@@ -263,8 +263,8 @@
     }
   </style>
 </head>
-<body>
-  <nav>
+
+  
     <div class="nav-inner">
       <span style="font-weight:bold;font-size:20px;color:#78350f;">李煜 · 重瞳·钟山隐</span>
       <div style="display:flex;gap:32px;flex-wrap:wrap;justify-content:center;">
@@ -280,11 +280,11 @@
     <div id="mainContent"></div>
   </main>
 
-  <footer>
+  
     <p style="margin:0;">© 2026 历史人物生平拆解项目 · 李煜《重瞳·钟山隐》专题站</p>
   </footer>
 
-  <script>
+  
     const STORAGE_KEY = 'liyuGameSave';
     const ATTR_LABELS = { poetry: '词心', power: '龙椅', love: '情缘', people: '民心', sad: '愁绪' };
 
@@ -359,8 +359,7 @@
     const storyLines = [
       {
         title: '楔子 · 重瞳降生',
-        content: `
-公元937年，七夕。
+        content: `公元937年，七夕。
 金陵宫城，梧桐未落。
 
 你在"重瞳"的异名里降生。
@@ -383,8 +382,9 @@
 你可以把心交给词句，做钟山下一个不问世事的渔父；
 也可以把目光投向权势，在金陵宫城里挣一份属于自己的位置。
 ——只是你那时还不知道，
-有些选择，从你生而重瞳的那一夜起，就已经替你写好了一半
-幼时的你选择`,
+有些选择，从你生而重瞳的那一夜起，就已经替你写好了一半。
+
+幼时的你选择：`,
         options: [
           {
             text: '偷偷翻出祖辈旧书，夜夜受教于诗笺',
@@ -410,33 +410,29 @@
         ]
       },
       {
-        title: '过渡一 · 钟山书斋·雨',
-        content: `钟山脚下，书斋。窗外细雨如丝。案上摊着宣纸，墨已研好。你今年十六岁，你坐在窗前听雨。
+        title: '第一幕 · 钟山书斋·雨',
+        content: `钟山脚下，书斋。窗外细雨如丝。案上摊着宣纸，墨已研好。你今年十六岁，坐在窗前听雨。
 这是你最喜欢的地方。金陵宫城太吵，朝堂太险，只有这里，是你的天地。你在这里写词，在这里弹琴，在这里和僧人谈禅，你希望所有人都相信：李从嘉，只是一个爱风月的闲人。
 可是今天，一封信从宫中送来，你拆开一看，是大哥李弘冀的手书。信上只有一行字：
-“叔父李景遂，已除。”`,
+"叔父李景遂，已除。"`,
         options: [
           {
             text: '烧掉信，写一首《渔父》词，表明心志',
-            desc: '你把信凑到烛火上，看着它化为灰烬。然后你提笔，写下：“浪花有意千里雪，桃花无言一队春。一壶酒，一竿纶，世上如侬有几人。”
-  你命人把这首词送到金陵城里。你要让所有人都知道——六皇子李从嘉，只想做一个渔父。',
+            desc: '你把信凑到烛火上，看着它化为灰烬。然后你提笔，写下："浪花有意千里雪，桃花无言一队春。一壶酒，一竿纶，世上如侬有几人。"你命人把这首词送到金陵城里。你要让所有人都知道——六皇子李从嘉，只想做一个渔父。',
             effect: { poetry: 3 },
             tags: ['避世未成'],
             next: 2
           },
           {
             text: '把信压在书案最底层，假装什么都没发生',
-            desc: '你把信折好，压在书案最底层。你继续研墨，继续写你的词。但你写的每一个字，都带着那行字的重量。
-你告诉自己：不看不听不想，就不会被卷进去。可你心里清楚，这只是自欺欺人',
+            desc: '你把信折好，压在书案最底层。你继续研墨，继续写你的词。但你写的每一个字，都带着那行字的重量。你告诉自己：不看不听不想，就不会被卷进去。可你心里清楚，这只是自欺欺人。',
             effect: { sad: 2 },
             tags: ['沉默的旁观者'],
             next: 2
           },
           {
             text: '冒雨进宫，去见父亲',
-            desc: '你披上蓑衣，骑马入城。澄心堂里，父亲正在看一幅画。你跪坐在他身旁，犹豫了很久，终于开口：“父亲，大哥他……”
-父亲没有抬头。他说：“从嘉，你大哥做的事，我知道。但你不用怕。你只管读书写词，其他的事，有父亲在。”
-你看着父亲的脸，他老了很多。',
+            desc: '你披上蓑衣，骑马入城。澄心堂里，父亲正在看一幅画。你跪坐在他身旁，犹豫了很久，终于开口："父亲，大哥他……"父亲没有抬头。他说："从嘉，你大哥做的事，我知道。但你不用怕。你只管读书写词，其他的事，有父亲在。"你看着父亲的脸，他老了很多。',
             effect: { power: 2, people: 1 },
             tags: ['寻求庇护'],
             next: 2
@@ -444,11 +440,13 @@
         ]
       },
       {
-        title: '第二幕 · 瑶光殿琵琶',
-        content: `归城之后，瑶光殿的琵琶声如影随形：既惊艳又易碎。宫中人称赞你的才情，也暗地议论你的身份与未来。你意识到，光环与流言，总是会从最意外的地方落在耳边。
-旁白：你开始学会把声音与姿态变成策略，去讨好一部分人，回避另一部分人的注目。宫廷是个巨大的舞台，每一个笑容、每一次低头都可能被解读成一种政治。
-在那晚的筵席后，你在自己的房中独坐，既有得意也有不安：是否以艺术为路，或把才情转化为操控人心的工具？这一选择，会影响你日后在朝堂与诗词中的位置。
-旁白：你可以把艺术推向风潮，也可以收藏起惊艳以保全自己，或用温柔换取人心。每一条路，都有代价。`,
+        title: '第二幕 · 瑶光殿·琵琶',
+        content: `金陵宫城，瑶光殿。大周后娥皇正在调琵琶。你进来时，她抬头看了你一眼，没有问你为什么来，也没有问你从哪里来。她只是把琵琶往旁边一搁，给你让出半张坐榻。案上摊着《霓裳羽衣曲》的残谱，旁边搁着一支你上次留在这里的紫毫笔。
+她听见脚步声，抬起头，看见是你，笑了。
+她说："从嘉，你脸色不好。是不是又淋雨了？"
+你没有回答。你坐在她对面，看着她手里的琵琶。那是一把烧槽琵琶，是父亲赐给她的。她说这把琵琶的音色像江南的雨。
+她放下琵琶，看着你，说："从嘉，你今日心神不宁。你每次心里有事，就会用拇指去捻袖口。你今天已经捻了十七次了。"
+你低下头。你确实在捻袖口。你想说点什么。关于大哥，关于叔父，关于那个你逃不掉的未来。但话到嘴边，又咽了回去。`,
         options: [
           {
             text: '在瑶光殿中尽情翻新曲调',
@@ -476,9 +474,9 @@
       {
         title: '第三幕 · 东宫惊变',
         content: `大哥的病逝来得猝然，像一场无法预言的冰雹打进你平日的秩序。消息传来，宫内外的目光瞬时聚向你：有人表示哀悼，也有人在盘算政局与继承的问题。
-旁白：死亡把每个生活的层面撕开，露出向权力倾斜的真相。人性、忠诚、野心在丧事的仪式里交织，旧日友情也被现实拉扯出不同的姿态。
+死亡把每个生活的层面撕开，露出向权力倾斜的真相。人性、忠诚、野心在丧事的仪式里交织，旧日友情也被现实拉扯出不同的姿态。
 你站在风口浪尖，知道沉默或冲锋都会被解读。于是你权衡：压抑悲伤、以行动争取话语权；或将内心吐于文字，以诗句处理痛苦；抑或去探访旧友、了解人心变化，决定未来垂直于何处。
-旁白：在这一刻，任何选择都不仅关于你自己，而是会改变朝堂与人的走向。`,
+在这一刻，任何选择都不仅关于你自己，而是会改变朝堂与人的走向。`,
         options: [
           {
             text: '拒绝哭泣，立刻奔赴父亲处求见',
@@ -506,9 +504,9 @@
       {
         title: '第四幕 · 改名登基',
         content: `父亲辞世，国朝更替的秩序把你推向了前台。改名为李煜，不只是字面之变，更是一种责任与期许的落地。你在长廊前驻足，感受到姓名在世间带来的重量，也感受到它背后隐含的不可回退。
-旁白：从此，私人情绪与国事逐渐相互侵入。治理需要刚毅，也需要柔软。你权衡在朝政与词章之间的方向：是把艺术与国治并置，还是把情感作为统治的调味，甚至藏起自己的脆弱，像刀锋藏进袖中。
+从此，私人情绪与国事逐渐相互侵入。治理需要刚毅，也需要柔软。你权衡在朝政与词章之间的方向：是把艺术与国治并置，还是把情感作为统治的调味，甚至藏起自己的脆弱，像刀锋藏进袖中。
 决策带来回声，或会被赞誉，或会在朝中掀起争议。你开始学习在公开发声时把词意收拢、在私下让思想如水流动。每一步都像在琴弦上按弦，或轻或重，都会被记住。
-旁白：你可以选择振兴文治、以温柔抚民心，或暗中筹谋以固权柄——每条路皆有其代价与回响。`,
+你可以选择振兴文治、以温柔抚民心，或暗中筹谋以固权柄——每条路皆有其代价与回响。`,
         options: [
           {
             text: '宣令天下，重整文治与国局',
@@ -536,9 +534,9 @@
       {
         title: '终幕 · 登基前夜',
         content: `登基大典的前一夜，澄心堂之中月色如洗，你独坐案前，烛光映出纸上未尽的词句。历经的争斗、温柔、隐忍与愁绪一一回放——像一卷写在心里的长卷，旋即落在纸上，变成了谁也无法替代的生命的注脚。
-旁白：你忽然明白，所谓“重瞳”的能力，从来不只是看清世界，更是看见人心的隐秘处。你将如何把这些见闻写入史册，或将它们藏于内心的私密里？
+你忽然明白，所谓"重瞳"的能力，从来不只是看清世界，更是看见人心的隐秘处。你将如何把这些见闻写入史册，或将它们藏于内心的私密里？
 在这最后的选择里，你可以把一生的情绪、时局与理想写成一阕词以示留名；也可以把权柄握牢，以国事覆盖个人的软弱；或者以温柔与悯怀，尝试在琐碎的人间留下同情，而不是被历史埋没。
-旁白：每一个决定将成为历史的注脚，也会在你自己的夜里回响。做出你的终章之选。`,
+每一个决定将成为历史的注脚，也会在你自己的夜里回响。做出你的终章之选。`,
         options: [
           {
             text: '把所有情绪写成一阕词，留给后世与自己',
@@ -622,6 +620,94 @@
       return best[1];
     }
 
+    /* ================= 人生轨迹渲染 ================= */
+    function renderJourney() {
+      const a = gameState.attr;
+      const choices = gameState.choices;
+      const total = storyLines.length;
+      
+      let timelineHtml = '';
+      choices.forEach((item, idx) => {
+        timelineHtml += `
+          <div class="timeline-card scene-card">
+            <div class="timeline-head">
+              <div class="scene-badge">${idx + 1}</div>
+              <h4 class="timeline-title">${escapeHtml(item.sceneTitle)}</h4>
+            </div>
+            <p class="timeline-narration">${escapeHtml(item.narration)}</p>
+            <div class="choice-box">
+              你的选择：</strong>
+              <p style="font-weight:500;color:#78350f;margin-bottom:6px;">${escapeHtml(item.choiceText)}</p>
+              <p style="font-size:14px;">${escapeHtml(item.choiceDesc)}</p>
+              ${item.effect ? `<p style="font-size:12px;color:#b45309;margin-top:8px;margin-bottom:0;">属性变化：${formatEffect(item.effect)}</p>` : ''}
+            </div>
+            ${item.tags && item.tags.length ? `
+              <div class="tag-group">
+                ${item.tags.map(t => `<span class="tag">${escapeHtml(t)}</span>`).join('')}
+              </div>
+            ` : ''}
+          </div>
+        `;
+      });
+
+      const main = document.getElementById('mainContent');
+      main.innerHTML = `
+        <div class="scene-card" style="text-align:center;margin-bottom:32px;">
+          <h2 style="font-size:32px;margin:0 0 12px;">${gameState.finished ? '序章终局' : '人生轨迹回顾'}</h2>
+          <p style="color:#78716c;margin:0;">${gameState.finished ? '你已经走完了李煜序章的全部旅程，以下是你做出的所有选择。' : `你已完成 ${choices.length} / ${total} 幕，以下是你迄今为止的选择。`}</p>
+          ${!gameState.finished ? `<p class="progress-tip">进度：${Math.round((choices.length / total) * 100)}%</p><div class="progress-bar"><div class="progress-fill" style="width:${Math.round((choices.length / total) * 100)}%"></div></div>` : ''}
+        </div>
+
+        ${timelineHtml}
+
+        ${gameState.finished ? `
+          <div class="final-card scene-card">
+            <h3 style="text-align:center;font-size:24px;margin-top:0;">序章结局</h3>
+            <div class="final-attr-grid">
+              <div class="final-attr-item">
+                <p class="name">词心</p>
+                <p class="val">${a.poetry}</p>
+              </div>
+              <div class="final-attr-item">
+                <p class="name">龙椅</p>
+                <p class="val">${a.power}</p>
+              </div>
+              <div class="final-attr-item">
+                <p class="name">情缘</p>
+                <p class="val">${a.love}</p>
+              </div>
+              <div class="final-attr-item">
+                <p class="name">民心</p>
+                <p class="val">${a.people}</p>
+              </div>
+              <div class="final-attr-item">
+                <p class="name">愁绪</p>
+                <p class="val">${a.sad}</p>
+              </div>
+            </div>
+            <p class="ending-text">${getEnding()}</p>
+            <div class="tag-group" style="justify-content:center;">
+              ${gameState.tags.map(t => `<span class="tag">${escapeHtml(t)}</span>`).join('')}
+            </div>
+          </div>
+        ` : ''}
+
+        <div class="controls-row">
+          ${!gameState.finished ? `<button class="btn btn-primary" id="backGameBtn">返回继续游玩</button>` : ''}
+          <button class="btn btn-danger" onclick="restartGame()">重新开始序章</button>
+        </div>
+      `;
+
+      const backBtn = document.getElementById('backGameBtn');
+      if (backBtn) {
+        backBtn.onclick = () => {
+          previewMode = false;
+          renderScene();
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        };
+      }
+    }
+
     /* ================= 游玩视图 ================= */
     function renderScene() {
       const scene = storyLines[gameState.currentScene];
@@ -650,7 +736,7 @@
         <div id="optBox" style="margin-top:32px;"></div>
         <div class="controls-row">
           <button class="btn btn-secondary" id="previewBtn" ${gameState.choices.length ? '' : 'disabled'}>回顾已走过的轨迹</button>
-          <button class="btn btn-primary" onclick="restartGame()">重新开始序章</button>
+          <button class="btn btn-danger" onclick="restartGame()">重新开始序章</button>
         </div>
       `;
 
@@ -673,6 +759,7 @@
             } else {
               renderScene();
             }
+            window.scrollTo({ top: 0, behavior: 'smooth' });
           }, 450);
         };
         box.appendChild(btn);
@@ -680,103 +767,23 @@
 
       const previewBtn = document.getElementById('previewBtn');
       if (previewBtn) {
-        previewBtn.onclick = () => { previewMode = true; renderJourney(); };
+        previewBtn.onclick = () => {
+          previewMode = true;
+          renderJourney();
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        };
       }
-      window.scrollTo(0, 0);
     }
 
-    /* ================= 人生轨迹视图（已并入本页） ================= */
-    function renderJourney() {
-      const main = document.getElementById('mainContent');
-
-      let timelineHtml = '';
-      if (!gameState.choices.length) {
-        timelineHtml = `<div style="text-align:center;padding:48px;color:#78716c;background:#ffffff;border-radius:12px;">你还没有做出任何选择，先回到序章开始你的旅程吧。</div>`;
-      } else {
-        timelineHtml = gameState.choices.map((item, idx) => `
-          <article class="timeline-card">
-            <div class="timeline-head">
-              <div class="scene-badge">${idx + 1}</div>
-              <h4 class="timeline-title">${escapeHtml(item.sceneTitle)}</h4>
-            </div>
-            <p class="timeline-narration">${escapeHtml(item.narration)}</p>
-            <div class="choice-box">
-              <strong>你的选择</strong>
-              <p>${escapeHtml(item.choiceText)}</p>
-              ${item.choiceDesc ? `<p style="font-size:14px;color:#78716c;margin-top:6px;">${escapeHtml(item.choiceDesc)}</p>` : ''}
-              ${item.effect ? `<p style="font-size:13px;color:#b45309;margin-top:8px;">属性变化：${formatEffect(item.effect)}</p>` : ''}
-            </div>
-            ${item.tags && item.tags.length ? `
-              <div class="tag-group">
-                ${item.tags.map(t => `<span class="tag">${escapeHtml(t)}</span>`).join('')}
-              </div>` : ''}
-          </article>
-        `).join('');
-      }
-
-      let finalHtml = '';
-      if (gameState.finished) {
-        finalHtml = `
-          <div class="final-card">
-            <h3 style="text-align:center;color:#78350f;font-size:26px;margin:0 0 8px;">序章完结 · 人生结算</h3>
-            <p style="text-align:center;color:#78716c;margin:0;font-size:14px;">你走过的每一幕旁白与选择，都完整保留在上方</p>
-            <div class="final-attr-grid">
-              <div class="final-attr-item"><p class="name">词心</p><p class="val">${gameState.attr.poetry}</p></div>
-              <div class="final-attr-item"><p class="name">龙椅</p><p class="val">${gameState.attr.power}</p></div>
-              <div class="final-attr-item"><p class="name">情缘</p><p class="val">${gameState.attr.love}</p></div>
-              <div class="final-attr-item"><p class="name">民心</p><p class="val">${gameState.attr.people}</p></div>
-              <div class="final-attr-item"><p class="name">愁绪</p><p class="val">${gameState.attr.sad}</p></div>
-            </div>
-            <h4 style="text-align:center;color:#92400e;font-size:18px;margin:24px 0 12px;">你解锁的全部标记</h4>
-            <div class="tag-group" style="justify-content:center;">
-              ${gameState.tags.length ? gameState.tags.map(t => `<span class="tag">${escapeHtml(t)}</span>`).join('') : '<span class="tag">暂无标记</span>'}
-            </div>
-            <p class="ending-text">${escapeHtml(getEnding())}</p>
-            <p class="ending-text" style="font-size:14px;color:#78716c;">从李从嘉到李煜，你走完了序章的全部剧情。南唐国主的人生才刚刚开始，真正的命运还在你手中书写。</p>
-            <div class="controls-row">
-              <a href="bag.html" class="btn btn-primary">查看属性背包</a>
-              <a href="appendix.html" class="btn btn-secondary">查看拓展附录</a>
-              <button class="btn btn-danger" onclick="restartGame()">清空存档重开</button>
-            </div>
-          </div>
-        `;
-      } else {
-        finalHtml = `
-          <div class="controls-row">
-            <button class="btn btn-primary" id="backBtn">返回继续游玩</button>
-            <button class="btn btn-secondary" onclick="restartGame()">重新开始序章</button>
-          </div>
-        `;
-      }
-
-      main.innerHTML = `
-        <div style="text-align:center;margin-bottom:40px;">
-          <h2 style="font-size:32px;margin:0 0 12px;">我的人生轨迹</h2>
-          <p style="color:#78716c;margin:0;">${gameState.finished ? '这里完整记录了你做出的每一个选择，旁白与抉择连缀成篇' : '以下是你目前为止走过的人生片段'}</p>
-        </div>
-        ${timelineHtml}
-        ${finalHtml}
-      `;
-
-      const backBtn = document.getElementById('backBtn');
-      if (backBtn) backBtn.onclick = () => { previewMode = false; renderScene(); };
-
-      window.scrollTo(0, 0);
-    }
-
-    function render() {
-      if (previewMode || gameState.finished) {
+    /* ================= 页面初始化 ================= */
+    document.addEventListener('DOMContentLoaded', () => {
+      gameState = loadState();
+      if (gameState.finished || previewMode) {
         renderJourney();
       } else {
         renderScene();
       }
-    }
-
-    document.addEventListener('DOMContentLoaded', () => {
-      gameState = loadState();
-      render();
     });
   </script>
 </body>
 </html>
-<!--17155914652395614730100301-->
